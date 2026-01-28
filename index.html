@@ -18,7 +18,6 @@
             --text: #1a1a1a;
             --bg: #fafafa;
             --white: #ffffff;
-            --shadow: rgba(0, 0, 0, 0.15);
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -32,13 +31,10 @@
             overflow-x: hidden;
         }
 
-        /* LAYER SFONDI */
+        /* LAYER SFONDI FISSI */
         .bg-layer {
             position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
+            top: 0; left: 0; width: 100%; height: 100%;
             z-index: -1;
             pointer-events: none;
         }
@@ -51,19 +47,8 @@
             background-repeat: no-repeat;
         }
 
-        .bg-right {
-            top: 0;
-            right: 0;
-            background-image: url('img/back-right.png');
-            background-position: top right;
-        }
-
-        .bg-left {
-            bottom: 0;
-            left: 0;
-            background-image: url('img/back-left.png');
-            background-position: bottom left;
-        }
+        .bg-right { top: 0; right: 0; background-image: url('img/back-right.png'); background-position: top right; }
+        .bg-left { bottom: 0; left: 0; background-image: url('img/back-left.png'); background-position: bottom left; }
 
         header { 
             background: var(--white); 
@@ -94,7 +79,6 @@
             display: inline-block;
         }
 
-        /* SCHEDE E TABELLE */
         .next-match-card { 
             background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%); 
             color: white; 
@@ -161,7 +145,6 @@
         }
 
         .player-card {
-            position: relative;
             background: white;
             border-radius: 12px;
             overflow: hidden;
@@ -171,7 +154,7 @@
         .player-img-container {
             position: relative;
             width: 100%;
-            padding-top: 125%; /* Rapporto 4:5 */
+            padding-top: 125%;
             background: #eee;
         }
 
@@ -182,7 +165,7 @@
         }
 
         @media (max-width: 768px) {
-            .bg-img { width: 150px; height: 450px; opacity: 0.5; } /* Ridotte su mobile */
+            .bg-img { width: 150px; height: 450px; opacity: 0.5; }
             .match-teams { font-size: 1.6rem; gap: 1rem; }
             th:nth-child(3), td:nth-child(3), th:nth-child(4), td:nth-child(4), th:nth-child(5), td:nth-child(5), th:nth-child(6), td:nth-child(6) { display: none; }
             .rosa-grid { grid-template-columns: repeat(2, 1fr); }
@@ -224,7 +207,7 @@
         <section>
             <h2>Prossima Partita</h2>
             <div id="next-match-container" class="next-match-card">
-                <p>Caricamento dati...</p>
+                <p>In attesa dei dati...</p>
             </div>
         </section>
 
@@ -284,10 +267,8 @@
                     let grid = '<div class="rosa-grid">';
                     filtrati.forEach(g => {
                         grid += `<div class="player-card">
-                            <div class="player-img-container">
-                                <img src="${g.foto}" class="player-img" onerror="this.src='https://via.placeholder.com/400x500?text=Foto+Mancante'">
-                            </div>
-                            <div class="player-info"><div class="player-name">${g.nome}</div></div>
+                            <div class="player-img-container"><img src="${g.foto}" class="player-img" onerror="this.src='https://via.placeholder.com/400x500?text=?'"></div>
+                            <div style="padding:0.8rem;"><div style="font-weight:bold; color:var(--primary); font-family:'Teko'; font-size:1.3rem;">${g.nome}</div></div>
                         </div>`;
                     });
                     grid += '</div>';
@@ -297,13 +278,20 @@
         }
 
         async function caricaDati() {
+            const containerPartita = document.getElementById('next-match-container');
             try {
-                const response = await fetch('dati-nemorense.json?v=' + Date.now());
+                // Carichiamo il file con un parametro casuale per evitare la cache del browser
+                const response = await fetch('dati-nemorense.json?nocache=' + new Date().getTime());
+                
+                if (!response.ok) {
+                    throw new Error(`File non trovato (Errore ${response.status})`);
+                }
+
                 const dati = await response.json();
                 
                 if (dati.prossima_partita) {
                     const p = dati.prossima_partita;
-                    document.getElementById('next-match-container').innerHTML = `
+                    containerPartita.innerHTML = `
                         <div style="font-family:'Teko'; font-size:1.8rem; margin-bottom:1rem;">${p.data}</div>
                         <div style="display:flex; justify-content:center; align-items:center; gap:2rem; font-size:2.2rem; font-weight:700; font-family:'Teko'; text-transform:uppercase;">
                             <span>${p.casa}</span>
@@ -316,26 +304,3 @@
                 const standingsBody = document.getElementById('standings-body');
                 standingsBody.innerHTML = '';
                 dati.classifica.forEach(team => {
-                    const isNemorense = team.nome.toLowerCase().includes('nemorense');
-                    const logoName = team.nome.toLowerCase().replace(/\s+/g, '-') + '.png';
-                    standingsBody.innerHTML += `
-                        <tr class="${isNemorense ? 'highlight' : ''}">
-                            <td>${team.posizione}</td>
-                            <td>
-                                <div class="team-cell">
-                                    <img src="img/${logoName}" class="team-logo" onerror="this.src='https://via.placeholder.com/25?text=?'">
-                                    <span>${team.nome}</span>
-                                </div>
-                            </td>
-                            <td>${team.giocate}</td>
-                            <td>${team.vinte}</td>
-                            <td>${team.pareggiate}</td>
-                            <td>${team.sconfitte}</td>
-                            <td><strong>${team.punti}</strong></td>
-                        </tr>
-                    `;
-                });
-                document.getElementById('update-time').innerHTML = `<small>Ultimo aggiornamento: ${dati.ultimo_aggiornamento}</small>`;
-            } catch (e) {
-                console.error("Errore caricamento dati:", e);
-                document.getElementById('next-match-container').innerHTML = "Errore nel caricamento del file JSON. Controlla il nome del file su GitHub.";
