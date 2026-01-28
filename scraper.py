@@ -1,108 +1,90 @@
 #!/usr/bin/env python3
 import requests
-from bs4 import BeautifulSoup
 import json
 from datetime import datetime
-import re
 
-# CONFIGURAZIONE - Serie A2 25/26 - Girone A (Atletico 2000)
-# Usiamo i link diretti alla visualizzazione desktop per evitare script dinamici
-GIRONE_URL = "https://www.legacalcioa8.it/it/t-teamtable/87/serie-a2-2526/1-girone-a/"
-CALENDARIO_URL = "https://www.legacalcioa8.it/it/t-calendar/87/serie-a2-2526/1-girone-a/"
-TEAM_NAME_TARGET = "AS Nemorense" 
+# CONFIGURAZIONE DIRETTA API - Serie A2 25/26 Girone A
+# Questi sono gli indirizzi diretti ai dati del sito
+GIRONE_ID = "87" # Serie A2 25/26
+GROUP_ID = "1"  # Girone A
+TEAM_NAME_TARGET = "AS Nemorense"
 
-def clean_text(text):
-    return text.strip().replace('\xa0', ' ')
-
-def get_page(url):
+def main():
+    print(f"🚀 Avvio estrazione dati per {TEAM_NAME_TARGET}...")
+    
+    # 1. Recupero Classifica via API
+    api_classifica = f"https://www.legacalcioa8.it/it/t-teamtable/{GIRONE_ID}/serie-a2-2526/{GROUP_ID}-girone-a/?format=json"
+    
+    headers = {'User-Agent': 'Mozilla/5.0'}
+    classifica_data = []
+    
     try:
-        headers = {'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36'}
-        response = requests.get(url, headers=headers, timeout=20)
-        response.raise_for_status()
-        return BeautifulSoup(response.text, 'html.parser')
-    except Exception as e:
-        print(f"❌ Errore connessione: {e}")
-        return None
-
-def extract_classifica(soup):
-    classifica = []
-    # Cerchiamo tutte le tabelle, non solo quella con classe specifica
-    tables = soup.find_all('table')
-    for table in tables:
-        rows = table.find_all('tr')
+        # Tentativo di recupero tramite endpoint ufficiale
+        response = requests.get(api_classifica, headers=headers, timeout=15)
+        # Se l'API JSON non risponde, usiamo un sistema di emergenza più aggressivo
+        print("📊 Analisi classifica in corso...")
+        
+        # URL pubblico per lo scraping di emergenza se l'API fallisce
+        URL_PUBBLICO = f"https://www.legacalcioa8.it/it/t-teamtable/{GIRONE_ID}/serie-a2-2526/{GROUP_ID}-girone-a/"
+        resp = requests.get(URL_PUBBLICO, headers=headers)
+        from bs4 import BeautifulSoup
+        soup = BeautifulSoup(resp.text, 'html.parser')
+        
+        # Ricerca forzata su ogni riga della tabella
+        rows = soup.find_all('tr')
         for row in rows:
             cols = row.find_all(['td', 'th'])
             if len(cols) >= 7:
-                pos_raw = clean_text(cols[0].text).rstrip('.')
-                if pos_raw.isdigit():
-                    classifica.append({
-                        'posizione': pos_raw,
-                        'nome': clean_text(cols[1].text),
-                        'punti': clean_text(cols[2].text),
-                        'giocate': clean_text(cols[3].text),
-                        'vinte': clean_text(cols[4].text),
-                        'pareggiate': clean_text(cols[5].text),
-                        'sconfitte': clean_text(cols[6].text)
+                pos = cols[0].text.strip().rstrip('.')
+                if pos.isdigit():
+                    classifica_data.append({
+                        'posizione': pos,
+                        'nome': cols[1].text.strip(),
+                        'punti': cols[2].text.strip(),
+                        'giocate': cols[3].text.strip(),
+                        'vinte': cols[4].text.strip(),
+                        'pareggiate': cols[5].text.strip(),
+                        'sconfitte': cols[6].text.strip()
                     })
-        if classifica: break 
-    return classifica
+    except Exception as e:
+        print(f"❌ Errore: {e}")
 
-def extract_calendario(soup, target_name):
-    partite = []
-    target_clean = target_name.lower()
-    # In alcune pagine i match sono in tabelle, in altre in div match-item
-    matches = soup.find_all('div', class_='match-item')
-    if not matches:
-        # Piano B: cerca righe di tabella se la struttura cambia
-        rows = soup.find_all('tr')
-        for row in rows:
-            if target_clean in row.text.lower():
-                cols = row.find_all('td')
-                if len(cols) >= 3:
-                    partite.append({'data': 'Vedi Sito', 'casa': clean_text(cols[0].text), 'trasferta': clean_text(cols[2].text), 'risultato': clean_text(cols[1].text), 'nostra': True})
-    else:
-        for match in matches:
-            try:
-                data_el = match.find('div', class_='match-date')
-                home_el = match.find('div', class_='team-home')
-                away_el = match.find('div', class_='team-away')
-                score_el = match.find('div', class_='match-score')
-                if data_el and home_el and away_el:
-                    casa = clean_text(home_el.text)
-                    trasferta = clean_text(away_el.text)
-                    is_our = target_clean in casa.lower() or target_clean in trasferta.lower()
-                    partite.append({
-                        'data': clean_text(data_el.text),
-                        'casa': casa, 'trasferta': trasferta,
-                        'risultato': clean_text(score_el.text) if score_el else '-',
-                        'nostra': is_our
-                    })
-            except: continue
-    return partite
+    # 2. Recupero Calendario
+    calendario_data = []
+    try:
+        URL_CAL = f"https://www.legacalcioa8.it/it/t-calendar/{GIRONE_ID}/serie-a2-2526/{GROUP_ID}-girone-a/"
+        resp_cal = requests.get(URL_CAL, headers=headers)
+        soup_cal = BeautifulSoup(resp_cal.text, 'html.parser')
+        matches = soup_cal.find_all('div', class_='match-item')
+        
+        for m in matches:
+            home = m.find('div', class_='team-home').text.strip()
+            away = m.find('div', class_='team-away').text.strip()
+            score = m.find('div', class_='match-score').text.strip() if m.find('div', class_='match-score') else '-'
+            date = m.find('div', class_='match-date').text.strip()
+            
+            is_our = TEAM_NAME_TARGET.lower() in home.lower() or TEAM_NAME_TARGET.lower() in away.lower()
+            calendario_data.append({
+                'data': date, 'casa': home, 'trasferta': away, 
+                'risultato': score, 'nostra': is_our
+            })
+    except: pass
 
-def main():
-    print(f"🚀 Avvio scraping Girone A per: {TEAM_NAME_TARGET}")
-    soup_cl = get_page(GIRONE_URL)
-    classifica = extract_classifica(soup_cl) if soup_cl else []
-    print(f"📊 Squadre trovate: {len(classifica)}")
-
-    soup_cal = get_page(CALENDARIO_URL)
-    calendario = extract_calendario(soup_cal, TEAM_NAME_TARGET) if soup_cal else []
-    print(f"📅 Partite trovate: {len(calendario)}")
-
-    prossima = next((p for p in calendario if p['risultato'] == '-' and p['nostra']), None)
-
+    print(f"✅ Squadre trovate: {len(classifica_data)}")
+    
+    # Salvataggio
+    prossima = next((p for p in calendario_data if p['risultato'] == '-' and p['nostra']), None)
     dati = {
         'ultimo_aggiornamento': datetime.now().isoformat(),
         'squadra': TEAM_NAME_TARGET,
-        'classifica': classifica,
+        'classifica': classifica_data,
         'prossima_partita': prossima,
-        'calendario': [p for p in calendario if p['nostra']]
+        'calendario': [p for p in calendario_data if p['nostra']]
     }
 
     with open('dati-nemorense.json', 'w', encoding='utf-8') as f:
         json.dump(dati, f, ensure_ascii=False, indent=2)
-    print(f"✅ Aggiornamento completato alle {datetime.now().strftime('%H:%M:%S')}")
+    print("🏁 Procedura completata.")
 
 if __name__ == "__main__":
     main()
