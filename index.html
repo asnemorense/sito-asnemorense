@@ -96,13 +96,12 @@
             height: 250px;
             object-fit: cover;
             display: block;
-            background: #eee; /* Fallback se l'immagine manca */
+            background: #eee;
         }
 
         .player-info { padding: 1rem; }
         .player-name { font-weight: bold; color: var(--primary); font-family: 'Teko', sans-serif; font-size: 1.4rem; }
 
-        /* BIO HOVER EFFECT */
         .player-bio {
             position: absolute;
             top: 0; left: 0; width: 100%; height: 100%;
@@ -116,7 +115,7 @@
             transition: opacity 0.3s ease;
             font-size: 0.95rem;
             text-align: center;
-            pointer-events: none; /* Evita conflitti con il mouse */
+            pointer-events: none;
         }
 
         .player-card:hover .player-bio { opacity: 1; }
@@ -131,11 +130,25 @@
             text-transform: uppercase;
         }
 
-        /* VECCHIO CSS ORIGINALE */
+        /* STILI CLASSIFICA CON LOGHI */
+        .team-cell {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            text-align: left;
+        }
+
+        .team-logo {
+            width: 25px;
+            height: 25px;
+            object-fit: contain;
+        }
+
         .next-match-card { background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%); color: white; border-radius: 20px; padding: 2.5rem; text-align: center; margin-bottom: 3rem; box-shadow: 0 10px 30px rgba(107, 15, 26, 0.2); }
         .match-date { font-family: 'Teko', sans-serif; font-size: 1.8rem; margin-bottom: 1rem; }
         .match-teams { display: flex; justify-content: center; align-items: center; gap: 2rem; font-size: 2.2rem; font-weight: 700; font-family: 'Teko', sans-serif; text-transform: uppercase; }
         .vs { background: var(--white); color: var(--primary); padding: 0.2rem 0.8rem; border-radius: 8px; font-size: 1.2rem; }
+        
         .table-container { background: var(--white); border-radius: 20px; overflow: hidden; box-shadow: 0 5px 20px rgba(0,0,0,0.05); margin-bottom: 3rem; }
         table { width: 100%; border-collapse: collapse; }
         thead { background: #333; color: white; font-family: 'Teko', sans-serif; font-size: 1.2rem; }
@@ -165,9 +178,7 @@
                 <h2>Rosa AS Nemorense</h2>
                 <button onclick="toggleRosa()" style="background: none; border: none; font-size: 2rem; cursor: pointer; color: var(--primary);"><i class="fas fa-times"></i></button>
             </div>
-            
-            <div id="lista-giocatori">
-                </div>
+            <div id="lista-giocatori"></div>
         </div>
     </div>
 
@@ -201,8 +212,6 @@
     </div>
 
     <script>
-        // --- CONFIGURAZIONE GIOCATORI ---
-        // Carica le foto nella cartella "img" su GitHub (es. img/nome-giocatore.jpg)
         const giocatori = [
             { nome: "Alessio Lucci", ruolo: "Portieri", foto: "img/alessio-lucci.jpg", bio: "Descrizione" },
             { nome: "Alessandro Tudini", ruolo: "Difensori", foto: "img/alessandro-tudini.jpg", bio: "Descrizione" },
@@ -280,10 +289,20 @@
                 standingsBody.innerHTML = '';
                 dati.classifica.forEach(team => {
                     const isNemorense = team.nome.toLowerCase().includes('nemorense');
+                    
+                    // Creazione automatica percorso logo (es: "AS Nemorense" -> "img/as-nemorense.png")
+                    const logoFileName = team.nome.toLowerCase().replace(/\s+/g, '-') + '.png';
+                    const logoPath = `img/${logoFileName}`;
+
                     standingsBody.innerHTML += `
                         <tr class="${isNemorense ? 'highlight' : ''}">
                             <td>${team.posizione}</td>
-                            <td>${team.nome}</td>
+                            <td>
+                                <div class="team-cell">
+                                    <img src="${logoPath}" class="team-logo" onerror="this.src='https://via.placeholder.com/25?text=?'">
+                                    <span>${team.nome}</span>
+                                </div>
+                            </td>
                             <td>${team.giocate}</td>
                             <td>${team.vinte}</td>
                             <td>${team.pareggiate}</td>
