@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="it">
 <head>
@@ -46,7 +45,6 @@
             background-repeat: no-repeat;
         }
 
-        /* Immagine alta a destra */
         body::before {
             top: 0;
             right: 0;
@@ -54,7 +52,6 @@
             background-position: top right;
         }
 
-        /* Immagine sinistra (basso) */
         body::after {
             bottom: 0;
             left: 0;
@@ -69,38 +66,99 @@
         
         h2 { font-family: 'Teko', sans-serif; font-size: 2.5rem; text-transform: uppercase; color: var(--primary); margin-bottom: 1.5rem; border-bottom: 2px solid var(--primary); display: inline-block; }
 
-        /* PULSANTI FLOAT */
-        .float-btn {
+        /* --- NUOVO SISTEMA PULSANTI FLOAT --- */
+        
+        /* Menu Social a comparsa */
+        .social-menu-container {
             position: fixed;
+            bottom: 25px;
+            right: 25px;
+            z-index: 1001;
+            display: flex;
+            flex-direction: column-reverse;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .social-main-btn {
             width: 60px;
             height: 60px;
-            right: 25px;
-            color: #FFF;
-            border-radius: 50px;
-            text-align: center;
-            font-size: 24px;
-            box-shadow: 2px 2px 10px rgba(0,0,0,0.3);
-            z-index: 1001;
+            background: #333;
+            color: white;
+            border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
-            text-decoration: none;
-            transition: all 0.3s ease;
+            font-size: 24px;
+            box-shadow: 2px 2px 10px var(--shadow);
             cursor: pointer;
+            transition: all 0.3s ease;
             border: none;
         }
 
-        .instagram-float {
-            bottom: 25px;
+        .social-options {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(20px);
+            transition: all 0.3s ease;
+        }
+
+        .social-menu-container:hover .social-options {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+
+        .social-btn {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            text-decoration: none;
+            font-size: 20px;
+            box-shadow: 2px 2px 8px var(--shadow);
+            transition: transform 0.2s;
+        }
+
+        .social-btn:hover { transform: scale(1.1); }
+
+        .instagram-color {
             background: radial-gradient(circle at 30% 107%, #fdf497 0%, #fdf497 5%, #fd5949 45%, #d6249f 60%, #285AEB 90%);
         }
 
-        .menu-float {
-            bottom: 95px;
-            background: var(--primary);
+        .tiktok-color {
+            background: #000000;
+            border: 1px solid #ff0050;
         }
 
-        .float-btn:hover { transform: scale(1.1); }
+        /* Pulsante Rosa */
+        .menu-float {
+            position: fixed;
+            bottom: 100px; /* Alzato per non coprire il menu social */
+            right: 25px;
+            width: 60px;
+            height: 60px;
+            background: var(--primary);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            box-shadow: 2px 2px 10px rgba(0,0,0,0.3);
+            z-index: 1001;
+            cursor: pointer;
+            border: none;
+            transition: all 0.3s ease;
+        }
+
+        .menu-float:hover { transform: scale(1.1); }
 
         /* SEZIONE ROSA */
         #rosa-section {
@@ -134,17 +192,14 @@
         .player-img-container {
             position: relative;
             width: 100%;
-            padding-top: 125%; /* Rapporto 4:5 */
+            padding-top: 125%;
             background: #eee;
             overflow: hidden;
         }
 
         .player-img {
             position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
+            top: 0; left: 0; width: 100%; height: 100%;
             object-fit: cover;
             display: block;
         }
@@ -181,7 +236,7 @@
             text-transform: uppercase;
         }
 
-        /* CLASSIFICA */
+        /* CLASSIFICA E MATCH */
         .team-cell { display: flex; align-items: center; gap: 10px; text-align: left; }
         .team-logo { width: 24px; height: 24px; object-fit: contain; }
 
@@ -207,13 +262,23 @@
 </head>
 <body>
 
-    <button class="float-btn menu-float" onclick="toggleRosa()" title="Visualizza Rosa">
+    <button class="menu-float" onclick="toggleRosa()" title="Visualizza Rosa">
         <i class="fas fa-users" id="menu-icon"></i>
     </button>
 
-    <a href="https://www.instagram.com/asnemorense/" class="float-btn instagram-float" target="_blank" title="Seguici su Instagram">
-        <i class="fab fa-instagram"></i>
-    </a>
+    <div class="social-menu-container">
+        <button class="social-main-btn">
+            <i class="fas fa-share-alt"></i>
+        </button>
+        <div class="social-options">
+            <a href="https://www.tiktok.com/@asnemorense_official" class="social-btn tiktok-color" target="_blank" title="Seguici su TikTok">
+                <i class="fab fa-tiktok"></i>
+            </a>
+            <a href="https://www.instagram.com/asnemorense/" class="social-btn instagram-color" target="_blank" title="Seguici su Instagram">
+                <i class="fab fa-instagram"></i>
+            </a>
+        </div>
+    </div>
 
     <div id="rosa-section">
         <div class="container">
@@ -334,7 +399,6 @@
                 standingsBody.innerHTML = '';
                 dati.classifica.forEach(team => {
                     const isNemorense = team.nome.toLowerCase().includes('nemorense');
-                    
                     const logoFileName = team.nome.toLowerCase().replace(/\s+/g, '-') + '.png';
                     const logoPath = `img/${logoFileName}`;
 
