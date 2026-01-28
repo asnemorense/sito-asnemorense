@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>AS Nemorense - Squadra Calcio</title>
+    <link rel="icon" type="image/png" href="logo-nemorense.png">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Teko:wght@400;600;700&family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet">
@@ -76,23 +77,20 @@
         }
 
         .logo-shield {
-            width: 50px;
+            width: 60px;
             height: 60px;
-            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%);
-            clip-path: polygon(50% 0%, 100% 20%, 100% 80%, 50% 100%, 0% 80%, 0% 20%);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-family: 'Teko', sans-serif;
-            font-weight: 700;
-            font-size: 1.1rem;
-            color: var(--accent);
-            box-shadow: 0 4px 15px rgba(107, 15, 26, 0.3);
             transition: transform 0.3s ease;
         }
 
+        .logo-shield img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            filter: drop-shadow(0 2px 8px rgba(107, 15, 26, 0.3));
+        }
+
         .logo:hover .logo-shield {
-            transform: scale(1.1) rotate(5deg);
+            transform: scale(1.1);
         }
 
         .logo-text {
@@ -212,6 +210,20 @@
             position: relative;
             z-index: 1;
             animation: fadeInUp 0.8s ease-out 0.3s backwards;
+        }
+
+        .hero-logo {
+            width: 150px;
+            height: 150px;
+            margin: 0 auto 2rem;
+            filter: drop-shadow(0 4px 20px rgba(0, 0, 0, 0.3));
+            animation: fadeInUp 0.8s ease-out 0.1s backwards;
+        }
+
+        .hero-logo img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
         }
 
         @keyframes fadeInUp {
@@ -567,6 +579,11 @@
                 font-size: 1.1rem;
             }
 
+            .hero-logo {
+                width: 100px;
+                height: 100px;
+            }
+
             .section-title {
                 font-size: 2.2rem;
             }
@@ -609,7 +626,9 @@
     <header>
         <div class="header-content">
             <a href="#" class="logo">
-                <div class="logo-shield">ASN</div>
+                <div class="logo-shield">
+                    <img src="logo-nemorense.png" alt="AS Nemorense Logo">
+                </div>
                 <span class="logo-text">AS Nemorense</span>
             </a>
             <button class="mobile-menu-btn" aria-label="Menu">
@@ -628,8 +647,11 @@
 
     <div class="hero">
         <div class="hero-content">
+            <div class="hero-logo">
+                <img src="logo-nemorense.png" alt="AS Nemorense Logo">
+            </div>
             <h1>AS NEMORENSE</h1>
-            <p>L'anima dei Castelli</p>
+            <p>Passione, Impegno, Vittoria</p>
         </div>
     </div>
 
