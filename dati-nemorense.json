@@ -1,7 +1,137 @@
 {
-  "ultimo_aggiornamento": "2026-01-28T16:27:43.961300",
+  "ultimo_aggiornamento": "28/01/2026, 17:40:03",
   "squadra": "AS Nemorense",
-  "classifica": [],
-  "prossima_partita": null,
-  "calendario": []
+  "prossima_partita": {
+    "data": "Lunedì 2 Febbraio 2026 • 21:30 ",
+    "casa": "ASD Baron Academy",
+    "trasferta": "AS Nemorense"
+  },
+  "classifica": [
+    {
+      "posizione": "1",
+      "nome": "Atletico Alberone FC",
+      "giocate": "13",
+      "vinte": "12",
+      "pareggiate": "0",
+      "sconfitte": "1",
+      "punti": "36"
+    },
+    {
+      "posizione": "2",
+      "nome": "George Best Team Academy",
+      "giocate": "13",
+      "vinte": "9",
+      "pareggiate": "3",
+      "sconfitte": "1",
+      "punti": "30"
+    },
+    {
+      "posizione": "3",
+      "nome": "ASD Baron Academy",
+      "giocate": "14",
+      "vinte": "8",
+      "pareggiate": "2",
+      "sconfitte": "4",
+      "punti": "26"
+    },
+    {
+      "posizione": "4",
+      "nome": "Atletico Appio C8",
+      "giocate": "13",
+      "vinte": "7",
+      "pareggiate": "2",
+      "sconfitte": "4",
+      "punti": "23"
+    },
+    {
+      "posizione": "5",
+      "nome": "La Fraschetta del pesce express",
+      "giocate": "13",
+      "vinte": "7",
+      "pareggiate": "2",
+      "sconfitte": "4",
+      "punti": "23"
+    },
+    {
+      "posizione": "6",
+      "nome": "ASD Union FB",
+      "giocate": "14",
+      "vinte": "7",
+      "pareggiate": "1",
+      "sconfitte": "6",
+      "punti": "22"
+    },
+    {
+      "posizione": "7",
+      "nome": "AS Nemorense",
+      "giocate": "14",
+      "vinte": "6",
+      "pareggiate": "3",
+      "sconfitte": "5",
+      "punti": "21"
+    },
+    {
+      "posizione": "8",
+      "nome": "Gringos C8",
+      "giocate": "13",
+      "vinte": "6",
+      "pareggiate": "2",
+      "sconfitte": "5",
+      "punti": "20"
+    },
+    {
+      "posizione": "9",
+      "nome": "Virtus San Giustino",
+      "giocate": "14",
+      "vinte": "6",
+      "pareggiate": "2",
+      "sconfitte": "6",
+      "punti": "20"
+    },
+    {
+      "posizione": "106",
+      "nome": "Fratini Gialli",
+      "giocate": "13",
+      "vinte": "4",
+      "pareggiate": "2",
+      "sconfitte": "7",
+      "punti": "14"
+    },
+    {
+      "posizione": "11",
+      "nome": "Inter Club C8 Academy",
+      "giocate": "13",
+      "vinte": "3",
+      "pareggiate": "2",
+      "sconfitte": "8",
+      "punti": "11"
+    },
+    {
+      "posizione": "12",
+      "nome": "Naturalmente Carne FC",
+      "giocate": "14",
+      "vinte": "2",
+      "pareggiate": "3",
+      "sconfitte": "9",
+      "punti": "9"
+    },
+    {
+      "posizione": "13",
+      "nome": "Grottaferrata C8",
+      "giocate": "13",
+      "vinte": "2",
+      "pareggiate": "1",
+      "sconfitte": "10",
+      "punti": "7"
+    },
+    {
+      "posizione": "14",
+      "nome": "Paris San Giovanni",
+      "giocate": "14",
+      "vinte": "1",
+      "pareggiate": "3",
+      "sconfitte": "10",
+      "punti": "6"
+    }
+  ]
 }
