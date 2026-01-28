@@ -5,9 +5,9 @@ import json
 from datetime import datetime
 
 # CONFIGURAZIONE - Inserisci i tuoi link tra le virgolette
-GIRONE_URL = "https://www.legacalcioa8.it/it/t-teamtable/87/serie-a2-2526/5-girone-e/"  
-CALENDARIO_URL = "https://www.legacalcioa8.it/it/t-calendar/87/serie-a2-2526/5-girone-e/"
-TEAM_NAME = "AS Nemorense" 
+GIRONE_URL = "https://www.legacalcioa8.it/it/t-teamtable/87/serie-a2-2526/"  
+CALENDARIO_URL = "https://www.legacalcioa8.it/it/t-calendar/87/serie-a2-2526/"
+TEAM_NAME = AS Nemorense 
 
 def get_page(url):
     try:
@@ -60,10 +60,10 @@ def extract_calendario(soup, team_name):
 
 def main():
     print("🔄 Avvio aggiornamento dati...")
-    soup_classifica = get_page("https://www.legacalcioa8.it/it/t-teamtable/87/serie-a2-2526/5-girone-e/")
+    soup_classifica = get_page(GIRONE_URL)
     classifica = extract_classifica(soup_classifica) if soup_classifica else []
     
-    soup_calendario = get_page("https://www.legacalcioa8.it/it/t-calendar/87/serie-a2-2526/5-girone-e/")
+    soup_calendario = get_page(CALENDARIO_URL)
     calendario = extract_calendario(soup_calendario, TEAM_NAME) if soup_calendario else []
     
     prossima = next((p for p in calendario if p['risultato'] == '-' and p['nostra']), None)
