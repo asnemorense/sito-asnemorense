@@ -1,10 +1,11 @@
 {
-  "ultimo_aggiornamento": "28/01/2026, 17:40:03",
+  "ultimo_aggiornamento": "28/1/2026, 15:24:26",
   "squadra": "AS Nemorense",
   "prossima_partita": {
-    "data": "Lunedì 2 Febbraio 2026 • 21:30 ",
-    "casa": "ASD Baron Academy",
-    "trasferta": "AS Nemorense"
+    "data": "2026-02-02T21:30:00",
+    "casa": "AS Nemorense",
+    "trasferta": "Gringos C8",
+    "risultato": "-"
   },
   "classifica": [
     {
@@ -89,7 +90,7 @@
       "punti": "20"
     },
     {
-      "posizione": "106",
+      "posizione": "10",
       "nome": "Fratini Gialli",
       "giocate": "13",
       "vinte": "4",
@@ -133,5 +134,6 @@
       "sconfitte": "10",
       "punti": "6"
     }
-  ]
+  ],
+  "calendario": []
 }
