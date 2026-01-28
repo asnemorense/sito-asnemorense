@@ -6,9 +6,9 @@ from datetime import datetime
 import re
 
 # CONFIGURAZIONE - Girone A Atletico 2000
-GIRONE_URL = "https://www.legacalcioa8.it/it/t-teamtable/87/serie-a2-2526/?desk=1"
-CALENDARIO_URL = "https://www.legacalcioa8.it/it/t-calendar/87/serie-a2-2526/?desk=1"
-TEAM_NAME_TARGET = "AS Nemorense" 
+GIRONE_URL: "https://www.legacalcioa8.it/it/t-teamtable/87/serie-a2-2526/?desk=1"
+CALENDARIO_URL: "https://www.legacalcioa8.it/it/t-calendar/87/serie-a2-2526/?desk=1"
+TEAM_NAME: "Nemorense" 
 
 def clean_name(name):
     """Rimuove punti, spazi extra e rende minuscolo per confronti sicuri."""
