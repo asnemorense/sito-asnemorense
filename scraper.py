@@ -112,7 +112,7 @@ def main():
     
     # Scarica la classifica
     print("📊 Scaricamento classifica...")
-    soup_classifica = get_page(https://www.legacalcioa8.it/it/t-teamtable/87/serie-a2-2526/)
+    soup_classifica = get_page("https://www.legacalcioa8.it/it/t-teamtable/87/serie-a2-2526/")
     classifica = []
     if soup_classifica:
         classifica = extract_classifica(soup_classifica)
@@ -120,7 +120,7 @@ def main():
     
     # Scarica il calendario
     print("📅 Scaricamento calendario...")
-    soup_calendario = get_page(https://www.legacalcioa8.it/it/t-calendar/87/serie-a2-2526/)
+    soup_calendario = get_page("https://www.legacalcioa8.it/it/t-calendar/87/serie-a2-2526/")
     calendario = []
     prossima_partita = None
     if soup_calendario:
