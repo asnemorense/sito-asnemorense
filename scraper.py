@@ -7,7 +7,7 @@ from datetime import datetime
 # CONFIGURAZIONE - Inserisci i tuoi link tra le virgolette
 GIRONE_URL = "https://www.legacalcioa8.it/it/t-teamtable/87/serie-a2-2526/"  
 CALENDARIO_URL = "https://www.legacalcioa8.it/it/t-calendar/87/serie-a2-2526/"
-TEAM_NAME = AS Nemorense 
+TEAM_NAME = "AS Nemorense" 
 
 def get_page(url):
     try:
