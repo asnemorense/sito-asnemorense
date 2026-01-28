@@ -28,46 +28,98 @@
             background: var(--bg); 
             color: var(--text); 
             padding-bottom: 50px; 
-            position: relative;
             min-height: 100vh;
+            overflow-x: hidden;
         }
 
-        /* IMMAGINI DI SFONDO FISSE - AGGIORNATE PER MOBILE */
-        body::before,
-        body::after {
-            content: "";
+        /* LAYER SFONDI */
+        .bg-layer {
             position: fixed;
-            width: 338px; /* Larghezza desktop */
-            max-width: 40vw; /* Su mobile non superano il 40% dello schermo */
-            height: 1000px;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
             z-index: -1;
             pointer-events: none;
+        }
+
+        .bg-img {
+            position: absolute;
+            width: 338px;
+            height: 1000px;
             background-size: contain;
             background-repeat: no-repeat;
         }
 
-        /* Immagine alta a destra */
-        body::before {
+        .bg-right {
             top: 0;
             right: 0;
             background-image: url('img/back-right.png');
             background-position: top right;
         }
 
-        /* Immagine sinistra (basso) */
-        body::after {
+        .bg-left {
             bottom: 0;
             left: 0;
             background-image: url('img/back-left.png');
             background-position: bottom left;
         }
 
-        header { background: var(--white); padding: 1rem; text-align: center; border-bottom: 3px solid var(--primary); box-shadow: 0 2px 10px rgba(0,0,0,0.05); position: relative; z-index: 10; }
+        header { 
+            background: var(--white); 
+            padding: 1rem; 
+            text-align: center; 
+            border-bottom: 3px solid var(--primary); 
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05); 
+            position: relative; 
+            z-index: 100; 
+        }
         .logo-container img { height: 80px; }
 
-        .container { max-width: 1000px; margin: 2rem auto; padding: 0 1.5rem; position: relative; z-index: 10; }
+        .container { 
+            max-width: 1000px; 
+            margin: 2rem auto; 
+            padding: 0 1.5rem; 
+            position: relative; 
+            z-index: 100; 
+        }
         
-        h2 { font-family: 'Teko', sans-serif; font-size: 2.5rem; text-transform: uppercase; color: var(--primary); margin-bottom: 1.5rem; border-bottom: 2px solid var(--primary); display: inline-block; }
+        h2 { 
+            font-family: 'Teko', sans-serif; 
+            font-size: 2.5rem; 
+            text-transform: uppercase; 
+            color: var(--primary); 
+            margin-bottom: 1.5rem; 
+            border-bottom: 2px solid var(--primary); 
+            display: inline-block;
+        }
+
+        /* SCHEDE E TABELLE */
+        .next-match-card { 
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%); 
+            color: white; 
+            border-radius: 20px; 
+            padding: 2.5rem; 
+            text-align: center; 
+            margin-bottom: 3rem;
+            box-shadow: 0 10px 30px rgba(107, 15, 26, 0.2);
+        }
+
+        .table-container { 
+            background: var(--white); 
+            border-radius: 20px; 
+            overflow: hidden; 
+            box-shadow: 0 5px 20px rgba(0,0,0,0.05); 
+            margin-bottom: 3rem; 
+        }
+
+        table { width: 100%; border-collapse: collapse; }
+        thead { background: #333; color: white; font-family: 'Teko', sans-serif; font-size: 1.2rem; }
+        th, td { padding: 1.2rem 1rem; text-align: center; border-bottom: 1px solid #eee; }
+        tr.highlight { background: rgba(107, 15, 26, 0.08); font-weight: bold; }
+
+        .team-cell { display: flex; align-items: center; gap: 10px; text-align: left; }
+        .team-logo { width: 24px; height: 24px; object-fit: contain; }
 
         /* PULSANTI FLOAT */
         .float-btn {
@@ -77,30 +129,18 @@
             right: 25px;
             color: #FFF;
             border-radius: 50px;
-            text-align: center;
-            font-size: 24px;
-            box-shadow: 2px 2px 10px rgba(0,0,0,0.3);
-            z-index: 1001;
             display: flex;
             align-items: center;
             justify-content: center;
+            font-size: 24px;
+            box-shadow: 2px 2px 10px rgba(0,0,0,0.3);
+            z-index: 1001;
             text-decoration: none;
-            transition: all 0.3s ease;
             cursor: pointer;
             border: none;
         }
-
-        .instagram-float {
-            bottom: 25px;
-            background: radial-gradient(circle at 30% 107%, #fdf497 0%, #fdf497 5%, #fd5949 45%, #d6249f 60%, #285AEB 90%);
-        }
-
-        .menu-float {
-            bottom: 95px;
-            background: var(--primary);
-        }
-
-        .float-btn:hover { transform: scale(1.1); }
+        .instagram-float { bottom: 25px; background: radial-gradient(circle at 30% 107%, #fdf497 0%, #fdf497 5%, #fd5949 45%, #d6249f 60%, #285AEB 90%); }
+        .menu-float { bottom: 95px; background: var(--primary); }
 
         /* SEZIONE ROSA */
         #rosa-section {
@@ -126,79 +166,23 @@
             border-radius: 12px;
             overflow: hidden;
             box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-            text-align: center;
-            display: flex;
-            flex-direction: column;
         }
 
         .player-img-container {
             position: relative;
             width: 100%;
-            padding-top: 125%;
+            padding-top: 125%; /* Rapporto 4:5 */
             background: #eee;
-            overflow: hidden;
         }
 
         .player-img {
             position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            display: block;
-        }
-
-        .player-info { padding: 0.8rem; }
-        .player-name { font-weight: bold; color: var(--primary); font-family: 'Teko', sans-serif; font-size: 1.3rem; line-height: 1.1; }
-
-        .player-bio {
-            position: absolute;
             top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(107, 15, 26, 0.9);
-            color: white;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            padding: 1rem;
-            opacity: 0;
-            transition: opacity 0.3s ease;
-            font-size: 0.85rem;
-            text-align: center;
-            pointer-events: none;
-            z-index: 2;
+            object-fit: cover;
         }
-
-        .player-card:hover .player-bio { opacity: 1; }
-
-        .role-title {
-            font-family: 'Teko', sans-serif;
-            font-size: 2rem;
-            color: #333;
-            margin: 1.5rem 0 1rem;
-            border-left: 5px solid var(--primary);
-            padding-left: 10px;
-            text-transform: uppercase;
-        }
-
-        /* CLASSIFICA */
-        .team-cell { display: flex; align-items: center; gap: 10px; text-align: left; }
-        .team-logo { width: 24px; height: 24px; object-fit: contain; }
-
-        .next-match-card { background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%); color: white; border-radius: 20px; padding: 2.5rem; text-align: center; margin-bottom: 3rem; }
-        .match-date { font-family: 'Teko', sans-serif; font-size: 1.8rem; margin-bottom: 1rem; }
-        .match-teams { display: flex; justify-content: center; align-items: center; gap: 2rem; font-size: 2.2rem; font-weight: 700; font-family: 'Teko', sans-serif; text-transform: uppercase; }
-        .vs { background: var(--white); color: var(--primary); padding: 0.2rem 0.8rem; border-radius: 8px; font-size: 1.2rem; }
-        
-        .table-container { background: var(--white); border-radius: 20px; overflow: hidden; box-shadow: 0 5px 20px rgba(0,0,0,0.05); margin-bottom: 3rem; }
-        table { width: 100%; border-collapse: collapse; }
-        thead { background: #333; color: white; font-family: 'Teko', sans-serif; font-size: 1.2rem; }
-        th, td { padding: 1.2rem 1rem; text-align: center; border-bottom: 1px solid #eee; }
-        tr.highlight { background: rgba(107, 15, 26, 0.08); font-weight: bold; }
-        #update-time { text-align: center; padding: 2rem; color: #888; font-size: 0.8rem; }
 
         @media (max-width: 768px) {
-            /* Ora gli sfondi RESTANO visibili ma ridimensionati dal max-width: 40vw sopra */
+            .bg-img { width: 150px; height: 450px; opacity: 0.5; } /* Ridotte su mobile */
             .match-teams { font-size: 1.6rem; gap: 1rem; }
             th:nth-child(3), td:nth-child(3), th:nth-child(4), td:nth-child(4), th:nth-child(5), td:nth-child(5), th:nth-child(6), td:nth-child(6) { display: none; }
             .rosa-grid { grid-template-columns: repeat(2, 1fr); }
@@ -207,11 +191,16 @@
 </head>
 <body>
 
+    <div class="bg-layer">
+        <div class="bg-img bg-right"></div>
+        <div class="bg-img bg-left"></div>
+    </div>
+
     <button class="float-btn menu-float" onclick="toggleRosa()" title="Visualizza Rosa">
         <i class="fas fa-users" id="menu-icon"></i>
     </button>
 
-    <a href="https://www.instagram.com/asnemorense/" class="float-btn instagram-float" target="_blank" title="Seguici su Instagram">
+    <a href="https://www.instagram.com/asnemorense/" class="float-btn instagram-float" target="_blank">
         <i class="fab fa-instagram"></i>
     </a>
 
@@ -219,7 +208,7 @@
         <div class="container">
             <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem;">
                 <h2>Rosa AS Nemorense</h2>
-                <button onclick="toggleRosa()" style="background: none; border: none; font-size: 2rem; cursor: pointer; color: var(--primary);"><i class="fas fa-times"></i></button>
+                <button onclick="toggleRosa()" style="background:none; border:none; font-size:2rem; cursor:pointer; color:var(--primary);"><i class="fas fa-times"></i></button>
             </div>
             <div id="lista-giocatori"></div>
         </div>
@@ -235,10 +224,118 @@
         <section>
             <h2>Prossima Partita</h2>
             <div id="next-match-container" class="next-match-card">
-                <p>Caricamento...</p>
+                <p>Caricamento dati...</p>
             </div>
         </section>
 
         <section>
             <h2>Classifica Serie A2</h2>
             <div class="table-container">
+                <table>
+                    <thead>
+                        <tr><th>#</th><th>Squadra</th><th>G</th><th>V</th><th>N</th><th>P</th><th>PT</th></tr>
+                    </thead>
+                    <tbody id="standings-body"></tbody>
+                </table>
+            </div>
+        </section>
+
+        <div id="update-time" style="text-align: center; color: #888; font-size: 0.8rem; padding: 2rem;"></div>
+    </div>
+
+    <script>
+        const giocatori = [
+            { nome: "Alessio Lucci", ruolo: "Portieri", foto: "img/alessio-lucci.jpg", bio: "Descrizione" },
+            { nome: "Alessandro Tudini", ruolo: "Difensori", foto: "img/alessandro-tudini.jpg", bio: "Descrizione" },
+            { nome: "Lorenzo Cavaterra", ruolo: "Difensori", foto: "img/lorenzo-cavaterra.jpg", bio: "Descrizione" },
+            { nome: "Giordano Massimi", ruolo: "Difensori", foto: "img/giordano-massimi.jpg", bio: "Descrizione" },
+            { nome: "Federico Trequattrini", ruolo: "Difensori", foto: "img/federico-trequattrini.jpg", bio: "Descrizione" },
+            { nome: "Enrico Marsinano", ruolo: "Centrocampisti", foto: "img/enrico-marsinano.jpg", bio: "Descrizione" },
+            { nome: "Manuel Valentini", ruolo: "Centrocampisti", foto: "img/manuel-valentini.jpg", bio: "Descrizione" },
+            { nome: "Manuel Ugolini", ruolo: "Centrocampisti", foto: "img/manuel-ugolini.jpg", bio: "Descrizione" },
+            { nome: "Massimo Bianchi", ruolo: "Attaccanti", foto: "img/massimo-bianchi.jpg", bio: "Descrizione" },
+            { nome: "Fabio Tramonti", ruolo: "Attaccanti", foto: "img/fabio-tramonti.jpg", bio: "Descrizione" },
+            { nome: "Mattia Hazizi", ruolo: "Attaccanti", foto: "img/mattia-hazizi.jpg", bio: "Descrizione" }
+        ];
+
+        function toggleRosa() {
+            const rosa = document.getElementById('rosa-section');
+            const icon = document.getElementById('menu-icon');
+            if (rosa.style.display === 'block') {
+                rosa.style.display = 'none';
+                icon.className = 'fas fa-users';
+                document.body.style.overflow = 'auto';
+            } else {
+                rosa.style.display = 'block';
+                icon.className = 'fas fa-times';
+                document.body.style.overflow = 'hidden';
+                renderRosa();
+            }
+        }
+
+        function renderRosa() {
+            const container = document.getElementById('lista-giocatori');
+            container.innerHTML = '';
+            const ruoli = ["Portieri", "Difensori", "Centrocampisti", "Attaccanti"];
+            ruoli.forEach(ruolo => {
+                const filtrati = giocatori.filter(g => g.ruolo === ruolo);
+                if (filtrati.length > 0) {
+                    container.innerHTML += `<div class="role-title">${ruolo}</div>`;
+                    let grid = '<div class="rosa-grid">';
+                    filtrati.forEach(g => {
+                        grid += `<div class="player-card">
+                            <div class="player-img-container">
+                                <img src="${g.foto}" class="player-img" onerror="this.src='https://via.placeholder.com/400x500?text=Foto+Mancante'">
+                            </div>
+                            <div class="player-info"><div class="player-name">${g.nome}</div></div>
+                        </div>`;
+                    });
+                    grid += '</div>';
+                    container.innerHTML += grid;
+                }
+            });
+        }
+
+        async function caricaDati() {
+            try {
+                const response = await fetch('dati-nemorense.json?v=' + Date.now());
+                const dati = await response.json();
+                
+                if (dati.prossima_partita) {
+                    const p = dati.prossima_partita;
+                    document.getElementById('next-match-container').innerHTML = `
+                        <div style="font-family:'Teko'; font-size:1.8rem; margin-bottom:1rem;">${p.data}</div>
+                        <div style="display:flex; justify-content:center; align-items:center; gap:2rem; font-size:2.2rem; font-weight:700; font-family:'Teko'; text-transform:uppercase;">
+                            <span>${p.casa}</span>
+                            <span style="background:white; color:var(--primary); padding:0.2rem 0.8rem; border-radius:8px; font-size:1.2rem;">VS</span>
+                            <span>${p.trasferta}</span>
+                        </div>
+                    `;
+                }
+
+                const standingsBody = document.getElementById('standings-body');
+                standingsBody.innerHTML = '';
+                dati.classifica.forEach(team => {
+                    const isNemorense = team.nome.toLowerCase().includes('nemorense');
+                    const logoName = team.nome.toLowerCase().replace(/\s+/g, '-') + '.png';
+                    standingsBody.innerHTML += `
+                        <tr class="${isNemorense ? 'highlight' : ''}">
+                            <td>${team.posizione}</td>
+                            <td>
+                                <div class="team-cell">
+                                    <img src="img/${logoName}" class="team-logo" onerror="this.src='https://via.placeholder.com/25?text=?'">
+                                    <span>${team.nome}</span>
+                                </div>
+                            </td>
+                            <td>${team.giocate}</td>
+                            <td>${team.vinte}</td>
+                            <td>${team.pareggiate}</td>
+                            <td>${team.sconfitte}</td>
+                            <td><strong>${team.punti}</strong></td>
+                        </tr>
+                    `;
+                });
+                document.getElementById('update-time').innerHTML = `<small>Ultimo aggiornamento: ${dati.ultimo_aggiornamento}</small>`;
+            } catch (e) {
+                console.error("Errore caricamento dati:", e);
+                document.getElementById('next-match-container').innerHTML = "Errore nel caricamento del file JSON. Controlla il nome del file su GitHub.";
