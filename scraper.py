@@ -11,9 +11,9 @@ from datetime import datetime
 import re
 
 # Configurazione - MODIFICA QUESTI PARAMETRI
-GIRONE_URL = "https://www.legacalcioa8.it/it/t-teamtable/87/serie-a2-2526/"  # URL da trovare sul sito
+GIRONE_URL = "https://www.legacalcioa8.it/it/t-teamtable/87/serie-a2-2526/"  
 CALENDARIO_URL = "https://www.legacalcioa8.it/it/t-calendar/87/serie-a2-2526/"
-TEAM_NAME = "AS Nemorense"  # Nome esatto della squadra come appare sul sito
+TEAM_NAME = "AS_Nemorense" 
 
 
 def get_page(url):
