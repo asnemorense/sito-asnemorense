@@ -23,186 +23,136 @@
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body { font-family: 'DM Sans', sans-serif; background: var(--bg); color: var(--text); line-height: 1.6; }
 
-        header { background: var(--white); box-shadow: 0 2px 20px var(--shadow); position: sticky; top: 0; z-index: 1000; }
-        .header-content { max-width: 1200px; margin: 0 auto; padding: 1rem 2rem; display: flex; justify-content: space-between; align-items: center; }
+        header { background: var(--white); padding: 1.5rem; text-align: center; box-shadow: 0 4px 20px var(--shadow); position: sticky; top: 0; z-index: 100; border-bottom: 3px solid var(--primary); }
+        .logo-container img { height: 100px; transition: transform 0.3s ease; }
+        .logo-container img:hover { transform: scale(1.05); }
+
+        .container { max-width: 1000px; margin: 2rem auto; padding: 0 1.5rem; }
         
-        .logo { display: flex; align-items: center; gap: 1rem; text-decoration: none; color: var(--primary); }
-        .logo-shield img { width: 50px; height: 50px; object-fit: contain; }
-        .logo-text { font-family: 'Teko', sans-serif; font-size: 1.8rem; font-weight: 700; }
+        h2 { font-family: 'Teko', sans-serif; font-size: 2.5rem; text-transform: uppercase; color: var(--primary); margin-bottom: 1.5rem; display: flex; align-items: center; gap: 0.8rem; }
+        h2::after { content: ''; flex: 1; height: 2px; background: linear-gradient(to right, var(--primary), transparent); }
 
-        nav { display: flex; gap: 1.5rem; align-items: center; }
-        nav a { text-decoration: none; color: var(--text); font-weight: 500; transition: 0.3s; }
-        nav a:hover { color: var(--primary); }
+        .next-match-card { background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%); color: white; border-radius: 20px; padding: 2.5rem; text-align: center; margin-bottom: 3rem; box-shadow: 0 10px 30px var(--shadow); position: relative; overflow: hidden; }
+        .match-date { font-family: 'Teko', sans-serif; font-size: 1.5rem; opacity: 0.9; margin-bottom: 1rem; letter-spacing: 1px; }
+        .match-teams { display: flex; justify-content: center; align-items: center; gap: 2rem; font-size: 2.2rem; font-weight: 700; font-family: 'Teko', sans-serif; text-transform: uppercase; }
+        .vs { background: var(--white); color: var(--primary); padding: 0.2rem 0.8rem; border-radius: 8px; font-size: 1.2rem; }
 
-        .hero { background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%); color: white; padding: 4rem 2rem; text-align: center; }
-        .hero-logo img { width: 120px; margin-bottom: 1rem; }
-        .hero h1 { font-family: 'Teko', sans-serif; font-size: 3.5rem; letter-spacing: 2px; }
+        .table-container { background: var(--white); border-radius: 20px; overflow: hidden; box-shadow: 0 10px 30px var(--shadow); margin-bottom: 3rem; }
+        table { width: 100%; border-collapse: collapse; font-size: 1rem; }
+        thead { background: var(--anthracite); color: white; font-family: 'Teko', sans-serif; font-size: 1.2rem; text-transform: uppercase; letter-spacing: 1px; }
+        th, td { padding: 1.2rem 1rem; text-align: center; border-bottom: 1px solid #eee; }
+        th:nth-child(2), td:nth-child(2) { text-align: left; width: 40%; font-weight: 600; }
+        tr.highlight { background: rgba(107, 15, 26, 0.08); }
+        tr.highlight td:nth-child(2) { color: var(--primary); font-weight: 800; }
 
-        section { padding: 4rem 2rem; max-width: 1200px; margin: 0 auto; }
-        .section-title { font-family: 'Teko', sans-serif; font-size: 2.5rem; text-align: center; color: var(--primary); margin-bottom: 2rem; }
-
-        .next-match { background: var(--primary); border-radius: 20px; padding: 2rem; color: white; text-align: center; box-shadow: 0 10px 30px var(--shadow); }
-        .match-teams { display: flex; justify-content: center; align-items: center; gap: 2rem; margin: 1.5rem 0; font-family: 'Teko', sans-serif; font-size: 2rem; }
-
-        .table-container { background: white; border-radius: 15px; overflow-x: auto; box-shadow: 0 5px 20px var(--shadow); }
-        table { width: 100%; border-collapse: collapse; min-width: 600px; }
-        th { background: var(--primary); color: white; padding: 1rem; text-align: left; }
-        td { padding: 1rem; border-bottom: 1px solid #eee; }
-        tr.highlight { background: rgba(107, 15, 26, 0.05); font-weight: bold; }
-
-        .calendar-grid { display: grid; gap: 1rem; }
-        .match-card { background: white; padding: 1.5rem; border-radius: 12px; display: flex; justify-content: space-between; align-items: center; box-shadow: 0 4px 15px var(--shadow); border-left: 5px solid var(--primary); }
-        .win { color: #28a745; font-weight: bold; }
-        .loss { color: #dc3545; font-weight: bold; }
-
-        footer { background: var(--anthracite); color: white; padding: 2rem; text-align: center; margin-top: 4rem; }
-
-        @media (max-width: 768px) {
-            .header-content { flex-direction: column; gap: 1rem; }
-            .hero h1 { font-size: 2.5rem; }
-            .match-teams { font-size: 1.5rem; }
+        #update-time { text-align: center; padding: 2rem; color: #888; font-size: 0.9rem; }
+        
+        @media (max-width: 600px) {
+            .match-teams { font-size: 1.6rem; gap: 1rem; }
+            th:nth-child(3), td:nth-child(3), th:nth-child(4), td:nth-child(4), th:nth-child(5), td:nth-child(5), th:nth-child(6), td:nth-child(6) { display: none; }
+            .logo-container img { height: 80px; }
         }
     </style>
 </head>
 <body>
-
     <header>
-        <div class="header-content">
-            <a href="#" class="logo">
-                <div class="logo-shield">
-                    <img src="logo-nemorense.png" alt="Logo AS Nemorense">
-                </div>
-                <span class="logo-text">AS NEMORENSE</span>
-            </a>
-            <nav>
-                <a href="#classifica">Classifica</a>
-                <a href="#calendario">Calendario</a>
-                <a href="https://www.instagram.com/asnemorense/" target="_blank">Instagram</a>
-            </nav>
+        <div class="logo-container">
+            <img src="logo-nemorense.png" alt="AS Nemorense Logo">
         </div>
     </header>
 
-    <div class="hero">
-        <div class="hero-logo">
-            <img src="logo-nemorense.png" alt="Logo">
-        </div>
-        <h1>AS NEMORENSE</h1>
-        <p>Serie A2 - Lega Calcio a 8 Roma</p>
-    </div>
+    <div class="container">
+        <section id="next-match-section">
+            <h2>Prossima Partita</h2>
+            <div id="next-match-container" class="next-match-card">
+                <p>Caricamento in corso...</p>
+            </div>
+        </section>
 
-    <section id="prossima-partita">
-        <h2 class="section-title">Prossima Gara</h2>
-        <div id="next-match-container">
-            <p style="text-align: center;">Caricamento prossima partita...</p>
-        </div>
-    </section>
+        <section id="standings-section">
+            <h2>Classifica Serie A2</h2>
+            <div class="table-container">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Squadra</th>
+                            <th>G</th>
+                            <th>V</th>
+                            <th>N</th>
+                            <th>P</th>
+                            <th>PT</th>
+                        </tr>
+                    </thead>
+                    <tbody id="standings-body">
+                        </tbody>
+                </table>
+            </div>
+        </section>
 
-    <section id="classifica">
-        <h2 class="section-title">Classifica Girone A</h2>
-        <div class="table-container">
-            <table>
-                <thead>
-                    <tr>
-                        <th>Pos</th>
-                        <th>Squadra</th>
-                        <th>G</th>
-                        <th>V</th>
-                        <th>P</th>
-                        <th>S</th>
-                        <th>Punti</th>
-                    </tr>
-                </thead>
-                <tbody id="classifica-body"></tbody>
-            </table>
-        </div>
-    </section>
-
-    <section id="calendario">
-        <h2 class="section-title">Ultime Partite</h2>
-        <div class="calendar-grid" id="calendario-grid"></div>
-    </section>
-
-    <footer>
-        <p>© 2026 AS Nemorense | Lega Calcio a 8</p>
         <div id="update-time"></div>
-    </footer>
+    </div>
 
     <script>
         async function caricaDati() {
             try {
-                const response = await fetch('dati-nemorense.json?v=' + Date.now());
+                // Aggiungiamo un parametro casuale per saltare la cache del browser
+                const response = await fetch('dati-nemorense.json?t=' + new Date().getTime());
+                if (!response.ok) throw new Error('File non trovato');
                 const dati = await response.json();
 
-                // 1. Prossima Partita
-                const nextContainer = document.getElementById('next-match-container');
-                if (dati.prossima_partita) {
-                    nextContainer.innerHTML = `
-                        <div class="next-match">
-                            <div>${dati.prossima_partita.data}</div>
-                            <div class="match-teams">
-                                <span>${dati.prossima_partita.casa}</span>
-                                <span style="color: gold;">VS</span>
-                                <span>${dati.prossima_partita.trasferta}</span>
-                            </div>
-                            <div style="opacity: 0.8;">Campionato Serie A2 - Girone A</div>
+                // 1. GESTIONE PROSSIMA PARTITA
+                const nextMatchContainer = document.getElementById('next-match-container');
+                if (dati.prossima_partita && dati.prossima_partita.casa) {
+                    const p = dati.prossima_partita;
+                    nextMatchContainer.innerHTML = `
+                        <div class="match-date">${p.data}</div>
+                        <div class="match-teams">
+                            <span>${p.casa}</span>
+                            <span class="vs">VS</span>
+                            <span>${p.trasferta}</span>
                         </div>
+                        <div style="margin-top: 10px; opacity: 0.8;">Serie A2 - Girone A</div>
                     `;
                 } else {
-                    nextContainer.innerHTML = "<p style='text-align:center;'>Nessuna partita ufficiale in programma al momento.</p>";
+                    nextMatchContainer.innerHTML = "<p>Nessun match in programma</p>";
                 }
 
-                // 2. Classifica
-                const classificaBody = document.getElementById('classifica-body');
-                classificaBody.innerHTML = '';
-                dati.classifica.forEach(s => {
-                    const isNemorense = s.nome.toLowerCase().includes('nemorense');
-                    classificaBody.innerHTML += `
-                        <tr class="${isNemorense ? 'highlight' : ''}">
-                            <td>${s.posizione}</td>
-                            <td>${s.nome}</td>
-                            <td>${s.giocate}</td>
-                            <td>${s.vinte}</td>
-                            <td>${s.pareggiate}</td>
-                            <td>${s.sconfitte}</td>
-                            <td>${s.punti}</td>
-                        </tr>
-                    `;
-                });
+                // 2. GESTIONE CLASSIFICA
+                const standingsBody = document.getElementById('standings-body');
+                standingsBody.innerHTML = '';
+                if (dati.classifica && dati.classifica.length > 0) {
+                    dati.classifica.forEach(team => {
+                        const isNemorense = team.nome.toLowerCase().includes('nemorense');
+                        standingsBody.innerHTML += `
+                            <tr class="${isNemorense ? 'highlight' : ''}">
+                                <td>${team.posizione}</td>
+                                <td>${team.nome}</td>
+                                <td>${team.giocate}</td>
+                                <td>${team.vinte}</td>
+                                <td>${team.pareggiate}</td>
+                                <td>${team.sconfitte}</td>
+                                <td><strong>${team.punti}</strong></td>
+                            </tr>
+                        `;
+                    });
+                }
 
-                // 3. Calendario
-                const calGrid = document.getElementById('calendario-grid');
-                calGrid.innerHTML = '';
-                dati.calendario.forEach(p => {
-                    let resClass = '';
-                    if (p.risultato !== '-') {
-                        const score = p.risultato.split('-').map(Number);
-                        const isHome = p.casa.toLowerCase().includes('nemorense');
-                        if (score.length === 2 && !isNaN(score[0])) {
-                            if ((isHome && score[0] > score[1]) || (!isHome && score[1] > score[0])) resClass = 'win';
-                            else if (score[0] === score[1]) resClass = '';
-                            else resClass = 'loss';
-                        }
-                    }
-                    calGrid.innerHTML += `
-                        <div class="match-card">
-                            <div>
-                                <small>${p.data}</small>
-                                <div>${p.casa} - ${p.trasferta}</div>
-                            </div>
-                            <div class="${resClass}">${p.risultato}</div>
-                        </div>
-                    `;
-                });
-
-                // 4. Data ultimo aggiornamento
-                const date = new Date(dati.ultimo_aggiornamento);
-                document.getElementById('update-time').innerHTML = `<small>Dati aggiornati al: ${date.toLocaleString('it-IT')}</small>`;
+                // 3. DATA AGGIORNAMENTO
+                if (dati.ultimo_aggiornamento) {
+                    document.getElementById('update-time').innerHTML = 
+                        `<small>Ultimo aggiornamento manuale: ${dati.ultimo_aggiornamento}</small>`;
+                }
 
             } catch (e) {
-                console.error("Errore nel caricamento dei dati:", e);
-                document.getElementById('next-match-container').innerHTML = "<p style='text-align:center;'>Impossibile caricare i dati aggiornati.</p>";
+                console.error("Errore:", e);
+                document.getElementById('next-match-container').innerHTML = 
+                    "<p style='text-align:center;'>Dati in fase di aggiornamento...</p>";
+                document.getElementById('standings-body').innerHTML = 
+                    "<tr><td colspan='7'>Caricamento classifica...</td></tr>";
             }
         }
+
         document.addEventListener('DOMContentLoaded', caricaDati);
     </script>
 </body>
