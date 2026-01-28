@@ -8,47 +8,81 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Teko:wght@400;600;700&family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    
     <style>
         :root {
             --primary: #6b0f1a;
             --primary-light: #8b1a2a;
-            --accent: #ffffff;
-            --anthracite: #3a3a3a;
+            --instagram: #E1306C;
             --text: #1a1a1a;
             --bg: #fafafa;
             --white: #ffffff;
-            --shadow: rgba(107, 15, 26, 0.12);
+            --shadow: rgba(0, 0, 0, 0.15);
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { font-family: 'DM Sans', sans-serif; background: var(--bg); color: var(--text); line-height: 1.6; }
+        body { font-family: 'DM Sans', sans-serif; background: var(--bg); color: var(--text); padding-bottom: 50px; }
 
-        header { background: var(--white); padding: 1.5rem; text-align: center; box-shadow: 0 4px 20px var(--shadow); position: sticky; top: 0; z-index: 100; border-bottom: 3px solid var(--primary); }
-        .logo-container img { height: 100px; }
+        header { background: var(--white); padding: 1rem; text-align: center; border-bottom: 3px solid var(--primary); box-shadow: 0 2px 10px rgba(0,0,0,0.05); }
+        .logo-container img { height: 80px; }
 
         .container { max-width: 1000px; margin: 2rem auto; padding: 0 1.5rem; }
         
-        h2 { font-family: 'Teko', sans-serif; font-size: 2.5rem; text-transform: uppercase; color: var(--primary); margin-bottom: 1.5rem; display: flex; align-items: center; gap: 0.8rem; }
-        h2::after { content: ''; flex: 1; height: 2px; background: linear-gradient(to right, var(--primary), transparent); }
+        h2 { font-family: 'Teko', sans-serif; font-size: 2.5rem; text-transform: uppercase; color: var(--primary); margin-bottom: 1.5rem; border-bottom: 2px solid var(--primary); display: inline-block; }
 
-        .next-match-card { background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%); color: white; border-radius: 20px; padding: 2.5rem; text-align: center; margin-bottom: 3rem; box-shadow: 0 10px 30px var(--shadow); }
+        .next-match-card { background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%); color: white; border-radius: 20px; padding: 2.5rem; text-align: center; margin-bottom: 3rem; box-shadow: 0 10px 30px rgba(107, 15, 26, 0.2); }
         .match-date { font-family: 'Teko', sans-serif; font-size: 1.8rem; margin-bottom: 1rem; }
         .match-teams { display: flex; justify-content: center; align-items: center; gap: 2rem; font-size: 2.2rem; font-weight: 700; font-family: 'Teko', sans-serif; text-transform: uppercase; }
         .vs { background: var(--white); color: var(--primary); padding: 0.2rem 0.8rem; border-radius: 8px; font-size: 1.2rem; }
 
-        .table-container { background: var(--white); border-radius: 20px; overflow: hidden; box-shadow: 0 10px 30px var(--shadow); margin-bottom: 3rem; }
+        .table-container { background: var(--white); border-radius: 20px; overflow: hidden; box-shadow: 0 5px 20px rgba(0,0,0,0.05); margin-bottom: 3rem; }
         table { width: 100%; border-collapse: collapse; }
-        thead { background: var(--anthracite); color: white; font-family: 'Teko', sans-serif; }
+        thead { background: #333; color: white; font-family: 'Teko', sans-serif; font-size: 1.2rem; }
         th, td { padding: 1.2rem 1rem; text-align: center; border-bottom: 1px solid #eee; }
         tr.highlight { background: rgba(107, 15, 26, 0.08); font-weight: bold; }
 
-        #update-time { text-align: center; padding: 2rem; color: #888; font-size: 0.9rem; }
+        /* PULSANTE INSTAGRAM FISSO */
+        .instagram-float {
+            position: fixed;
+            width: 60px;
+            height: 60px;
+            bottom: 25px;
+            right: 25px;
+            background: radial-gradient(circle at 30% 107%, #fdf497 0%, #fdf497 5%, #fd5949 45%, #d6249f 60%, #285AEB 90%);
+            color: #FFF;
+            border-radius: 50px;
+            text-align: center;
+            font-size: 30px;
+            box-shadow: 2px 2px 10px rgba(0,0,0,0.3);
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-decoration: none;
+            transition: transform 0.3s ease-in-out;
+        }
+        .instagram-float:hover {
+            transform: scale(1.1) rotate(5deg);
+        }
+
+        #update-time { text-align: center; padding: 2rem; color: #888; font-size: 0.8rem; }
+
+        @media (max-width: 600px) {
+            .match-teams { font-size: 1.6rem; gap: 1rem; }
+            th:nth-child(3), td:nth-child(3), th:nth-child(4), td:nth-child(4), th:nth-child(5), td:nth-child(5), th:nth-child(6), td:nth-child(6) { display: none; }
+        }
     </style>
 </head>
 <body>
+
+    <a href="https://www.instagram.com/asnemorense/" class="instagram-float" target="_blank" title="Seguici su Instagram">
+        <i class="fab fa-instagram"></i>
+    </a>
+
     <header>
         <div class="logo-container">
-            <img src="logo-nemorense.png" alt="AS Nemorense Logo">
+            <img src="logo-nemorense.png" alt="AS Nemorense">
         </div>
     </header>
 
@@ -56,7 +90,8 @@
         <section>
             <h2>Prossima Partita</h2>
             <div id="next-match-container" class="next-match-card">
-                </div>
+                <p>Caricamento...</p>
+            </div>
         </section>
 
         <section>
@@ -66,8 +101,7 @@
                     <thead>
                         <tr><th>#</th><th>Squadra</th><th>G</th><th>V</th><th>N</th><th>P</th><th>PT</th></tr>
                     </thead>
-                    <tbody id="standings-body">
-                        </tbody>
+                    <tbody id="standings-body"></tbody>
                 </table>
             </div>
         </section>
@@ -78,15 +112,12 @@
     <script>
         async function caricaDati() {
             try {
-                // Aggiunto ?v= per forzare l'aggiornamento dei dati
                 const response = await fetch('dati-nemorense.json?v=' + Date.now());
                 const dati = await response.json();
 
-                // 1. Prossima Partita (Corretto: carica i dati senza crashare sulla data)
-                const nextMatchContainer = document.getElementById('next-match-container');
                 if (dati.prossima_partita) {
                     const p = dati.prossima_partita;
-                    nextMatchContainer.innerHTML = `
+                    document.getElementById('next-match-container').innerHTML = `
                         <div class="match-date">${p.data}</div>
                         <div class="match-teams">
                             <span>${p.casa}</span>
@@ -96,7 +127,6 @@
                     `;
                 }
 
-                // 2. Classifica (Corretto)
                 const standingsBody = document.getElementById('standings-body');
                 standingsBody.innerHTML = '';
                 dati.classifica.forEach(team => {
@@ -114,12 +144,10 @@
                     `;
                 });
 
-                // 3. Data ultimo aggiornamento
-                document.getElementById('update-time').innerHTML = `<small>Dati aggiornati al: ${dati.ultimo_aggiornamento}</small>`;
+                document.getElementById('update-time').innerHTML = `<small>Ultimo aggiornamento: ${dati.ultimo_aggiornamento}</small>`;
 
             } catch (e) {
-                console.error("Errore:", e);
-                // Non mostriamo più il messaggio di errore sul sito
+                console.error("Errore nel caricamento dati");
             }
         }
         document.addEventListener('DOMContentLoaded', caricaDati);
