@@ -66,7 +66,7 @@
         
         h2 { font-family: 'Teko', sans-serif; font-size: 2.5rem; text-transform: uppercase; color: var(--primary); margin-bottom: 1.5rem; border-bottom: 2px solid var(--primary); display: inline-block; }
 
-        /* --- NUOVO SISTEMA PULSANTI FLOAT --- */
+        /* --- SISTEMA PULSANTI FLOAT --- */
         
         /* Menu Social a comparsa */
         .social-menu-container {
@@ -137,10 +137,10 @@
             border: 1px solid #ff0050;
         }
 
-        /* Pulsante Rosa */
+        /* Pulsante Rosa con transizione per la posizione */
         .menu-float {
             position: fixed;
-            bottom: 100px; /* Alzato per non coprire il menu social */
+            bottom: 100px; 
             right: 25px;
             width: 60px;
             height: 60px;
@@ -152,13 +152,16 @@
             justify-content: center;
             font-size: 24px;
             box-shadow: 2px 2px 10px rgba(0,0,0,0.3);
-            z-index: 1001;
+            z-index: 1002; /* Sopra tutto per sicurezza */
             cursor: pointer;
             border: none;
-            transition: all 0.3s ease;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
         }
 
-        .menu-float:hover { transform: scale(1.1); }
+        /* Classe aggiunta via JS per alzare il pulsante */
+        .menu-float.raised {
+            bottom: 210px;
+        }
 
         /* SEZIONE ROSA */
         #rosa-section {
@@ -262,11 +265,13 @@
 </head>
 <body>
 
-    <button class="menu-float" onclick="toggleRosa()" title="Visualizza Rosa">
+    <button id="btn-rosa" class="menu-float" onclick="toggleRosa()" title="Visualizza Rosa">
         <i class="fas fa-users" id="menu-icon"></i>
     </button>
 
-    <div class="social-menu-container">
+    <div class="social-menu-container" 
+         onmouseenter="document.getElementById('btn-rosa').classList.add('raised')" 
+         onmouseleave="document.getElementById('btn-rosa').classList.remove('raised')">
         <button class="social-main-btn">
             <i class="fas fa-share-alt"></i>
         </button>
@@ -324,19 +329,11 @@
             { nome: "Alessio Lucci", ruolo: "Portieri", foto: "img/alessio-lucci.jpg", bio: "Descrizione" },
             { nome: "Alessandro Tudini", ruolo: "Difensori", foto: "img/alessandro-tudini.jpg", bio: "Descrizione" },
             { nome: "Lorenzo Cavaterra", ruolo: "Difensori", foto: "img/lorenzo-cavaterra.jpg", bio: "Descrizione" },
-            { nome: "Giuseppe Massaro", ruolo: "Difensori", foto: "img/giuseppe-massaro.jpg", bio: "Descrizione" },
             { nome: "Giordano Massimi", ruolo: "Difensori", foto: "img/giordano-massimi.jpg", bio: "Descrizione" },
             { nome: "Federico Trequattrini", ruolo: "Difensori", foto: "img/federico-trequattrini.jpg", bio: "Descrizione" },
-            { nome: "Daniele Fortini", ruolo: "Difensori", foto: "img/daniele-fortini.jpg", bio: "Descrizione" },
-            { nome: "Matteo Vitelli", ruolo: "Difensori", foto: "img/matteo-vitelli.jpg", bio: "Descrizione" },
-            { nome: "Leonardo Patriarca", ruolo: "Difensori", foto: "img/leonardo-patriarca.jpg", bio: "Descrizione" },
-            { nome: "Michael Gregorini", ruolo: "Difensori", foto: "img/michael-gregorini.jpg", bio: "Descrizione" },
             { nome: "Enrico Marsinano", ruolo: "Centrocampisti", foto: "img/enrico-marsinano.jpg", bio: "Descrizione" },
             { nome: "Manuel Valentini", ruolo: "Centrocampisti", foto: "img/manuel-valentini.jpg", bio: "Descrizione" },
-            { nome: "Valerio Marcodoppido", ruolo: "Centrocampisti", foto: "img/valerio-marcodoppido.jpg", bio: "Descrizione" },
             { nome: "Manuel Ugolini", ruolo: "Centrocampisti", foto: "img/manuel-ugolini.jpg", bio: "Descrizione" },
-            { nome: "Miro De Angelis", ruolo: "Attaccanti", foto: "img/miro-deangelis.jpg", bio: "Descrizione" },
-            { nome: "Matteo Carva", ruolo: "Attaccanti", foto: "img/matteo-carva.jpg", bio: "Descrizione" },
             { nome: "Massimo Bianchi", ruolo: "Attaccanti", foto: "img/massimo-bianchi.jpg", bio: "Descrizione" },
             { nome: "Fabio Tramonti", ruolo: "Attaccanti", foto: "img/fabio-tramonti.jpg", bio: "Descrizione" },
             { nome: "Mattia Hazizi", ruolo: "Attaccanti", foto: "img/mattia-hazizi.jpg", bio: "Descrizione" }
@@ -345,14 +342,18 @@
         function toggleRosa() {
             const rosa = document.getElementById('rosa-section');
             const icon = document.getElementById('menu-icon');
+            const btnRosa = document.getElementById('btn-rosa');
+            
             if (rosa.style.display === 'block') {
                 rosa.style.display = 'none';
                 icon.className = 'fas fa-users';
                 document.body.style.overflow = 'auto';
+                btnRosa.style.display = 'flex';
             } else {
                 rosa.style.display = 'block';
                 icon.className = 'fas fa-times';
                 document.body.style.overflow = 'hidden';
+                btnRosa.style.display = 'none'; // Nasconde il tasto fluttuante quando la rosa è aperta per usare quello interno
                 renderRosa();
             }
         }
