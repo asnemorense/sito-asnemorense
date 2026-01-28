@@ -1,1020 +1,139 @@
-<!DOCTYPE html>
-<html lang="it">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AS Nemorense - Squadra Calcio</title>
-    <link rel="icon" type="image/png" href="logo-nemorense.png">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Teko:wght@400;600;700&family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet">
-    <style>
-        :root {
-            --primary: #6b0f1a;
-            --primary-light: #8b1a2a;
-            --accent: #ffffff;
-            --accent-dark: #f0f0f0;
-            --anthracite: #3a3a3a;
-            --anthracite-light: #4a4a4a;
-            --text: #1a1a1a;
-            --text-light: #666;
-            --bg: #fafafa;
-            --white: #ffffff;
-            --shadow: rgba(107, 15, 26, 0.12);
-            --shadow-hover: rgba(107, 15, 26, 0.20);
-        }
-
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            font-family: 'DM Sans', sans-serif;
-            background: var(--bg);
-            color: var(--text);
-            line-height: 1.6;
-            overflow-x: hidden;
-        }
-
-        /* Header */
-        header {
-            background: var(--white);
-            box-shadow: 0 2px 20px var(--shadow);
-            position: sticky;
-            top: 0;
-            z-index: 1000;
-            animation: slideDown 0.6s ease-out;
-        }
-
-        @keyframes slideDown {
-            from {
-                transform: translateY(-100%);
-                opacity: 0;
-            }
-            to {
-                transform: translateY(0);
-                opacity: 1;
-            }
-        }
-
-        .header-content {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 1.5rem 2rem;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .logo {
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-            text-decoration: none;
-            color: var(--primary);
-        }
-
-        .logo-shield {
-            width: 60px;
-            height: 60px;
-            transition: transform 0.3s ease;
-        }
-
-        .logo-shield img {
-            width: 100%;
-            height: 100%;
-            object-fit: contain;
-            filter: drop-shadow(0 2px 8px rgba(107, 15, 26, 0.3));
-        }
-
-        .logo:hover .logo-shield {
-            transform: scale(1.1);
-        }
-
-        .logo-text {
-            font-family: 'Teko', sans-serif;
-            font-size: 2rem;
-            font-weight: 700;
-            letter-spacing: 1px;
-        }
-
-        nav {
-            display: flex;
-            gap: 2.5rem;
-            align-items: center;
-        }
-
-        nav a {
-            text-decoration: none;
-            color: var(--text);
-            font-weight: 500;
-            position: relative;
-            transition: color 0.3s ease;
-            padding: 0.5rem 0;
-        }
-
-        nav a::after {
-            content: '';
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            width: 0;
-            height: 3px;
-            background: var(--accent);
-            transition: width 0.3s ease;
-        }
-
-        nav a:hover {
-            color: var(--primary);
-        }
-
-        nav a:hover::after {
-            width: 100%;
-        }
-
-        .instagram-btn {
-            background: linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%);
-            color: white !important;
-            padding: 0.7rem 1.5rem;
-            border-radius: 50px;
-            font-weight: 600;
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-        }
-
-        .instagram-btn::after {
-            display: none;
-        }
-
-        .instagram-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 5px 20px rgba(188, 24, 136, 0.4);
-        }
-
-        /* Mobile Menu */
-        .mobile-menu-btn {
-            display: none;
-            flex-direction: column;
-            gap: 5px;
-            background: none;
-            border: none;
-            cursor: pointer;
-            padding: 0.5rem;
-        }
-
-        .mobile-menu-btn span {
-            width: 25px;
-            height: 3px;
-            background: var(--primary);
-            transition: all 0.3s ease;
-            border-radius: 2px;
-        }
-
-        .mobile-menu-btn.active span:nth-child(1) {
-            transform: rotate(45deg) translate(7px, 7px);
-        }
-
-        .mobile-menu-btn.active span:nth-child(2) {
-            opacity: 0;
-        }
-
-        .mobile-menu-btn.active span:nth-child(3) {
-            transform: rotate(-45deg) translate(7px, -7px);
-        }
-
-        /* Hero Section */
-        .hero {
-            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%);
-            color: white;
-            padding: 4rem 2rem;
-            text-align: center;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .hero::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M30 30c0-5.523 4.477-10 10-10s10 4.477 10 10-4.477 10-10 10-10-4.477-10-10zm10-20c0 5.523-4.477 10-10 10S20 15.523 20 10 24.477 0 30 0s10 4.477 10 10z' fill='%23ffffff' fill-opacity='0.05' fill-rule='evenodd'/%3E%3C/svg%3E");
-            opacity: 0.3;
-        }
-
-        .hero-content {
-            max-width: 1200px;
-            margin: 0 auto;
-            position: relative;
-            z-index: 1;
-            animation: fadeInUp 0.8s ease-out 0.3s backwards;
-        }
-
-        .hero-logo {
-            width: 150px;
-            height: 150px;
-            margin: 0 auto 2rem;
-            filter: drop-shadow(0 4px 20px rgba(0, 0, 0, 0.3));
-            animation: fadeInUp 0.8s ease-out 0.1s backwards;
-        }
-
-        .hero-logo img {
-            width: 100%;
-            height: 100%;
-            object-fit: contain;
-        }
-
-        @keyframes fadeInUp {
-            from {
-                opacity: 0;
-                transform: translateY(30px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        .hero h1 {
-            font-family: 'Teko', sans-serif;
-            font-size: 4rem;
-            font-weight: 700;
-            margin-bottom: 1rem;
-            letter-spacing: 2px;
-            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
-        }
-
-        .hero p {
-            font-size: 1.3rem;
-            opacity: 0.95;
-        }
-
-        /* Container */
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 2rem;
-        }
-
-        /* Sections */
-        section {
-            padding: 4rem 2rem;
-            animation: fadeInUp 0.8s ease-out;
-        }
-
-        section:nth-child(even) {
-            background: var(--white);
-        }
-
-        .section-title {
-            font-family: 'Teko', sans-serif;
-            font-size: 3rem;
-            font-weight: 700;
-            color: var(--primary);
-            margin-bottom: 2rem;
-            text-align: center;
-            position: relative;
-            padding-bottom: 1rem;
-        }
-
-        .section-title::after {
-            content: '';
-            position: absolute;
-            bottom: 0;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 80px;
-            height: 4px;
-            background: var(--accent);
-            border-radius: 2px;
-        }
-
-        /* Next Match Card */
-        .next-match {
-            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%);
-            border-radius: 20px;
-            padding: 3rem;
-            color: white;
-            box-shadow: 0 10px 40px var(--shadow-hover);
-            max-width: 800px;
-            margin: 0 auto;
-            position: relative;
-            overflow: hidden;
-            transition: transform 0.3s ease;
-        }
-
-        .next-match:hover {
-            transform: translateY(-5px);
-        }
-
-        .next-match::before {
-            content: '';
-            position: absolute;
-            top: -50%;
-            right: -50%;
-            width: 200%;
-            height: 200%;
-            background: radial-gradient(circle, rgba(255, 255, 255, 0.1) 0%, transparent 70%);
-            animation: pulse 4s ease-in-out infinite;
-        }
-
-        @keyframes pulse {
-            0%, 100% { transform: scale(1); opacity: 0.5; }
-            50% { transform: scale(1.1); opacity: 0.8; }
-        }
-
-        .match-content {
-            position: relative;
-            z-index: 1;
-        }
-
-        .match-date {
-            font-size: 1.1rem;
-            opacity: 0.9;
-            margin-bottom: 1.5rem;
-            font-weight: 500;
-        }
-
-        .match-teams {
-            display: flex;
-            justify-content: space-around;
-            align-items: center;
-            gap: 2rem;
-            margin: 2rem 0;
-        }
-
-        .team {
-            text-align: center;
-            flex: 1;
-        }
-
-        .team-name {
-            font-family: 'Teko', sans-serif;
-            font-size: 2rem;
-            font-weight: 700;
-            margin-top: 1rem;
-            letter-spacing: 1px;
-        }
-
-        .vs {
-            font-family: 'Teko', sans-serif;
-            font-size: 3rem;
-            font-weight: 700;
-            color: var(--accent);
-            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
-        }
-
-        .match-info {
-            text-align: center;
-            font-size: 1.1rem;
-            opacity: 0.9;
-            margin-top: 1.5rem;
-        }
-
-        /* Table */
-        .table-container {
-            background: white;
-            border-radius: 15px;
-            overflow: hidden;
-            box-shadow: 0 5px 25px var(--shadow);
-            margin: 0 auto;
-            max-width: 900px;
-        }
-
-        table {
-            width: 100%;
-            border-collapse: collapse;
-        }
-
-        thead {
-            background: var(--primary);
-            color: white;
-        }
-
-        th {
-            padding: 1.2rem 1rem;
-            text-align: left;
-            font-family: 'Teko', sans-serif;
-            font-size: 1.3rem;
-            font-weight: 600;
-            letter-spacing: 1px;
-        }
-
-        th.text-center, td.text-center {
-            text-align: center;
-        }
-
-        tbody tr {
-            border-bottom: 1px solid #f0f0f0;
-            transition: background 0.2s ease;
-        }
-
-        tbody tr:hover {
-            background: rgba(10, 77, 60, 0.03);
-        }
-
-        tbody tr.highlight {
-            background: rgba(107, 15, 26, 0.08);
-            font-weight: 600;
-        }
-
-        td {
-            padding: 1rem;
-        }
-
-        .position {
-            font-family: 'Teko', sans-serif;
-            font-size: 1.5rem;
-            font-weight: 700;
-            color: var(--primary);
-        }
-
-        .points {
-            font-weight: 700;
-            font-size: 1.2rem;
-            color: var(--primary);
-        }
-
-        /* Calendar */
-        .calendar-grid {
-            display: grid;
-            gap: 1.5rem;
-            max-width: 900px;
-            margin: 0 auto;
-        }
-
-        .match-card {
-            background: white;
-            border-radius: 15px;
-            padding: 1.5rem;
-            box-shadow: 0 3px 15px var(--shadow);
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            transition: all 0.3s ease;
-            border-left: 4px solid var(--primary);
-        }
-
-        .match-card:hover {
-            transform: translateX(5px);
-            box-shadow: 0 5px 25px var(--shadow-hover);
-        }
-
-        .match-card.home {
-            border-left-color: var(--anthracite);
-        }
-
-        .match-date-time {
-            color: var(--text-light);
-            font-size: 0.9rem;
-            margin-bottom: 0.5rem;
-        }
-
-        .match-matchup {
-            font-size: 1.2rem;
-            font-weight: 600;
-            color: var(--text);
-        }
-
-        .match-location {
-            color: var(--text-light);
-            font-size: 0.9rem;
-            margin-top: 0.3rem;
-        }
-
-        .match-result {
-            font-family: 'Teko', sans-serif;
-            font-size: 2rem;
-            font-weight: 700;
-            color: var(--primary);
-        }
-
-        .match-result.win {
-            color: #0a7d4d;
-        }
-
-        .match-result.loss {
-            color: #d32f2f;
-        }
-
-        .match-result.draw {
-            color: #f57c00;
-        }
-
-        /* Footer */
-        footer {
-            background: var(--primary);
-            color: white;
-            padding: 3rem 2rem 2rem;
-            text-align: center;
-        }
-
-        .footer-content {
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-
-        .footer-social {
-            margin-bottom: 2rem;
-        }
-
-        .footer-social a {
-            display: inline-block;
-            margin: 0 1rem;
-            color: white;
-            text-decoration: none;
-            font-size: 1.1rem;
-            transition: color 0.3s ease;
-        }
-
-        .footer-social a:hover {
-            color: var(--accent);
-        }
-
-        .copyright {
-            opacity: 0.8;
-            font-size: 0.95rem;
-        }
-
-        /* Responsive */
-        @media (max-width: 768px) {
-            .mobile-menu-btn {
-                display: flex;
-            }
-
-            nav {
-                position: absolute;
-                top: 100%;
-                left: 0;
-                right: 0;
-                background: white;
-                flex-direction: column;
-                gap: 0;
-                padding: 0;
-                max-height: 0;
-                overflow: hidden;
-                transition: max-height 0.3s ease, padding 0.3s ease;
-                box-shadow: 0 5px 20px var(--shadow);
-            }
-
-            nav.active {
-                max-height: 400px;
-                padding: 1rem 0;
-            }
-
-            nav a {
-                padding: 1rem 2rem;
-                width: 100%;
-                text-align: center;
-                border-bottom: 1px solid #f0f0f0;
-            }
-
-            .hero h1 {
-                font-size: 2.5rem;
-            }
-
-            .hero p {
-                font-size: 1.1rem;
-            }
-
-            .hero-logo {
-                width: 100px;
-                height: 100px;
-            }
-
-            .section-title {
-                font-size: 2.2rem;
-            }
-
-            .match-teams {
-                flex-direction: column;
-                gap: 1rem;
-            }
-
-            .vs {
-                transform: rotate(90deg);
-                margin: 1rem 0;
-            }
-
-            .team-name {
-                font-size: 1.5rem;
-            }
-
-            table {
-                font-size: 0.9rem;
-            }
-
-            th, td {
-                padding: 0.8rem 0.5rem;
-            }
-
-            .match-card {
-                flex-direction: column;
-                align-items: flex-start;
-                gap: 1rem;
-            }
-
-            .next-match {
-                padding: 2rem 1.5rem;
-            }
-        }
-    </style>
-</head>
-<body>
-    <header>
-        <div class="header-content">
-            <a href="#" class="logo">
-                <div class="logo-shield">
-                    <img src="logo-nemorense.png" alt="AS Nemorense Logo">
-                </div>
-                <span class="logo-text">AS Nemorense</span>
-            </a>
-            <button class="mobile-menu-btn" aria-label="Menu">
-                <span></span>
-                <span></span>
-                <span></span>
-            </button>
-            <nav>
-                <a href="#prossima-partita">Prossima Partita</a>
-                <a href="#classifica">Classifica</a>
-                <a href="#calendario">Calendario</a>
-                <a href="https://www.instagram.com/asnemorense/" class="instagram-btn" target="_blank">Instagram</a>
-            </nav>
-        </div>
-    </header>
-
-    <div class="hero">
-        <div class="hero-content">
-            <div class="hero-logo">
-                <img src="logo-nemorense.png" alt="AS Nemorense Logo">
-            </div>
-            <h1>AS NEMORENSE</h1>
-            <p>Passione, Impegno, Vittoria</p>
-        </div>
-    </div>
-
-    <section id="prossima-partita">
-        <div class="container">
-            <h2 class="section-title">Prossima Partita</h2>
-            <div class="next-match">
-                <div class="match-content">
-                    <div class="match-date">Domenica 2 Febbraio 2026 • Ore 15:00</div>
-                    <div class="match-teams">
-                        <div class="team">
-                            <div class="team-name">AS NEMORENSE</div>
-                        </div>
-                        <div class="vs">VS</div>
-                        <div class="team">
-                            <div class="team-name">RIVALI FC</div>
-                        </div>
-                    </div>
-                    <div class="match-info">📍 Campo Comunale - Via dello Sport, 12</div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <section id="classifica">
-        <div class="container">
-            <h2 class="section-title">Classifica</h2>
-            <div class="table-container">
-                <table>
-                    <thead>
-                        <tr>
-                            <th class="text-center">#</th>
-                            <th>Squadra</th>
-                            <th class="text-center">G</th>
-                            <th class="text-center">V</th>
-                            <th class="text-center">P</th>
-                            <th class="text-center">S</th>
-                            <th class="text-center">Punti</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td class="text-center position">1</td>
-                            <td>Eagles United</td>
-                            <td class="text-center">15</td>
-                            <td class="text-center">12</td>
-                            <td class="text-center">2</td>
-                            <td class="text-center">1</td>
-                            <td class="text-center points">38</td>
-                        </tr>
-                        <tr class="highlight">
-                            <td class="text-center position">2</td>
-                            <td>AS Nemorense</td>
-                            <td class="text-center">15</td>
-                            <td class="text-center">10</td>
-                            <td class="text-center">3</td>
-                            <td class="text-center">2</td>
-                            <td class="text-center points">33</td>
-                        </tr>
-                        <tr>
-                            <td class="text-center position">3</td>
-                            <td>Thunder FC</td>
-                            <td class="text-center">15</td>
-                            <td class="text-center">9</td>
-                            <td class="text-center">4</td>
-                            <td class="text-center">2</td>
-                            <td class="text-center points">31</td>
-                        </tr>
-                        <tr>
-                            <td class="text-center position">4</td>
-                            <td>Lions Sport</td>
-                            <td class="text-center">15</td>
-                            <td class="text-center">8</td>
-                            <td class="text-center">3</td>
-                            <td class="text-center">4</td>
-                            <td class="text-center points">27</td>
-                        </tr>
-                        <tr>
-                            <td class="text-center position">5</td>
-                            <td>Victory Club</td>
-                            <td class="text-center">15</td>
-                            <td class="text-center">7</td>
-                            <td class="text-center">5</td>
-                            <td class="text-center">3</td>
-                            <td class="text-center points">26</td>
-                        </tr>
-                        <tr>
-                            <td class="text-center position">6</td>
-                            <td>Wolves Academy</td>
-                            <td class="text-center">15</td>
-                            <td class="text-center">6</td>
-                            <td class="text-center">4</td>
-                            <td class="text-center">5</td>
-                            <td class="text-center points">22</td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-        </div>
-    </section>
-
-    <section id="calendario">
-        <div class="container">
-            <h2 class="section-title">Calendario</h2>
-            <div class="calendar-grid">
-                <div class="match-card home">
-                    <div>
-                        <div class="match-date-time">Dom 26 Gen 2026 • 15:00</div>
-                        <div class="match-matchup">AS Nemorense vs Storm FC</div>
-                        <div class="match-location">🏟️ Casa</div>
-                    </div>
-                    <div class="match-result win">3-1</div>
-                </div>
-
-                <div class="match-card">
-                    <div>
-                        <div class="match-date-time">Dom 19 Gen 2026 • 14:30</div>
-                        <div class="match-matchup">Panthers FC vs AS Nemorense</div>
-                        <div class="match-location">✈️ Trasferta</div>
-                    </div>
-                    <div class="match-result draw">2-2</div>
-                </div>
-
-                <div class="match-card home">
-                    <div>
-                        <div class="match-date-time">Dom 12 Gen 2026 • 15:00</div>
-                        <div class="match-matchup">AS Nemorense vs Sharks United</div>
-                        <div class="match-location">🏟️ Casa</div>
-                    </div>
-                    <div class="match-result win">4-0</div>
-                </div>
-
-                <div class="match-card">
-                    <div>
-                        <div class="match-date-time">Dom 5 Gen 2026 • 14:00</div>
-                        <div class="match-matchup">Titans SC vs AS Nemorense</div>
-                        <div class="match-location">✈️ Trasferta</div>
-                    </div>
-                    <div class="match-result win">1-2</div>
-                </div>
-
-                <div class="match-card home">
-                    <div>
-                        <div class="match-date-time">Dom 2 Feb 2026 • 15:00</div>
-                        <div class="match-matchup">AS Nemorense vs Rivali FC</div>
-                        <div class="match-location">🏟️ Casa</div>
-                    </div>
-                    <div class="match-result">-</div>
-                </div>
-
-                <div class="match-card">
-                    <div>
-                        <div class="match-date-time">Dom 9 Feb 2026 • 14:30</div>
-                        <div class="match-matchup">Eagles United vs AS Nemorense</div>
-                        <div class="match-location">✈️ Trasferta</div>
-                    </div>
-                    <div class="match-result">-</div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <footer>
-        <div class="footer-content">
-            <div class="footer-social">
-                <a href="https://www.instagram.com/asnemorense/" target="_blank">Seguici su Instagram</a>
-            </div>
-            <div class="copyright">
-                © 2024-2025 AS Nemorense
-            </div>
-        </div>
-    </footer>
-
-    <script>
-        // ============================================
-        // CARICAMENTO DATI AUTOMATICO DA JSON
-        // ============================================
-        
-        // Carica i dati dal file JSON
-        async function caricaDati() {
-            try {
-                const response = await fetch('dati-nemorense.json');
-                if (!response.ok) {
-                    throw new Error('File JSON non trovato');
-                }
-                const dati = await response.json();
-                
-                // Aggiorna la prossima partita
-                aggiornaprossimaPartita(dati.prossima_partita);
-                
-                // Aggiorna la classifica
-                aggiornaClassifica(dati.classifica);
-                
-                // Aggiorna il calendario
-                aggiornaCalendario(dati.calendario);
-                
-                // Mostra data ultimo aggiornamento
-                mostraUltimoAggiornamento(dati.ultimo_aggiornamento);
-                
-                console.log('✅ Dati caricati con successo!');
-            } catch (error) {
-                console.error('⚠️ Errore nel caricamento dati:', error);
-                console.log('ℹ️ Usando dati di esempio statici');
-            }
-        }
-        
-        function aggiornaprossimaPartita(partita) {
-            if (!partita) return;
-            
-            const matchDate = document.querySelector('.match-date');
-            const teamNames = document.querySelectorAll('.team-name');
-            const matchInfo = document.querySelector('.match-info');
-            
-            if (matchDate) matchDate.textContent = partita.data;
-            if (teamNames[0]) teamNames[0].textContent = partita.casa.toUpperCase();
-            if (teamNames[1]) teamNames[1].textContent = partita.trasferta.toUpperCase();
-            if (matchInfo && partita.campo) {
-                matchInfo.innerHTML = `📍 ${partita.campo}`;
-            }
-        }
-        
-        function aggiornaClassifica(classifica) {
-            if (!classifica || classifica.length === 0) return;
-            
-            const tbody = document.querySelector('#classifica tbody');
-            if (!tbody) return;
-            
-            tbody.innerHTML = '';
-            
-            classifica.forEach(squadra => {
-                const isNemorense = squadra.nome.toLowerCase().includes('nemorense');
-                const row = document.createElement('tr');
-                if (isNemorense) row.classList.add('highlight');
-                
-                row.innerHTML = `
-                    <td class="text-center position">${squadra.posizione}</td>
-                    <td>${squadra.nome}</td>
-                    <td class="text-center">${squadra.giocate}</td>
-                    <td class="text-center">${squadra.vinte}</td>
-                    <td class="text-center">${squadra.pareggiate}</td>
-                    <td class="text-center">${squadra.sconfitte}</td>
-                    <td class="text-center points">${squadra.punti}</td>
-                `;
-                
-                tbody.appendChild(row);
-            });
-        }
-        
-        function aggiornaCalendario(calendario) {
-            if (!calendario || calendario.length === 0) return;
-            
-            const grid = document.querySelector('.calendar-grid');
-            if (!grid) return;
-            
-            grid.innerHTML = '';
-            
-            calendario.forEach(partita => {
-                const isHome = partita.casa.toLowerCase().includes('nemorense');
-                const card = document.createElement('div');
-                card.className = `match-card ${isHome ? 'home' : ''}`;
-                
-                let resultClass = '';
-                let resultText = partita.risultato;
-                
-                if (partita.risultato !== '-') {
-                    const [golCasa, golTrasferta] = partita.risultato.split('-').map(Number);
-                    if (isHome) {
-                        if (golCasa > golTrasferta) resultClass = 'win';
-                        else if (golCasa < golTrasferta) resultClass = 'loss';
-                        else resultClass = 'draw';
-                    } else {
-                        if (golTrasferta > golCasa) resultClass = 'win';
-                        else if (golTrasferta < golCasa) resultClass = 'loss';
-                        else resultClass = 'draw';
-                    }
-                }
-                
-                card.innerHTML = `
-                    <div>
-                        <div class="match-date-time">${partita.data}</div>
-                        <div class="match-matchup">${partita.casa} vs ${partita.trasferta}</div>
-                        <div class="match-location">${isHome ? '🏟️ Casa' : '✈️ Trasferta'}</div>
-                    </div>
-                    <div class="match-result ${resultClass}">${resultText}</div>
-                `;
-                
-                grid.appendChild(card);
-            });
-        }
-        
-        function mostraUltimoAggiornamento(dataAggiornamento) {
-            if (!dataAggiornamento) return;
-            
-            const data = new Date(dataAggiornamento);
-            const dataFormattata = data.toLocaleDateString('it-IT', {
-                day: '2-digit',
-                month: '2-digit',
-                year: 'numeric',
-                hour: '2-digit',
-                minute: '2-digit'
-            });
-            
-            // Aggiungi badge nel footer
-            const copyright = document.querySelector('.copyright');
-            if (copyright) {
-                copyright.innerHTML += `<br><small style="opacity: 0.7;">Ultimo aggiornamento: ${dataFormattata}</small>`;
-            }
-        }
-        
-        // Carica i dati all'avvio della pagina
-        document.addEventListener('DOMContentLoaded', caricaDati);
-        
-        // ============================================
-        // FUNZIONI ORIGINALI DEL SITO
-        // ============================================
-        
-        // Mobile menu toggle
-        const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
-        const nav = document.querySelector('nav');
-
-        mobileMenuBtn.addEventListener('click', () => {
-            mobileMenuBtn.classList.toggle('active');
-            nav.classList.toggle('active');
-        });
-
-        // Smooth scrolling for anchor links
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function (e) {
-                e.preventDefault();
-                const target = document.querySelector(this.getAttribute('href'));
-                if (target) {
-                    target.scrollIntoView({
-                        behavior: 'smooth',
-                        block: 'start'
-                    });
-                    // Close mobile menu if open
-                    nav.classList.remove('active');
-                    mobileMenuBtn.classList.remove('active');
-                }
-            });
-        });
-
-        // Intersection Observer for fade-in animations
-        const observerOptions = {
-            threshold: 0.1,
-            rootMargin: '0px 0px -50px 0px'
-        };
-
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.style.opacity = '1';
-                    entry.target.style.transform = 'translateY(0)';
-                }
-            });
-        }, observerOptions);
-
-        document.querySelectorAll('section, .match-card, .table-container').forEach(el => {
-            el.style.opacity = '0';
-            el.style.transform = 'translateY(20px)';
-            el.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
-            observer.observe(el);
-        });
-    </script>
-</body>
-</html>
+{
+  "ultimo_aggiornamento": "2026-01-28T18:00:00",
+  "squadra": "AS Nemorense",
+  "prossima_partita": {
+    "data": "2026-02-02T21:30:00",
+    "casa": "AS Nemorense",
+    "trasferta": "Gringos C8",
+    "risultato": "-"
+  },
+  "classifica": [
+    {
+      "posizione": "1",
+      "nome": "Atletico Alberone FC",
+      "giocate": "13",
+      "vinte": "12",
+      "pareggiate": "0",
+      "sconfitte": "1",
+      "punti": "36"
+    },
+    {
+      "posizione": "2",
+      "nome": "George Best Team Academy",
+      "giocate": "13",
+      "vinte": "9",
+      "pareggiate": "3",
+      "sconfitte": "1",
+      "punti": "30"
+    },
+    {
+      "posizione": "3",
+      "nome": "ASD Baron Academy",
+      "giocate": "14",
+      "vinte": "8",
+      "pareggiate": "2",
+      "sconfitte": "4",
+      "punti": "26"
+    },
+    {
+      "posizione": "4",
+      "nome": "Atletico Appio C8",
+      "giocate": "13",
+      "vinte": "7",
+      "pareggiate": "2",
+      "sconfitte": "4",
+      "punti": "23"
+    },
+    {
+      "posizione": "5",
+      "nome": "La Fraschetta del pesce express",
+      "giocate": "13",
+      "vinte": "7",
+      "pareggiate": "2",
+      "sconfitte": "4",
+      "punti": "23"
+    },
+    {
+      "posizione": "6",
+      "nome": "ASD Union FB",
+      "giocate": "14",
+      "vinte": "7",
+      "pareggiate": "1",
+      "sconfitte": "6",
+      "punti": "22"
+    },
+    {
+      "posizione": "7",
+      "nome": "AS Nemorense",
+      "giocate": "14",
+      "vinte": "6",
+      "pareggiate": "3",
+      "sconfitte": "5",
+      "punti": "21"
+    },
+    {
+      "posizione": "8",
+      "nome": "Gringos C8",
+      "giocate": "13",
+      "vinte": "6",
+      "pareggiate": "2",
+      "sconfitte": "5",
+      "punti": "20"
+    },
+    {
+      "posizione": "9",
+      "nome": "Virtus San Giustino",
+      "giocate": "14",
+      "vinte": "6",
+      "pareggiate": "2",
+      "sconfitte": "6",
+      "punti": "20"
+    },
+    {
+      "posizione": "10",
+      "nome": "Fratini Gialli",
+      "giocate": "13",
+      "vinte": "4",
+      "pareggiate": "2",
+      "sconfitte": "7",
+      "punti": "14"
+    },
+    {
+      "posizione": "11",
+      "nome": "Inter Club C8 Academy",
+      "giocate": "13",
+      "vinte": "3",
+      "pareggiate": "2",
+      "sconfitte": "8",
+      "punti": "11"
+    },
+    {
+      "posizione": "12",
+      "nome": "Naturalmente Carne FC",
+      "giocate": "14",
+      "vinte": "2",
+      "pareggiate": "3",
+      "sconfitte": "9",
+      "punti": "9"
+    },
+    {
+      "posizione": "13",
+      "nome": "Grottaferrata C8",
+      "giocate": "13",
+      "vinte": "2",
+      "pareggiate": "1",
+      "sconfitte": "10",
+      "punti": "7"
+    },
+    {
+      "posizione": "14",
+      "nome": "Paris San Giovanni",
+      "giocate": "14",
+      "vinte": "1",
+      "pareggiate": "3",
+      "sconfitte": "10",
+      "punti": "6"
+    }
+  ],
+  "calendario": []
+}
