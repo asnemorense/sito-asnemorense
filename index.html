@@ -1,139 +1,128 @@
-{
-  "ultimo_aggiornamento": "2026-01-28T18:00:00",
-  "squadra": "AS Nemorense",
-  "prossima_partita": {
-    "data": "2 Febbraio 2026 21:30",
-    "casa": "ASD Baron Academy",
-    "trasferta": "AS Nemorense",
-    "risultato": "-"
-  },
-  "classifica": [
-    {
-      "posizione": "1",
-      "nome": "Atletico Alberone FC",
-      "giocate": "13",
-      "vinte": "12",
-      "pareggiate": "0",
-      "sconfitte": "1",
-      "punti": "36"
-    },
-    {
-      "posizione": "2",
-      "nome": "George Best Team Academy",
-      "giocate": "13",
-      "vinte": "9",
-      "pareggiate": "3",
-      "sconfitte": "1",
-      "punti": "30"
-    },
-    {
-      "posizione": "3",
-      "nome": "ASD Baron Academy",
-      "giocate": "14",
-      "vinte": "8",
-      "pareggiate": "2",
-      "sconfitte": "4",
-      "punti": "26"
-    },
-    {
-      "posizione": "4",
-      "nome": "Atletico Appio C8",
-      "giocate": "13",
-      "vinte": "7",
-      "pareggiate": "2",
-      "sconfitte": "4",
-      "punti": "23"
-    },
-    {
-      "posizione": "5",
-      "nome": "La Fraschetta del pesce express",
-      "giocate": "13",
-      "vinte": "7",
-      "pareggiate": "2",
-      "sconfitte": "4",
-      "punti": "23"
-    },
-    {
-      "posizione": "6",
-      "nome": "ASD Union FB",
-      "giocate": "14",
-      "vinte": "7",
-      "pareggiate": "1",
-      "sconfitte": "6",
-      "punti": "22"
-    },
-    {
-      "posizione": "7",
-      "nome": "AS Nemorense",
-      "giocate": "14",
-      "vinte": "6",
-      "pareggiate": "3",
-      "sconfitte": "5",
-      "punti": "21"
-    },
-    {
-      "posizione": "8",
-      "nome": "Gringos C8",
-      "giocate": "13",
-      "vinte": "6",
-      "pareggiate": "2",
-      "sconfitte": "5",
-      "punti": "20"
-    },
-    {
-      "posizione": "9",
-      "nome": "Virtus San Giustino",
-      "giocate": "14",
-      "vinte": "6",
-      "pareggiate": "2",
-      "sconfitte": "6",
-      "punti": "20"
-    },
-    {
-      "posizione": "10",
-      "nome": "Fratini Gialli",
-      "giocate": "13",
-      "vinte": "4",
-      "pareggiate": "2",
-      "sconfitte": "7",
-      "punti": "14"
-    },
-    {
-      "posizione": "11",
-      "nome": "Inter Club C8 Academy",
-      "giocate": "13",
-      "vinte": "3",
-      "pareggiate": "2",
-      "sconfitte": "8",
-      "punti": "11"
-    },
-    {
-      "posizione": "12",
-      "nome": "Naturalmente Carne FC",
-      "giocate": "14",
-      "vinte": "2",
-      "pareggiate": "3",
-      "sconfitte": "9",
-      "punti": "9"
-    },
-    {
-      "posizione": "13",
-      "nome": "Grottaferrata C8",
-      "giocate": "13",
-      "vinte": "2",
-      "pareggiate": "1",
-      "sconfitte": "10",
-      "punti": "7"
-    },
-    {
-      "posizione": "14",
-      "nome": "Paris San Giovanni",
-      "giocate": "14",
-      "vinte": "1",
-      "pareggiate": "3",
-      "sconfitte": "10",
-      "punti": "6"
-    }
-  ],
-  "calendario": []
-}
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AS Nemorense - Sito Ufficiale</title>
+    <link rel="icon" type="image/png" href="logo-nemorense.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Teko:wght@400;600;700&family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #6b0f1a;
+            --primary-light: #8b1a2a;
+            --accent: #ffffff;
+            --anthracite: #3a3a3a;
+            --text: #1a1a1a;
+            --bg: #fafafa;
+            --white: #ffffff;
+            --shadow: rgba(107, 15, 26, 0.12);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'DM Sans', sans-serif; background: var(--bg); color: var(--text); line-height: 1.6; }
+
+        header { background: var(--white); padding: 1.5rem; text-align: center; box-shadow: 0 4px 20px var(--shadow); position: sticky; top: 0; z-index: 100; border-bottom: 3px solid var(--primary); }
+        .logo-container img { height: 100px; }
+
+        .container { max-width: 1000px; margin: 2rem auto; padding: 0 1.5rem; }
+        
+        h2 { font-family: 'Teko', sans-serif; font-size: 2.5rem; text-transform: uppercase; color: var(--primary); margin-bottom: 1.5rem; display: flex; align-items: center; gap: 0.8rem; }
+        h2::after { content: ''; flex: 1; height: 2px; background: linear-gradient(to right, var(--primary), transparent); }
+
+        .next-match-card { background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%); color: white; border-radius: 20px; padding: 2.5rem; text-align: center; margin-bottom: 3rem; box-shadow: 0 10px 30px var(--shadow); }
+        .match-date { font-family: 'Teko', sans-serif; font-size: 1.8rem; margin-bottom: 1rem; }
+        .match-teams { display: flex; justify-content: center; align-items: center; gap: 2rem; font-size: 2.2rem; font-weight: 700; font-family: 'Teko', sans-serif; text-transform: uppercase; }
+        .vs { background: var(--white); color: var(--primary); padding: 0.2rem 0.8rem; border-radius: 8px; font-size: 1.2rem; }
+
+        .table-container { background: var(--white); border-radius: 20px; overflow: hidden; box-shadow: 0 10px 30px var(--shadow); margin-bottom: 3rem; }
+        table { width: 100%; border-collapse: collapse; }
+        thead { background: var(--anthracite); color: white; font-family: 'Teko', sans-serif; }
+        th, td { padding: 1.2rem 1rem; text-align: center; border-bottom: 1px solid #eee; }
+        tr.highlight { background: rgba(107, 15, 26, 0.08); font-weight: bold; }
+
+        #update-time { text-align: center; padding: 2rem; color: #888; font-size: 0.9rem; }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="logo-container">
+            <img src="logo-nemorense.png" alt="AS Nemorense Logo">
+        </div>
+    </header>
+
+    <div class="container">
+        <section>
+            <h2>Prossima Partita</h2>
+            <div id="next-match-container" class="next-match-card">
+                </div>
+        </section>
+
+        <section>
+            <h2>Classifica Serie A2</h2>
+            <div class="table-container">
+                <table>
+                    <thead>
+                        <tr><th>#</th><th>Squadra</th><th>G</th><th>V</th><th>N</th><th>P</th><th>PT</th></tr>
+                    </thead>
+                    <tbody id="standings-body">
+                        </tbody>
+                </table>
+            </div>
+        </section>
+
+        <div id="update-time"></div>
+    </div>
+
+    <script>
+        async function caricaDati() {
+            try {
+                // Aggiunto ?v= per forzare l'aggiornamento dei dati
+                const response = await fetch('dati-nemorense.json?v=' + Date.now());
+                const dati = await response.json();
+
+                // 1. Prossima Partita (Corretto: carica i dati senza crashare sulla data)
+                const nextMatchContainer = document.getElementById('next-match-container');
+                if (dati.prossima_partita) {
+                    const p = dati.prossima_partita;
+                    nextMatchContainer.innerHTML = `
+                        <div class="match-date">${p.data}</div>
+                        <div class="match-teams">
+                            <span>${p.casa}</span>
+                            <span class="vs">VS</span>
+                            <span>${p.trasferta}</span>
+                        </div>
+                    `;
+                }
+
+                // 2. Classifica (Corretto)
+                const standingsBody = document.getElementById('standings-body');
+                standingsBody.innerHTML = '';
+                dati.classifica.forEach(team => {
+                    const isNemorense = team.nome.toLowerCase().includes('nemorense');
+                    standingsBody.innerHTML += `
+                        <tr class="${isNemorense ? 'highlight' : ''}">
+                            <td>${team.posizione}</td>
+                            <td>${team.nome}</td>
+                            <td>${team.giocate}</td>
+                            <td>${team.vinte}</td>
+                            <td>${team.pareggiate}</td>
+                            <td>${team.sconfitte}</td>
+                            <td><strong>${team.punti}</strong></td>
+                        </tr>
+                    `;
+                });
+
+                // 3. Data ultimo aggiornamento
+                document.getElementById('update-time').innerHTML = `<small>Dati aggiornati al: ${dati.ultimo_aggiornamento}</small>`;
+
+            } catch (e) {
+                console.error("Errore:", e);
+                // Non mostriamo più il messaggio di errore sul sito
+            }
+        }
+        document.addEventListener('DOMContentLoaded', caricaDati);
+    </script>
+</body>
+</html>
