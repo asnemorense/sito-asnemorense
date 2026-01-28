@@ -6,12 +6,11 @@ from datetime import datetime
 import re
 
 # CONFIGURAZIONE - Girone A Atletico 2000
-GIRONE_URL: "https://www.legacalcioa8.it/it/t-teamtable/87/serie-a2-2526/?desk=1"
-CALENDARIO_URL: "https://www.legacalcioa8.it/it/t-calendar/87/serie-a2-2526/?desk=1"
-TEAM_NAME_TARGET: "AS Nemorense" 
+GIRONE_URL = "https://www.legacalcioa8.it/it/t-teamtable/87/serie-a2-2526/?desk=1"
+CALENDARIO_URL = "https://www.legacalcioa8.it/it/t-calendar/87/serie-a2-2526/?desk=1"
+TEAM_NAME_TARGET = "AS Nemorense" 
 
 def clean_name(name):
-    """Rimuove punti, spazi extra e rende minuscolo per confronti sicuri."""
     return re.sub(r'[^\w\s]', '', name).lower().strip()
 
 def get_page(url):
@@ -26,14 +25,11 @@ def get_page(url):
 
 def extract_classifica(soup):
     classifica = []
-    # Cerca qualsiasi tabella che sembri una classifica
     table = soup.find('table', class_='table-score') or soup.find('table')
     if not table: return []
-
     rows = table.find_all('tr')
     for row in rows:
         cols = row.find_all(['td', 'th'])
-        # Filtra solo le righe che hanno almeno 7 colonne (dati della classifica)
         if len(cols) >= 7 and cols[0].text.strip().isdigit():
             classifica.append({
                 'posizione': cols[0].text.strip(),
@@ -50,19 +46,16 @@ def extract_calendario(soup, target_name):
     partite = []
     clean_target = clean_name(target_name)
     matches = soup.find_all('div', class_='match-item')
-    
     for match in matches:
         try:
             data_el = match.find('div', class_='match-date')
             home_el = match.find('div', class_='team-home')
             away_el = match.find('div', class_='team-away')
             score_el = match.find('div', class_='match-score')
-            
             if data_el and home_el and away_el:
                 casa = home_el.text.strip()
                 trasferta = away_el.text.strip()
                 is_our = clean_target in clean_name(casa) or clean_target in clean_name(trasferta)
-                
                 partite.append({
                     'data': data_el.text.strip(),
                     'casa': casa,
@@ -75,30 +68,21 @@ def extract_calendario(soup, target_name):
 
 def main():
     print(f"🚀 Avvio scraping per: {TEAM_NAME_TARGET}")
-    
     soup_cl = get_page(GIRONE_URL)
     classifica = extract_classifica(soup_cl) if soup_cl else []
-    print(f"📊 Squadre trovate in classifica: {len(classifica)}")
-
     soup_cal = get_page(CALENDARIO_URL)
     calendario = extract_calendario(soup_cal, TEAM_NAME_TARGET) if soup_cal else []
-    print(f"📅 Partite totali trovate: {len(calendario)}")
-
-    # Trova la prossima partita (la prima con risultato '-')
     prossima = next((p for p in calendario if p['risultato'] == '-' and p['nostra']), None)
-
     dati = {
         'ultimo_aggiornamento': datetime.now().isoformat(),
         'squadra': TEAM_NAME_TARGET,
         'classifica': classifica,
         'prossima_partita': prossima,
-        'calendario': calendario[-10:] # Ultime 10 per non appesantire il sito
+        'calendario': calendario[-10:]
     }
-
     with open('dati-nemorense.json', 'w', encoding='utf-8') as f:
         json.dump(dati, f, ensure_ascii=False, indent=2)
-    
-    print(f"✅ Aggiornamento completato: {dati['ultimo_aggiornamento']}")
+    print(f"✅ Aggiornamento completato")
 
 if __name__ == "__main__":
     main()
