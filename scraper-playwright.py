@@ -11,8 +11,8 @@ from playwright.sync_api import sync_playwright
 import time
 
 # CONFIGURAZIONE - Modifica questi parametri
-GIRONE_URL = "https://www.legacalcioa8.it/it/teamtable/600/content-girone-a-atletico-2000/"
-CALENDARIO_URL = "https://www.legacalcioa8.it/it/calendar/65/serie-a2-2425/"
+GIRONE_URL = "https://www.legacalcioa8.it/it/t-teamtable/87/serie-a2-2526/"
+CALENDARIO_URL = "https://www.legacalcioa8.it/it/t-calendar/87/serie-a2-2526/"
 TEAM_NAME = "AS Nemorense"
 GIRONE_NAME = "GIRONE A - ATLETICO 2000"
 
