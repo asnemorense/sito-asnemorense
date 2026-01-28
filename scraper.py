@@ -3,82 +3,102 @@ import requests
 from bs4 import BeautifulSoup
 import json
 from datetime import datetime
+import re
 
-# CONFIGURAZIONE - Inserisci i tuoi link tra le virgolette
+# CONFIGURAZIONE - Girone A Atletico 2000
 GIRONE_URL = "https://www.legacalcioa8.it/it/t-teamtable/87/serie-a2-2526/?desk=1"
 CALENDARIO_URL = "https://www.legacalcioa8.it/it/t-calendar/87/serie-a2-2526/?desk=1"
-TEAM_NAME = "AS Nemorense"
+TEAM_NAME_TARGET = "AS Nemorense" 
+
+def clean_name(name):
+    """Rimuove punti, spazi extra e rende minuscolo per confronti sicuri."""
+    return re.sub(r'[^\w\s]', '', name).lower().strip()
 
 def get_page(url):
     try:
-        headers = {'User-Agent': 'Mozilla/5.0'}
-        response = requests.get(url, headers=headers, timeout=10)
+        headers = {'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36'}
+        response = requests.get(url, headers=headers, timeout=15)
         response.raise_for_status()
         return BeautifulSoup(response.text, 'html.parser')
     except Exception as e:
-        print(f"Errore caricamento: {e}")
+        print(f"❌ Errore connessione: {e}")
         return None
 
 def extract_classifica(soup):
     classifica = []
-    try:
-        table = soup.find('table', class_='table-score') or soup.find('table')
-        if table:
-            rows = table.find_all('tr')[1:]
-            for row in rows:
-                cols = row.find_all('td')
-                if len(cols) >= 7:
-                    classifica.append({
-                        'posizione': cols[0].text.strip(),
-                        'nome': cols[1].text.strip(),
-                        'giocate': cols[2].text.strip(),
-                        'vinte': cols[3].text.strip(),
-                        'pareggiate': cols[4].text.strip(),
-                        'sconfitte': cols[5].text.strip(),
-                        'punti': cols[6].text.strip()
-                    })
-    except: pass
+    # Cerca qualsiasi tabella che sembri una classifica
+    table = soup.find('table', class_='table-score') or soup.find('table')
+    if not table: return []
+
+    rows = table.find_all('tr')
+    for row in rows:
+        cols = row.find_all(['td', 'th'])
+        # Filtra solo le righe che hanno almeno 7 colonne (dati della classifica)
+        if len(cols) >= 7 and cols[0].text.strip().isdigit():
+            classifica.append({
+                'posizione': cols[0].text.strip(),
+                'nome': cols[1].text.strip(),
+                'giocate': cols[2].text.strip(),
+                'vinte': cols[3].text.strip(),
+                'pareggiate': cols[4].text.strip(),
+                'sconfitte': cols[5].text.strip(),
+                'punti': cols[6].text.strip()
+            })
     return classifica
 
-def extract_calendario(soup, team_name):
+def extract_calendario(soup, target_name):
     partite = []
-    try:
-        matches = soup.find_all('div', class_='match-item')
-        for match in matches:
-            try:
-                data = match.find('div', class_='match-date').text.strip()
-                casa = match.find('div', class_='team-home').text.strip()
-                trasferta = match.find('div', class_='team-away').text.strip()
-                risultato = match.find('div', class_='match-score').text.strip() if match.find('div', class_='match-score') else '-'
+    clean_target = clean_name(target_name)
+    matches = soup.find_all('div', class_='match-item')
+    
+    for match in matches:
+        try:
+            data_el = match.find('div', class_='match-date')
+            home_el = match.find('div', class_='team-home')
+            away_el = match.find('div', class_='team-away')
+            score_el = match.find('div', class_='match-score')
+            
+            if data_el and home_el and away_el:
+                casa = home_el.text.strip()
+                trasferta = away_el.text.strip()
+                is_our = clean_target in clean_name(casa) or clean_target in clean_name(trasferta)
+                
                 partite.append({
-                    'data': data, 'casa': casa, 'trasferta': trasferta,
-                    'risultato': risultato, 'nostra': team_name.lower() in (casa + trasferta).lower()
+                    'data': data_el.text.strip(),
+                    'casa': casa,
+                    'trasferta': trasferta,
+                    'risultato': score_el.text.strip() if score_el else '-',
+                    'nostra': is_our
                 })
-            except: continue
-    except: pass
+        except: continue
     return partite
 
 def main():
-    print("🔄 Avvio aggiornamento dati...")
-    soup_classifica = get_page(GIRONE_URL)
-    classifica = extract_classifica(soup_classifica) if soup_classifica else []
+    print(f"🚀 Avvio scraping per: {TEAM_NAME_TARGET}")
     
-    soup_calendario = get_page(CALENDARIO_URL)
-    calendario = extract_calendario(soup_calendario, TEAM_NAME) if soup_calendario else []
-    
+    soup_cl = get_page(GIRONE_URL)
+    classifica = extract_classifica(soup_cl) if soup_cl else []
+    print(f"📊 Squadre trovate in classifica: {len(classifica)}")
+
+    soup_cal = get_page(CALENDARIO_URL)
+    calendario = extract_calendario(soup_cal, TEAM_NAME_TARGET) if soup_cal else []
+    print(f"📅 Partite totali trovate: {len(calendario)}")
+
+    # Trova la prossima partita (la prima con risultato '-')
     prossima = next((p for p in calendario if p['risultato'] == '-' and p['nostra']), None)
-    
+
     dati = {
         'ultimo_aggiornamento': datetime.now().isoformat(),
-        'squadra': TEAM_NAME,
+        'squadra': TEAM_NAME_TARGET,
         'classifica': classifica,
         'prossima_partita': prossima,
-        'calendario': calendario[-10:]
+        'calendario': calendario[-10:] # Ultime 10 per non appesantire il sito
     }
-    
+
     with open('dati-nemorense.json', 'w', encoding='utf-8') as f:
         json.dump(dati, f, ensure_ascii=False, indent=2)
-    print("✅ Dati salvati con successo!")
+    
+    print(f"✅ Aggiornamento completato: {dati['ultimo_aggiornamento']}")
 
 if __name__ == "__main__":
     main()
