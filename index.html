@@ -46,69 +46,411 @@
         }
 
         body::before {
-            top: 0; right: 0;
+            top: 0;
+            right: 0;
             background-image: url('img/back-right.png');
             background-position: top right;
         }
 
         body::after {
-            bottom: 0; left: 0;
+            bottom: 0;
+            left: 0;
             background-image: url('img/back-left.png');
             background-position: bottom left;
         }
 
-        /* HEADER FIXATO */
-        header { 
-            background: var(--white); 
-            padding: 1.5rem 1rem; 
-            border-bottom: 3px solid var(--primary); 
-            box-shadow: 0 2px 10px rgba(0,0,0,0.05); 
-            position: relative; 
-            z-index: 100; 
-        }
-
-        .header-content {
-            max-width: 1000px;
-            margin: 0 auto;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-        }
-
-        .header-text {
-            font-family: 'Teko', sans-serif;
-            font-size: 1.8rem;
-            font-weight: 600;
-            color: var(--primary);
-            text-transform: uppercase;
-            width: 30%; /* Forza una larghezza per bilanciare i lati */
-        }
-
-        .text-left { text-align: right; }
-        .text-right { text-align: left; }
-
-        .logo-container { width: 120px; text-align: center; }
-        .logo-container img { height: 90px; width: auto; }
+        header { background: var(--white); padding: 1rem; text-align: center; border-bottom: 3px solid var(--primary); box-shadow: 0 2px 10px rgba(0,0,0,0.05); position: relative; z-index: 10; }
+        .logo-container img { height: 80px; }
 
         .container { max-width: 1000px; margin: 2rem auto; padding: 0 1.5rem; position: relative; z-index: 10; }
         
         h2 { font-family: 'Teko', sans-serif; font-size: 2.5rem; text-transform: uppercase; color: var(--primary); margin-bottom: 1.5rem; border-bottom: 2px solid var(--primary); display: inline-block; }
 
-        /* PULSANTI FLOAT */
-        .team-menu-container { position: fixed; bottom: 100px; right: 25px; z-index: 1002; display: flex; flex-direction: column-reverse; align-items: center; gap: 15px; transition: all 0.4s; }
+        /* --- SISTEMA PULSANTI FLOAT --- */
+        .team-menu-container {
+            position: fixed;
+            bottom: 100px; 
+            right: 25px;
+            z-index: 1002;
+            display: flex;
+            flex-direction: column-reverse;
+            align-items: center;
+            gap: 15px;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
         .team-menu-container.raised { bottom: 210px; }
-        .team-main-btn { width: 60px; height: 60px; background: var(--primary); color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 24px; box-shadow: 2px 2px 10px rgba(0,0,0,0.3); border: none; cursor: pointer; }
-        .team-options { display: flex; flex-direction: column; gap: 10px; opacity: 0; visibility: hidden; transform: translateY(20px); transition: all 0.3s ease; }
+
+        .team-main-btn {
+            width: 60px; height: 60px;
+            background: var(--primary);
+            color: white; border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 24px; box-shadow: 2px 2px 10px rgba(0,0,0,0.3);
+            border: none; cursor: pointer;
+        }
+
+        .team-options {
+            display: flex; flex-direction: column; gap: 10px;
+            opacity: 0; visibility: hidden;
+            transform: translateY(20px); transition: all 0.3s ease;
+        }
+
         .team-menu-container:hover .team-options { opacity: 1; visibility: visible; transform: translateY(0); }
-        .sub-team-btn { width: 50px; height: 50px; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; border: none; font-size: 18px; box-shadow: 2px 2px 8px var(--shadow); cursor: pointer; transition: transform 0.2s; }
+
+        .sub-team-btn {
+            width: 50px; height: 50px; border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+            color: white; border: none; font-size: 18px;
+            box-shadow: 2px 2px 8px var(--shadow); cursor: pointer;
+            transition: transform 0.2s; text-decoration: none;
+        }
+
+        .sub-team-btn:hover { transform: scale(1.1); }
         .rosa-btn-color { background: var(--primary-light); }
         .staff-btn-color { background: #444; }
 
-        /* SOCIAL */
-        .social-menu-container { position: fixed; bottom: 25px; right: 25px; z-index: 1001; display: flex; flex-direction: column-reverse; align-items: center; gap: 15px; }
-        .social-main-btn { width: 60px; height: 60px; background: #333; color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 24px; box-shadow: 2px 2px 10px var(--shadow); cursor: pointer; border: none; }
-        .social-options { display: flex; flex-direction: column; gap: 10px; opacity: 0; visibility: hidden; transform: translateY(20px); transition: all 0.3s ease; }
+        /* Menu Social */
+        .social-menu-container {
+            position: fixed; bottom: 25px; right: 25px;
+            z-index: 1001; display: flex; flex-direction: column-reverse;
+            align-items: center; gap: 15px;
+        }
+
+        .social-main-btn {
+            width: 60px; height: 60px; background: #333;
+            color: white; border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 24px; box-shadow: 2px 2px 10px var(--shadow);
+            cursor: pointer; transition: all 0.3s ease; border: none;
+        }
+
+        .social-options {
+            display: flex; flex-direction: column; gap: 10px;
+            opacity: 0; visibility: hidden;
+            transform: translateY(20px); transition: all 0.3s ease;
+        }
+
         .social-menu-container:hover .social-options { opacity: 1; visibility: visible; transform: translateY(0); }
-        .social-btn { width: 50px; height: 50px; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; text-decoration: none; font-size: 20px; box-shadow: 2px 2px 8px var(--shadow); transition: transform 0.2s; }
+
+        .social-btn {
+            width: 50px; height: 50px; border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+            color: white; text-decoration: none; font-size: 20px;
+            box-shadow: 2px 2px 8px var(--shadow); transition: transform 0.2s;
+        }
+
+        .social-btn:hover { transform: scale(1.1); }
         .instagram-color { background: radial-gradient(circle at 30% 107%, #fdf497 0%, #fdf497 5%, #fd5949 45%, #d6249f 60%, #285AEB 90%); }
-        .tiktok-color { background: #00
+        .tiktok-color { background: #000000; border: 1px solid #ff0050; }
+
+        /* SEZIONI OVERLAY */
+        .overlay-section {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: var(--bg); z-index: 2000;
+            display: none; overflow-y: auto; padding: 2rem 1rem;
+        }
+
+        .rosa-grid {
+            display: grid; grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+            gap: 15px; margin-bottom: 3rem;
+        }
+
+        .player-card {
+            position: relative; background: white; border-radius: 12px;
+            overflow: hidden; box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+            text-align: center; display: flex; flex-direction: column;
+        }
+
+        .player-img-container {
+            position: relative; width: 100%; padding-top: 125%;
+            background: #eee; overflow: hidden;
+        }
+
+        .player-img { position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; }
+        .player-info { padding: 0.8rem; }
+        .player-name { font-weight: bold; color: var(--primary); font-family: 'Teko', sans-serif; font-size: 1.3rem; line-height: 1.1; }
+        .player-role-sub { font-size: 0.75rem; color: #666; text-transform: uppercase; margin-top: 2px; }
+
+        .player-bio {
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(107, 15, 26, 0.9); color: white;
+            display: flex; align-items: center; justify-content: center;
+            padding: 1rem; opacity: 0; transition: opacity 0.3s ease;
+            font-size: 0.85rem; text-align: center; pointer-events: none; z-index: 2;
+        }
+
+        .player-card:hover .player-bio { opacity: 1; }
+
+        .role-title {
+            font-family: 'Teko', sans-serif; font-size: 2rem; color: #333;
+            margin: 1.5rem 0 1rem; border-left: 5px solid var(--primary);
+            padding-left: 10px; text-transform: uppercase;
+        }
+
+        /* CLASSIFICA E MATCH */
+        .team-cell { display: flex; align-items: center; gap: 10px; text-align: left; }
+        .team-logo { width: 24px; height: 24px; object-fit: contain; }
+
+        .next-match-card { background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%); color: white; border-radius: 20px; padding: 2.5rem; text-align: center; margin-bottom: 3rem; }
+        .match-date { font-family: 'Teko', sans-serif; font-size: 1.8rem; margin-bottom: 1rem; }
+        .match-teams { display: flex; justify-content: center; align-items: center; gap: 2rem; font-size: 2.2rem; font-weight: 700; font-family: 'Teko', sans-serif; text-transform: uppercase; }
+        .vs { background: var(--white); color: var(--primary); padding: 0.2rem 0.8rem; border-radius: 8px; font-size: 1.2rem; }
+        
+        .table-container { background: var(--white); border-radius: 20px; overflow: hidden; box-shadow: 0 5px 20px rgba(0,0,0,0.05); margin-bottom: 3rem; }
+        table { width: 100%; border-collapse: collapse; }
+        thead { background: #333; color: white; font-family: 'Teko', sans-serif; font-size: 1.2rem; }
+        th, td { padding: 1.2rem 1rem; text-align: center; border-bottom: 1px solid #eee; }
+        tr.highlight { background: rgba(107, 15, 26, 0.08); font-weight: bold; }
+
+        /* --- STILE SEZIONE SPONSOR --- */
+        .sponsors-section {
+            margin-top: 4rem;
+            text-align: center;
+            padding: 2rem 0;
+        }
+        .sponsors-title {
+            font-family: 'Teko', sans-serif;
+            font-size: 1.2rem;
+            letter-spacing: 2px;
+            color: #bbb; /* Basso contrasto */
+            margin-bottom: 1.5rem;
+            text-transform: uppercase;
+        }
+        .sponsors-grid {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 3rem;
+            flex-wrap: wrap;
+            opacity: 0.8;
+            transition: opacity 0.3s ease;
+        }
+        .sponsors-grid:hover { opacity: 1; }
+        .sponsors-grid img {
+            max-height: 60px;
+            width: auto;
+            max-width: 150px;
+            object-fit: contain;
+        }
+
+        #update-time { text-align: center; padding: 2rem; color: #888; font-size: 0.8rem; }
+
+        @media (max-width: 768px) {
+            body::before, body::after { display: none; }
+            .match-teams { font-size: 1.6rem; gap: 1rem; }
+            th:nth-child(3), td:nth-child(3), th:nth-child(4), td:nth-child(4), th:nth-child(5), td:nth-child(5), th:nth-child(6), td:nth-child(6) { display: none; }
+            .rosa-grid { grid-template-columns: repeat(2, 1fr); }
+            .sponsors-grid { gap: 1.5rem; }
+            .sponsors-grid img { max-height: 45px; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="team-menu-container" id="team-menu-container">
+        <button class="team-main-btn" id="btn-team-main">
+            <i class="fas fa-tshirt"></i>
+        </button>
+        <div class="team-options">
+            <button class="sub-team-btn staff-btn-color" onclick="toggleSection('staff-section')" title="Staff Tecnico">
+                <i class="fas fa-user-tie"></i>
+            </button>
+            <button class="sub-team-btn rosa-btn-color" onclick="toggleSection('rosa-section')" title="Visualizza Rosa">
+                <i class="fas fa-users"></i>
+            </button>
+        </div>
+    </div>
+
+    <div class="social-menu-container" 
+         onmouseenter="document.getElementById('team-menu-container').classList.add('raised')" 
+         onmouseleave="document.getElementById('team-menu-container').classList.remove('raised')">
+        <button class="social-main-btn">
+            <i class="fas fa-share-alt"></i>
+        </button>
+        <div class="social-options">
+            <a href="https://www.tiktok.com/@asnemorense_official" class="social-btn tiktok-color" target="_blank">
+                <i class="fab fa-tiktok"></i>
+            </a>
+            <a href="https://www.instagram.com/asnemorense/" class="social-btn instagram-color" target="_blank">
+                <i class="fab fa-instagram"></i>
+            </a>
+        </div>
+    </div>
+
+    <div id="rosa-section" class="overlay-section">
+        <div class="container">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem;">
+                <h2>Rosa AS Nemorense</h2>
+                <button onclick="toggleSection('rosa-section')" style="background: none; border: none; font-size: 2rem; cursor: pointer; color: var(--primary);"><i class="fas fa-times"></i></button>
+            </div>
+            <div id="lista-giocatori"></div>
+        </div>
+    </div>
+
+    <div id="staff-section" class="overlay-section">
+        <div class="container">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem;">
+                <h2>Staff Tecnico</h2>
+                <button onclick="toggleSection('staff-section')" style="background: none; border: none; font-size: 2rem; cursor: pointer; color: var(--primary);"><i class="fas fa-times"></i></button>
+            </div>
+            <div id="lista-staff" class="rosa-grid"></div>
+        </div>
+    </div>
+
+    <header>
+        <div class="logo-container">
+            <img src="logo-nemorense.png" alt="AS Nemorense">
+        </div>
+    </header>
+
+    <div class="container">
+        <section>
+            <h2>Prossima Partita</h2>
+            <div id="next-match-container" class="next-match-card">
+                <p>Caricamento...</p>
+            </div>
+        </section>
+
+        <section>
+            <h2>Classifica Serie A2</h2>
+            <div class="table-container">
+                <table>
+                    <thead>
+                        <tr><th>#</th><th>Squadra</th><th>G</th><th>V</th><th>N</th><th>P</th><th>PT</th></tr>
+                    </thead>
+                    <tbody id="standings-body"></tbody>
+                </table>
+            </div>
+        </section>
+
+        <section class="sponsors-section">
+            <h3 class="sponsors-title">I nostri partner</h3>
+            <div class="sponsors-grid">
+                <img src="img/sponsor-1.png" alt="Partner 1" onerror="this.style.display='none'">
+                <img src="img/sponsor-2.png" alt="Partner 2" onerror="this.style.display='none'">
+                <img src="img/sponsor-3.png" alt="Partner 3" onerror="this.style.display='none'">
+            </div>
+        </section>
+
+        <div id="update-time"></div>
+    </div>
+
+    <script>
+        const giocatori = [
+            { nome: "Alessio Lucci", ruolo: "Portieri", foto: "img/alessio-lucci.jpg", bio: "Descrizione" },
+            { nome: "Alessandro Tudini", ruolo: "Difensori", foto: "img/alessandro-tudini.jpg", bio: "Descrizione" },
+            { nome: "Lorenzo Cavaterra", ruolo: "Difensori", foto: "img/lorenzo-cavaterra.jpg", bio: "Descrizione" },
+            { nome: "Giuseppe Massaro", ruolo: "Difensori", foto: "img/giuseppe-massaro.jpg", bio: "Descrizione" },
+            { nome: "Giordano Massimi", ruolo: "Difensori", foto: "img/giordano-massimi.jpg", bio: "Descrizione" },
+            { nome: "Federico Trequattrini", ruolo: "Difensori", foto: "img/federico-trequattrini.jpg", bio: "Descrizione" },
+            { nome: "Daniele Fortini", ruolo: "Difensori", foto: "img/daniele-fortini.jpg", bio: "Descrizione" },
+            { nome: "Matteo Vitelli", ruolo: "Difensori", foto: "img/matteo-vitelli.jpg", bio: "Descrizione" },
+            { nome: "Stefano Marsinano", ruolo: "Difensori", foto: "img/stefano-marsinano.jpg", bio: "Descrizione" },
+            { nome: "Leonardo Patriarca", ruolo: "Difensori", foto: "img/leonardo-patriarca.jpg", bio: "Descrizione" },
+            { nome: "Michael Gregorini", ruolo: "Difensori", foto: "img/michael-gregorini.jpg", bio: "Descrizione" },
+            { nome: "Enrico Marsinano", ruolo: "Centrocampisti", foto: "img/enrico-marsinano.jpg", bio: "Descrizione" },
+            { nome: "Manuel Valentini", ruolo: "Centrocampisti", foto: "img/manuel-valentini.jpg", bio: "Descrizione" },
+            { nome: "Valerio Marcodoppido", ruolo: "Centrocampisti", foto: "img/valerio-marcodoppido.jpg", bio: "Descrizione" },
+            { nome: "Daniele Marino", ruolo: "Centrocampisti", foto: "img/daniele-marino.jpg", bio: "Descrizione" },
+            { nome: "Manuel Ugolini", ruolo: "Centrocampisti", foto: "img/manuel-ugolini.jpg", bio: "Descrizione" },
+            { nome: "Miro De Angelis", ruolo: "Attaccanti", foto: "img/miro-deangelis.jpg", bio: "Descrizione" },
+            { nome: "Matteo Carva", ruolo: "Attaccanti", foto: "img/matteo-carva.jpg", bio: "Descrizione" },
+            { nome: "Massimo Bianchi", ruolo: "Attaccanti", foto: "img/massimo-bianchi.jpg", bio: "Descrizione" },
+            { nome: "Fabio Tramonti", ruolo: "Attaccanti", foto: "img/fabio-tramonti.jpg", bio: "Descrizione" },
+            { nome: "Mattia Hazizi", ruolo: "Attaccanti", foto: "img/mattia-hazizi.jpg", bio: "Descrizione" }
+        ];
+
+        const staff = [
+            { nome: "Nicolò Gramenzi", ruolo: "Dirigenza", foto: "img/nicolò-gramenzi.jpg", bio: "Descrizione" },
+            { nome: "Jacopo Gramenzi", ruolo: "Dirigenza", foto: "img/jacopo-gramenzi.jpg", bio: "Descrizione" },
+            { nome: "Leonardo Traccitto", ruolo: "Dirigenza", foto: "img/leonardo-traccitto.jpg", bio: "Descrizione" },
+            { nome: "Matteo Carva", ruolo: "Dirigenza", foto: "img/matteo-carva.jpg", bio: "Descrizione" },
+            { nome: "Francesco Montano", ruolo: "Dirigenza", foto: "img/francesco-montano.jpg", bio: "Descrizione" },
+            { nome: "Alessandro Isopi", ruolo: "Dirigenza", foto: "img/alessandro-isopi.jpg", bio: "Descrizione" },
+            { nome: "Gabriele Piersanti", ruolo: "Dirigenza", foto: "img/gabriele-piersanti.jpg", bio: "Descrizione" }
+        ];
+
+        function toggleSection(id) {
+            const section = document.getElementById(id);
+            const isOpening = section.style.display !== 'block';
+            document.querySelectorAll('.overlay-section').forEach(s => s.style.display = 'none');
+            if (isOpening) {
+                section.style.display = 'block';
+                document.body.style.overflow = 'hidden';
+                if(id === 'rosa-section') renderRosa();
+                if(id === 'staff-section') renderStaff();
+            } else {
+                document.body.style.overflow = 'auto';
+            }
+        }
+
+        function renderRosa() {
+            const container = document.getElementById('lista-giocatori');
+            container.innerHTML = '';
+            const ruoli = ["Portieri", "Difensori", "Centrocampisti", "Attaccanti"];
+            ruoli.forEach(ruolo => {
+                const filtrati = giocatori.filter(g => g.ruolo === ruolo);
+                if (filtrati.length > 0) {
+                    container.innerHTML += `<div class="role-title">${ruolo}</div>`;
+                    let grid = '<div class="rosa-grid">';
+                    filtrati.forEach(g => {
+                        grid += `<div class="player-card">
+                            <div class="player-img-container">
+                                <img src="${g.foto}" class="player-img" onerror="this.src='https://via.placeholder.com/400x500?text=Foto+Mancante'">
+                                <div class="player-bio">${g.bio}</div>
+                            </div>
+                            <div class="player-info"><div class="player-name">${g.nome}</div></div>
+                        </div>`;
+                    });
+                    grid += '</div>';
+                    container.innerHTML += grid;
+                }
+            });
+        }
+
+        function renderStaff() {
+            const container = document.getElementById('lista-staff');
+            container.innerHTML = staff.map(s => `
+                <div class="player-card">
+                    <div class="player-img-container">
+                        <img src="${s.foto}" class="player-img" onerror="this.src='https://via.placeholder.com/400x500?text=Staff'">
+                        <div class="player-bio">${s.bio}</div>
+                    </div>
+                    <div class="player-info">
+                        <div class="player-name">${s.nome}</div>
+                        <div class="player-role-sub">${s.ruolo}</div>
+                    </div>
+                </div>`).join('');
+        }
+
+        async function caricaDati() {
+            try {
+                const response = await fetch('dati-nemorense.json?v=' + Date.now());
+                const dati = await response.json();
+                if (dati.prossima_partita) {
+                    const p = dati.prossima_partita;
+                    document.getElementById('next-match-container').innerHTML = `
+                        <div class="match-date">${p.data}</div>
+                        <div class="match-teams"><span>${p.casa}</span><span class="vs">VS</span><span>${p.trasferta}</span></div>`;
+                }
+                const standingsBody = document.getElementById('standings-body');
+                standingsBody.innerHTML = '';
+                dati.classifica.forEach(team => {
+                    const isNemorense = team.nome.toLowerCase().includes('nemorense');
+                    const logoPath = `img/${team.nome.toLowerCase().replace(/\s+/g, '-')}.png`;
+                    standingsBody.innerHTML += `
+                        <tr class="${isNemorense ? 'highlight' : ''}">
+                            <td>${team.posizione}</td>
+                            <td><div class="team-cell"><img src="${logoPath}" class="team-logo" onerror="this.src='https://via.placeholder.com/25?text=?'"><span>${team.nome}</span></div></td>
+                            <td>${team.giocate}</td><td>${team.vinte}</td><td>${team.pareggiate}</td><td>${team.sconfitte}</td><td><strong>${team.punti}</strong></td>
+                        </tr>`;
+                });
+                document.getElementById('update-time').innerHTML = `<small>Ultimo aggiornamento: ${dati.ultimo_aggiornamento}</small>`;
+            } catch (e) { console.error("Errore nel caricamento dati"); }
+        }
+        document.addEventListener('DOMContentLoaded', caricaDati);
+    </script>
+</body>
+</html>
+
