@@ -92,7 +92,10 @@
         .sponsors-section { margin-top: 4rem; text-align: center; }
         .sponsors-title { font-family: 'Teko', sans-serif; font-size: 1.2rem; color: #bbb; margin-bottom: 1.5rem; }
         .sponsors-grid { display: flex; justify-content: center; align-items: center; gap: 3rem; flex-wrap: wrap; }
-        .sponsors-grid img { max-height: 60px; opacity: 0.7; }
+        .sponsors-grid a { transition: transform 0.3s; }
+        .sponsors-grid a:hover { transform: scale(1.1); }
+        .sponsors-grid img { max-height: 60px; opacity: 0.8; transition: opacity 0.3s; }
+        .sponsors-grid a:hover img { opacity: 1; }
 
         @media (max-width: 1024px) {
             body::before, body::after { display: none; }
@@ -135,11 +138,18 @@
         <section class="sponsors-section">
             <h3 class="sponsors-title">I NOSTRI PARTNER</h3>
             <div class="sponsors-grid">
-                <img src="img/sponsor-1.png" alt="Sponsor 1" onerror="this.style.display='none'">
-                <img src="img/sponsor-2.png" alt="Sponsor 2" onerror="this.style.display='none'">
-                <img src="img/sponsor-3.png" alt="Sponsor 3" onerror="this.style.display='none'">
+                <a href="https://share.google/THuj29ynREi7eDXar" target="_blank">
+                    <img src="img/sponsor-1.png" alt="Sponsor 1" onerror="this.style.display='none'">
+                </a>
+                <a href="https://share.google/8ENdFi131HRPHsA2S" target="_blank">
+                    <img src="img/sponsor-2.png" alt="Sponsor 2" onerror="this.style.display='none'">
+                </a>
+                <a href="https://share.google/A6vyph2RAM6JD8sgA" target="_blank">
+                    <img src="img/sponsor-3.png" alt="Sponsor 3" onerror="this.style.display='none'">
+                </a>
             </div>
         </section>
+        
         <div id="update-time" style="text-align:center; padding:2rem; color:#888;"></div>
     </div>
 
@@ -180,6 +190,7 @@
     </div>
 
     <script>
+        // Lo script rimane esattamente quello dell'ultima versione funzionante
         const NEWS_SHEET_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vRSgRS1yvWq4yLdhUYqjMBB9DQYa3iZ1z4SSuPZK-mMTGpwpvCN3kPloNHh_jxVQbwTlHIxrO6QkhT0/pub?gid=0&single=true&output=csv';
 
         const giocatori = [
@@ -264,14 +275,10 @@
             try {
                 const response = await fetch('dati-nemorense.json?v=' + Date.now());
                 const dati = await response.json();
-                
-                // Match
                 if (dati.prossima_partita) {
                     const p = dati.prossima_partita;
                     document.getElementById('next-match-container').innerHTML = `<div style="font-family:Teko; font-size:1.8rem;">${p.data}</div><div class="match-teams"><span>${p.casa}</span><span class="vs">VS</span><span>${p.trasferta}</span></div>`;
                 }
-
-                // Classifica con Loghi
                 const standingsBody = document.getElementById('standings-body');
                 standingsBody.innerHTML = dati.classifica.map(team => {
                     const isNemorense = team.nome.toLowerCase().includes('nemorense');
@@ -288,9 +295,8 @@
                             <td>${team.giocate}</td><td>${team.vinte}</td><td>${team.pareggiate}</td><td>${team.sconfitte}</td><td><strong>${team.punti}</strong></td>
                         </tr>`;
                 }).join('');
-
                 document.getElementById('update-time').innerHTML = `<small>Aggiornato: ${dati.ultimo_aggiornamento}</small>`;
-            } catch (e) { console.error("Errore caricamento dati JSON"); }
+            } catch (e) { console.error("Errore caricamento dati"); }
         }
 
         document.addEventListener('DOMContentLoaded', () => { caricaDatiSito(); caricaNews(); });
