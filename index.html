@@ -193,7 +193,6 @@
             box-shadow: 2px 2px 8px var(--shadow);
             transition: transform 0.2s;
         }
-
         .social-btn:hover { transform: scale(1.1); }
 
         .instagram-color {
@@ -298,11 +297,48 @@
         tr.highlight { background: rgba(107, 15, 26, 0.08); font-weight: bold; }
         #update-time { text-align: center; padding: 2rem; color: #888; font-size: 0.8rem; }
 
+        /* ====== EMBED LEGA CALCIO A8 (RITAGLIO) ====== */
+        .a8-embed-wrap{
+            width:100%;
+            overflow:hidden;
+            position:relative;
+            background:#fff;
+            border-radius:20px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.05);
+            margin-bottom: 3rem;
+        }
+
+        /* Classifica */
+        .a8-standings-wrap{ height:720px; }
+        .a8-standings-iframe{
+            width:100%;
+            height:1400px;
+            border:0;
+            display:block;
+            transform: translateY(-260px); /* regola se serve */
+        }
+
+        /* Tabellone Coppa */
+        .a8-stream-wrap{ height:700px; }
+        .a8-stream-iframe{
+            width:100%;
+            height:1400px;
+            border:0;
+            display:block;
+            transform: translateY(-350px); /* regola se serve */
+        }
+
         @media (max-width: 768px) {
             body::before, body::after { display: none; }
             .match-teams { font-size: 1.6rem; gap: 1rem; }
             th:nth-child(3), td:nth-child(3), th:nth-child(4), td:nth-child(4), th:nth-child(5), td:nth-child(5), th:nth-child(6), td:nth-child(6) { display: none; }
             .rosa-grid { grid-template-columns: repeat(2, 1fr); }
+
+            .a8-standings-wrap{ height:780px; }
+            .a8-standings-iframe{ height:1600px; transform: translateY(-300px); }
+
+            .a8-stream-wrap{ height:820px; }
+            .a8-stream-iframe{ height:1600px; transform: translateY(-380px); }
         }
     </style>
 </head>
@@ -374,13 +410,27 @@
 
         <section>
             <h2>Classifica Serie A2</h2>
-            <div class="table-container">
-                <table>
-                    <thead>
-                        <tr><th>#</th><th>Squadra</th><th>G</th><th>V</th><th>N</th><th>P</th><th>PT</th></tr>
-                    </thead>
-                    <tbody id="standings-body"></tbody>
-                </table>
+
+            <div class="a8-embed-wrap a8-standings-wrap" aria-label="Classifica Serie A2">
+                <iframe
+                    class="a8-standings-iframe"
+                    src="https://www.legacalcioa8.it/it/t-teamtable/87/serie-a2-2526/"
+                    loading="lazy"
+                    referrerpolicy="no-referrer-when-downgrade">
+                </iframe>
+            </div>
+        </section>
+
+        <section>
+            <h2>Tabellone Coppa Italia A2</h2>
+
+            <div class="a8-embed-wrap a8-stream-wrap" aria-label="Tabellone Coppa Italia A2">
+                <iframe
+                    class="a8-stream-iframe"
+                    src="https://www.legacalcioa8.it/it/tournament/98/coppa-italia-a2-2526/stream/"
+                    loading="lazy"
+                    referrerpolicy="no-referrer-when-downgrade">
+                </iframe>
             </div>
         </section>
 
@@ -504,31 +554,6 @@
                     `;
                 }
 
-                const standingsBody = document.getElementById('standings-body');
-                standingsBody.innerHTML = '';
-                dati.classifica.forEach(team => {
-                    const isNemorense = team.nome.toLowerCase().includes('nemorense');
-                    const logoFileName = team.nome.toLowerCase().replace(/\s+/g, '-') + '.png';
-                    const logoPath = `img/${logoFileName}`;
-
-                    standingsBody.innerHTML += `
-                        <tr class="${isNemorense ? 'highlight' : ''}">
-                            <td>${team.posizione}</td>
-                            <td>
-                                <div class="team-cell">
-                                    <img src="${logoPath}" class="team-logo" onerror="this.src='https://via.placeholder.com/25?text=?'">
-                                    <span>${team.nome}</span>
-                                </div>
-                            </td>
-                            <td>${team.giocate}</td>
-                            <td>${team.vinte}</td>
-                            <td>${team.pareggiate}</td>
-                            <td>${team.sconfitte}</td>
-                            <td><strong>${team.punti}</strong></td>
-                        </tr>
-                    `;
-                });
-
                 document.getElementById('update-time').innerHTML = `<small>Ultimo aggiornamento: ${dati.ultimo_aggiornamento}</small>`;
 
             } catch (e) {
@@ -539,3 +564,4 @@
     </script>
 </body>
 </html>
+            
