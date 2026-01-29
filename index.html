@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="it">
 <head>
@@ -24,28 +23,26 @@
 
         * { margin: 0; padding: 0; box-sizing: border-box; }
         
-        body { font-family: 'DM Sans', sans-serif; background: var(--bg); color: var(--text); padding-bottom: 50px; }
+        body { font-family: 'DM Sans', sans-serif; background: var(--bg); color: var(--text); padding-bottom: 50px; position: relative; min-height: 100vh; }
 
         /* SFONDI FISSI */
         body::before, body::after {
-            content: ""; position: fixed; width: 338px; height: 1000px;
+            content: ""; position: fixed; width: 300px; height: 800px;
             z-index: -1; pointer-events: none; background-size: contain; background-repeat: no-repeat;
+            opacity: 0.8;
         }
-        body::before { top: 0; right: 0; background-image: url('img/back-right.png'); }
-        body::after { bottom: 0; left: 0; background-image: url('img/back-left.png'); }
+        body::before { top: 0; right: 0; background-image: url('img/back-right.png'); background-position: top right; }
+        body::after { bottom: 0; left: 0; background-image: url('img/back-left.png'); background-position: bottom left; }
 
-        header { background: var(--white); padding: 1rem; text-align: center; border-bottom: 3px solid var(--primary); box-shadow: 0 2px 10px rgba(0,0,0,0.05); }
+        header { background: var(--white); padding: 1rem; text-align: center; border-bottom: 3px solid var(--primary); box-shadow: 0 2px 10px var(--shadow); position: relative; z-index: 10; }
         .logo-container img { height: 80px; }
 
-        .container { max-width: 1000px; margin: 2rem auto; padding: 0 1.5rem; }
+        .container { max-width: 1000px; margin: 2rem auto; padding: 0 1.5rem; position: relative; z-index: 10; }
         h2 { font-family: 'Teko', sans-serif; font-size: 2.5rem; text-transform: uppercase; color: var(--primary); margin-bottom: 1.5rem; border-bottom: 2px solid var(--primary); display: inline-block; }
 
-        /* SEZIONE NEWS */
+        /* NEWS */
         .news-grid { display: grid; gap: 1.5rem; margin-bottom: 3rem; }
-        .news-card { 
-            display: flex; background: white; border-radius: 15px; overflow: hidden; 
-            box-shadow: 0 5px 15px rgba(0,0,0,0.08); transition: transform 0.3s;
-        }
+        .news-card { display: flex; background: white; border-radius: 15px; overflow: hidden; box-shadow: 0 5px 15px rgba(0,0,0,0.08); transition: transform 0.3s; }
         .news-card:hover { transform: translateY(-5px); }
         .news-img { width: 35%; object-fit: cover; min-height: 150px; background: #eee; }
         .news-content { padding: 1.5rem; flex: 1; }
@@ -53,12 +50,40 @@
         .news-content h3 { font-family: 'Teko', sans-serif; font-size: 1.8rem; color: var(--primary); margin: 0.5rem 0; line-height: 1.1; }
         .news-content p { font-size: 0.95rem; color: #444; line-height: 1.5; }
 
-        /* TABELLA E MATCH */
+        /* CLASSIFICA LOGHI */
+        .team-cell { display: flex; align-items: center; gap: 10px; text-align: left; }
+        .team-logo { width: 25px; height: 25px; object-fit: contain; }
+
+        /* FLOAT BUTTONS */
+        .team-menu-container, .social-menu-container { position: fixed; right: 25px; z-index: 1002; display: flex; flex-direction: column-reverse; align-items: center; gap: 15px; }
+        .team-menu-container { bottom: 100px; transition: all 0.4s; }
+        .team-menu-container.raised { bottom: 210px; }
+        .social-menu-container { bottom: 25px; }
+        .main-btn { width: 60px; height: 60px; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-size: 24px; box-shadow: 2px 2px 10px rgba(0,0,0,0.3); border: none; cursor: pointer; }
+        .team-btn-main { background: var(--primary); }
+        .social-btn-main { background: #333; }
+        .sub-options { display: flex; flex-direction: column; gap: 10px; opacity: 0; visibility: hidden; transform: translateY(20px); transition: all 0.3s ease; }
+        .team-menu-container:hover .sub-options, .social-menu-container:hover .sub-options { opacity: 1; visibility: visible; transform: translateY(0); }
+        .sub-btn { width: 50px; height: 50px; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; border: none; font-size: 18px; box-shadow: 2px 2px 8px var(--shadow); cursor: pointer; text-decoration: none; }
+        .rosa-color { background: var(--primary-light); }
+        .staff-color { background: #444; }
+        .instagram-color { background: radial-gradient(circle at 30% 107%, #fdf497 0%, #fd5949 45%, #d6249f 60%, #285AEB 90%); }
+        .tiktok-color { background: #000; border: 1px solid #ff0050; }
+
+        /* OVERLAYS */
+        .overlay-section { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: var(--bg); z-index: 2000; display: none; overflow-y: auto; padding: 2rem 1rem; }
+        .rosa-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 15px; }
+        .player-card { background: white; border-radius: 12px; overflow: hidden; box-shadow: 0 4px 10px rgba(0,0,0,0.1); text-align: center; position: relative; }
+        .player-img-container { position: relative; padding-top: 125%; background: #eee; }
+        .player-img { position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; }
+        .player-info { padding: 0.8rem; }
+        .player-name { font-weight: bold; color: var(--primary); font-family: 'Teko', sans-serif; font-size: 1.3rem; }
+
+        /* MATCH E TABELLE */
         .next-match-card { background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%); color: white; border-radius: 20px; padding: 2.5rem; text-align: center; margin-bottom: 3rem; }
         .match-teams { display: flex; justify-content: center; align-items: center; gap: 2rem; font-size: 2.2rem; font-family: 'Teko', sans-serif; }
         .vs { background: var(--white); color: var(--primary); padding: 0.2rem 0.8rem; border-radius: 8px; font-size: 1.2rem; }
-        
-        .table-container { background: var(--white); border-radius: 20px; overflow: hidden; box-shadow: 0 5px 20px rgba(0,0,0,0.05); }
+        .table-container { background: var(--white); border-radius: 20px; overflow: hidden; box-shadow: 0 5px 20px rgba(0,0,0,0.05); margin-bottom: 3rem; }
         table { width: 100%; border-collapse: collapse; }
         th, td { padding: 1.2rem 1rem; text-align: center; border-bottom: 1px solid #eee; }
         tr.highlight { background: rgba(107, 15, 26, 0.08); font-weight: bold; }
@@ -67,13 +92,14 @@
         .sponsors-section { margin-top: 4rem; text-align: center; }
         .sponsors-title { font-family: 'Teko', sans-serif; font-size: 1.2rem; color: #bbb; margin-bottom: 1.5rem; }
         .sponsors-grid { display: flex; justify-content: center; align-items: center; gap: 3rem; flex-wrap: wrap; }
-        .sponsors-grid img { max-height: 60px; opacity: 0.6; transition: 0.3s; }
-        .sponsors-grid img:hover { opacity: 1; }
+        .sponsors-grid img { max-height: 60px; opacity: 0.7; }
 
-        @media (max-width: 768px) {
+        @media (max-width: 1024px) {
+            body::before, body::after { display: none; }
             .news-card { flex-direction: column; }
             .news-img { width: 100%; height: 200px; }
             .match-teams { font-size: 1.6rem; }
+            .rosa-grid { grid-template-columns: repeat(2, 1fr); }
         }
     </style>
 </head>
@@ -86,24 +112,20 @@
     <div class="container">
         <section>
             <h2>Ultime News</h2>
-            <div id="news-container" class="news-grid">
-                <p>Caricamento notizie...</p>
-            </div>
+            <div id="news-container" class="news-grid"><p>Caricamento notizie...</p></div>
         </section>
 
         <section>
             <h2>Prossima Partita</h2>
-            <div id="next-match-container" class="next-match-card">
-                <p>Caricamento...</p>
-            </div>
+            <div id="next-match-container" class="next-match-card"><p>Caricamento...</p></div>
         </section>
 
         <section>
-            <h2>Classifica</h2>
+            <h2>Classifica Serie A2</h2>
             <div class="table-container">
                 <table>
                     <thead>
-                        <tr><th>#</th><th>Squadra</th><th>G</th><th>PT</th></tr>
+                        <tr><th>#</th><th>Squadra</th><th>G</th><th>V</th><th>N</th><th>P</th><th>PT</th></tr>
                     </thead>
                     <tbody id="standings-body"></tbody>
                 </table>
@@ -118,38 +140,122 @@
                 <img src="img/sponsor-3.png" alt="Sponsor 3" onerror="this.style.display='none'">
             </div>
         </section>
-
         <div id="update-time" style="text-align:center; padding:2rem; color:#888;"></div>
     </div>
 
+    <div id="rosa-section" class="overlay-section">
+        <div class="container">
+            <div style="display:flex; justify-content:space-between; align-items:center;">
+                <h2>Rosa AS Nemorense</h2>
+                <button onclick="toggleSection('rosa-section')" style="background:none; border:none; font-size:2.5rem; cursor:pointer; color:var(--primary);">&times;</button>
+            </div>
+            <div id="lista-giocatori"></div>
+        </div>
+    </div>
+
+    <div id="staff-section" class="overlay-section">
+        <div class="container">
+            <div style="display:flex; justify-content:space-between; align-items:center;">
+                <h2>Staff Tecnico</h2>
+                <button onclick="toggleSection('staff-section')" style="background:none; border:none; font-size:2.5rem; cursor:pointer; color:var(--primary);">&times;</button>
+            </div>
+            <div id="lista-staff" class="rosa-grid"></div>
+        </div>
+    </div>
+
+    <div class="team-menu-container" id="team-menu-container">
+        <button class="main-btn team-btn-main"><i class="fas fa-tshirt"></i></button>
+        <div class="sub-options">
+            <button class="sub-btn staff-color" onclick="toggleSection('staff-section')"><i class="fas fa-user-tie"></i></button>
+            <button class="sub-btn rosa-color" onclick="toggleSection('rosa-section')"><i class="fas fa-users"></i></button>
+        </div>
+    </div>
+
+    <div class="social-menu-container" onmouseenter="document.getElementById('team-menu-container').classList.add('raised')" onmouseleave="document.getElementById('team-menu-container').classList.remove('raised')">
+        <button class="main-btn social-btn-main"><i class="fas fa-share-alt"></i></button>
+        <div class="sub-options">
+            <a href="https://www.tiktok.com/@asnemorense_official" class="sub-btn tiktok-color" target="_blank"><i class="fab fa-tiktok"></i></a>
+            <a href="https://www.instagram.com/asnemorense/" class="sub-btn instagram-color" target="_blank"><i class="fab fa-instagram"></i></a>
+        </div>
+    </div>
+
     <script>
-        // --- CONFIGURAZIONE GOOGLE SHEETS ---
-        // INCOLLA QUI IL TUO LINK CSV
         const NEWS_SHEET_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vRSgRS1yvWq4yLdhUYqjMBB9DQYa3iZ1z4SSuPZK-mMTGpwpvCN3kPloNHh_jxVQbwTlHIxrO6QkhT0/pub?gid=0&single=true&output=csv';
+
+        const giocatori = [
+            { nome: "Alessio Lucci", ruolo: "Portieri", foto: "img/alessio-lucci.jpg" },
+            { nome: "Alessandro Tudini", ruolo: "Difensori", foto: "img/alessandro-tudini.jpg" },
+            { nome: "Lorenzo Cavaterra", ruolo: "Difensori", foto: "img/lorenzo-cavaterra.jpg" },
+            { nome: "Giuseppe Massaro", ruolo: "Difensori", foto: "img/giuseppe-massaro.jpg" },
+            { nome: "Giordano Massimi", ruolo: "Difensori", foto: "img/giordano-massimi.jpg" },
+            { nome: "Federico Trequattrini", ruolo: "Difensori", foto: "img/federico-trequattrini.jpg" },
+            { nome: "Daniele Fortini", ruolo: "Difensori", foto: "img/daniele-fortini.jpg" },
+            { nome: "Matteo Vitelli", ruolo: "Difensori", foto: "img/matteo-vitelli.jpg" },
+            { nome: "Stefano Marsinano", ruolo: "Difensori", foto: "img/stefano-marsinano.jpg" },
+            { nome: "Leonardo Patriarca", ruolo: "Difensori", foto: "img/leonardo-patriarca.jpg" },
+            { nome: "Michael Gregorini", ruolo: "Difensori", foto: "img/michael-gregorini.jpg" },
+            { nome: "Enrico Marsinano", ruolo: "Centrocampisti", foto: "img/enrico-marsinano.jpg" },
+            { nome: "Manuel Valentini", ruolo: "Centrocampisti", foto: "img/manuel-valentini.jpg" },
+            { nome: "Valerio Marcodoppido", ruolo: "Centrocampisti", foto: "img/valerio-marcodoppido.jpg" },
+            { nome: "Daniele Marino", ruolo: "Centrocampisti", foto: "img/daniele-marino.jpg" },
+            { nome: "Manuel Ugolini", ruolo: "Centrocampisti", foto: "img/manuel-ugolini.jpg" },
+            { nome: "Miro De Angelis", ruolo: "Attaccanti", foto: "img/miro-deangelis.jpg" },
+            { nome: "Matteo Carva", ruolo: "Attaccanti", foto: "img/matteo-carva.jpg" },
+            { nome: "Massimo Bianchi", ruolo: "Attaccanti", foto: "img/massimo-bianchi.jpg" },
+            { nome: "Fabio Tramonti", ruolo: "Attaccanti", foto: "img/fabio-tramonti.jpg" },
+            { nome: "Mattia Hazizi", ruolo: "Attaccanti", foto: "img/mattia-hazizi.jpg" }
+        ];
+
+        const staff = [
+            { nome: "Nicolò Gramenzi", ruolo: "Dirigenza", foto: "img/nicolò-gramenzi.jpg" },
+            { nome: "Jacopo Gramenzi", ruolo: "Dirigenza", foto: "img/jacopo-gramenzi.jpg" },
+            { nome: "Leonardo Traccitto", ruolo: "Dirigenza", foto: "img/leonardo-traccitto.jpg" },
+            { nome: "Matteo Carva", ruolo: "Dirigenza", foto: "img/matteo-carva.jpg" },
+            { nome: "Francesco Montano", ruolo: "Dirigenza", foto: "img/francesco-montano.jpg" },
+            { nome: "Alessandro Isopi", ruolo: "Dirigenza", foto: "img/alessandro-isopi.jpg" },
+            { nome: "Gabriele Piersanti", ruolo: "Dirigenza", foto: "img/gabriele-piersanti.jpg" }
+        ];
+
+        function toggleSection(id) {
+            const section = document.getElementById(id);
+            const isOpening = section.style.display !== 'block';
+            document.querySelectorAll('.overlay-section').forEach(s => s.style.display = 'none');
+            if (isOpening) {
+                section.style.display = 'block';
+                document.body.style.overflow = 'hidden';
+                if(id === 'rosa-section') renderRosa();
+                if(id === 'staff-section') renderStaff();
+            } else {
+                document.body.style.overflow = 'auto';
+            }
+        }
+
+        function renderRosa() {
+            const container = document.getElementById('lista-giocatori');
+            container.innerHTML = '';
+            ["Portieri", "Difensori", "Centrocampisti", "Attaccanti"].forEach(ruolo => {
+                const filtrati = giocatori.filter(g => g.ruolo === ruolo);
+                if (filtrati.length > 0) {
+                    container.innerHTML += `<div style="font-family:Teko; font-size:2rem; margin:1.5rem 0; border-left:5px solid var(--primary); padding-left:10px;">${ruolo}</div>`;
+                    let grid = '<div class="rosa-grid">';
+                    filtrati.forEach(g => {
+                        grid += `<div class="player-card"><div class="player-img-container"><img src="${g.foto}" class="player-img" onerror="this.src='https://via.placeholder.com/400x500?text=Logo'"></div><div class="player-info"><div class="player-name">${g.nome}</div></div></div>`;
+                    });
+                    container.innerHTML += grid + '</div>';
+                }
+            });
+        }
+
+        function renderStaff() {
+            document.getElementById('lista-staff').innerHTML = staff.map(s => `<div class="player-card"><div class="player-img-container"><img src="${s.foto}" class="player-img" onerror="this.src='https://via.placeholder.com/400x500?text=Staff'"></div><div class="player-info"><div class="player-name">${s.nome}</div><div style="font-size:0.8rem; color:#666;">${s.ruolo}</div></div></div>`).join('');
+        }
 
         function caricaNews() {
             Papa.parse(NEWS_SHEET_URL, {
-                download: true,
-                header: true,
+                download: true, header: true,
                 complete: function(results) {
-                    const data = results.data;
-                    const container = document.getElementById('news-container');
-                    container.innerHTML = '';
-                    
-                    // Mostriamo solo le ultime 3 news (dalla più recente)
-                    data.reverse().slice(0, 3).forEach(item => {
-                        if(!item.Titolo) return;
-                        container.innerHTML += `
-                            <div class="news-card">
-                                ${item.Immagine ? `<img src="${item.Immagine}" class="news-img" onerror="this.style.display='none'">` : ''}
-                                <div class="news-content">
-                                    <small>${item.Data}</small>
-                                    <h3>${item.Titolo}</h3>
-                                    <p>${item.Testo}</p>
-                                </div>
-                            </div>
-                        `;
-                    });
+                    const data = results.data.reverse().slice(0, 3);
+                    document.getElementById('news-container').innerHTML = data.map(item => item.Titolo ? `<div class="news-card">${item.Immagine ? `<img src="${item.Immagine}" class="news-img" onerror="this.style.display='none'">` : ''}<div class="news-content"><small>${item.Data}</small><h3>${item.Titolo}</h3><p>${item.Testo}</p></div></div>` : '').join('');
                 }
             });
         }
@@ -162,31 +268,32 @@
                 // Match
                 if (dati.prossima_partita) {
                     const p = dati.prossima_partita;
-                    document.getElementById('next-match-container').innerHTML = `
-                        <div style="font-family:'Teko'; font-size:1.8rem;">${p.data}</div>
-                        <div class="match-teams"><span>${p.casa}</span><span class="vs">VS</span><span>${p.trasferta}</span></div>`;
+                    document.getElementById('next-match-container').innerHTML = `<div style="font-family:Teko; font-size:1.8rem;">${p.data}</div><div class="match-teams"><span>${p.casa}</span><span class="vs">VS</span><span>${p.trasferta}</span></div>`;
                 }
 
-                // Classifica
+                // Classifica con Loghi
                 const standingsBody = document.getElementById('standings-body');
-                standingsBody.innerHTML = '';
-                dati.classifica.forEach(team => {
+                standingsBody.innerHTML = dati.classifica.map(team => {
                     const isNemorense = team.nome.toLowerCase().includes('nemorense');
-                    standingsBody.innerHTML += `
+                    const logoPath = `img/${team.nome.toLowerCase().replace(/\s+/g, '-')}.png`;
+                    return `
                         <tr class="${isNemorense ? 'highlight' : ''}">
                             <td>${team.posizione}</td>
-                            <td style="text-align:left;">${team.nome}</td>
-                            <td>${team.giocate}</td><td><strong>${team.punti}</strong></td>
+                            <td>
+                                <div class="team-cell">
+                                    <img src="${logoPath}" class="team-logo" onerror="this.src='https://via.placeholder.com/25?text=?'">
+                                    <span>${team.nome}</span>
+                                </div>
+                            </td>
+                            <td>${team.giocate}</td><td>${team.vinte}</td><td>${team.pareggiate}</td><td>${team.sconfitte}</td><td><strong>${team.punti}</strong></td>
                         </tr>`;
-                });
+                }).join('');
+
                 document.getElementById('update-time').innerHTML = `<small>Aggiornato: ${dati.ultimo_aggiornamento}</small>`;
-            } catch (e) { console.error("Errore dati JSON"); }
+            } catch (e) { console.error("Errore caricamento dati JSON"); }
         }
 
-        document.addEventListener('DOMContentLoaded', () => {
-            caricaDatiSito();
-            caricaNews();
-        });
+        document.addEventListener('DOMContentLoaded', () => { caricaDatiSito(); caricaNews(); });
     </script>
 </body>
 </html>
