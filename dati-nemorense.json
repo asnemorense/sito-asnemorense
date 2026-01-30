@@ -1,35 +1,33 @@
-
 {
-  "ultimo_aggiornamento": "28/1/2026, 15:24:26",
+  "ultimo_aggiornamento": "30/01/2026, 10:27:44",
   "squadra": "AS Nemorense",
   "prossima_partita": {
     "data": "2026-02-02 21:30 Atletico 2000 Via di Centocelle, 195",
     "casa": "ASD Baron Academy",
-    "trasferta": "AS Nemorense",
-    "risultato": "-"
+    "trasferta": "AS Nemorense"
   },
   "classifica": [
     {
       "posizione": "1",
       "nome": "Atletico Alberone FC",
-      "giocate": "13",
-      "vinte": "12",
+      "giocate": "14",
+      "vinte": "13",
       "pareggiate": "0",
       "sconfitte": "1",
-      "punti": "36"
+      "punti": "39"
     },
     {
       "posizione": "2",
       "nome": "George Best Team Academy",
-      "giocate": "13",
-      "vinte": "9",
+      "giocate": "14",
+      "vinte": "10",
       "pareggiate": "3",
       "sconfitte": "1",
-      "punti": "30"
+      "punti": "33"
     },
     {
       "posizione": "3",
-      "nome": "ASD Baron Academy",
+      "nome": "Atletico Appio C8",
       "giocate": "14",
       "vinte": "8",
       "pareggiate": "2",
@@ -38,12 +36,12 @@
     },
     {
       "posizione": "4",
-      "nome": "Atletico Appio C8",
-      "giocate": "13",
-      "vinte": "7",
+      "nome": "ASD Baron Academy",
+      "giocate": "14",
+      "vinte": "8",
       "pareggiate": "2",
       "sconfitte": "4",
-      "punti": "23"
+      "punti": "26"
     },
     {
       "posizione": "5",
@@ -51,7 +49,7 @@
       "giocate": "13",
       "vinte": "7",
       "pareggiate": "2",
-      "sconfitte": "4",
+      "sconfitte": "5",
       "punti": "23"
     },
     {
@@ -75,10 +73,10 @@
     {
       "posizione": "8",
       "nome": "Gringos C8",
-      "giocate": "13",
+      "giocate": "14",
       "vinte": "6",
       "pareggiate": "2",
-      "sconfitte": "5",
+      "sconfitte": "6",
       "punti": "20"
     },
     {
@@ -102,10 +100,10 @@
     {
       "posizione": "11",
       "nome": "Inter Club C8 Academy",
-      "giocate": "13",
+      "giocate": "14",
       "vinte": "3",
       "pareggiate": "2",
-      "sconfitte": "8",
+      "sconfitte": "9",
       "punti": "11"
     },
     {
@@ -135,6 +133,5 @@
       "sconfitte": "10",
       "punti": "6"
     }
-  ],
-  "calendario": []
+  ]
 }
