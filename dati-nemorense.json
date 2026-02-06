@@ -7,7 +7,7 @@
     "trasferta": "ASD Union FB"
   },
   "prossima_partita_coppa": {
-    "data": "06-02-2026 22:30 Atletico 2000 Via di Centocelle, 195",
+    "data": "06-02-2026 22:30 USD Centocelle Viale della Primavera, 64",
     "casa": "AS Nemorense",
     "trasferta": "TS Zerosei"
   },
@@ -24,11 +24,11 @@
     {
       "posizione": "2",
       "nome": "George Best Team Academy",
-      "giocate": "14",
-      "vinte": "10",
+      "giocate": "15",
+      "vinte": "11",
       "pareggiate": "3",
       "sconfitte": "1",
-      "punti": "33"
+      "punti": "36"
     },
     {
       "posizione": "3",
@@ -42,38 +42,38 @@
     {
       "posizione": "4",
       "nome": "Atletico Appio C8",
-      "giocate": "14",
+      "giocate": "15",
       "vinte": "8",
       "pareggiate": "2",
-      "sconfitte": "4",
+      "sconfitte": "5",
       "punti": "26"
     },
     {
       "posizione": "5",
       "nome": "La Fraschetta del pesce express",
-      "giocate": "14",
-      "vinte": "7",
+      "giocate": "15",
+      "vinte": "8",
       "pareggiate": "2",
       "sconfitte": "5",
-      "punti": "23"
+      "punti": "26"
     },
     {
       "posizione": "6",
+      "nome": "ASD Union FB",
+      "giocate": "15",
+      "vinte": "8",
+      "pareggiate": "1",
+      "sconfitte": "6",
+      "punti": "25"
+    },
+    {
+      "posizione": "7",
       "nome": "Gringos C8",
       "giocate": "15",
       "vinte": "7",
       "pareggiate": "2",
       "sconfitte": "6",
       "punti": "23"
-    },
-    {
-      "posizione": "7",
-      "nome": "ASD Union FB",
-      "giocate": "14",
-      "vinte": "7",
-      "pareggiate": "1",
-      "sconfitte": "6",
-      "punti": "22"
     },
     {
       "posizione": "8",
@@ -86,7 +86,7 @@
     },
     {
       "posizione": "9",
-      "nome": "Virtus San Giustino",
+      "nome": "Fratini Gialli",
       "giocate": "15",
       "vinte": "6",
       "pareggiate": "2",
@@ -95,20 +95,20 @@
     },
     {
       "posizione": "10",
-      "nome": "Fratini Gialli",
-      "giocate": "14",
-      "vinte": "5",
+      "nome": "Virtus San Giustino",
+      "giocate": "15",
+      "vinte": "6",
       "pareggiate": "2",
       "sconfitte": "7",
-      "punti": "17"
+      "punti": "20"
     },
     {
       "posizione": "11",
       "nome": "Inter Club C8 Academy",
-      "giocate": "14",
+      "giocate": "15",
       "vinte": "3",
       "pareggiate": "2",
-      "sconfitte": "9",
+      "sconfitte": "10",
       "punti": "11"
     },
     {
@@ -123,19 +123,19 @@
     {
       "posizione": "13",
       "nome": "Grottaferrata C8",
-      "giocate": "14",
+      "giocate": "15",
       "vinte": "2",
       "pareggiate": "1",
-      "sconfitte": "11",
+      "sconfitte": "12",
       "punti": "7"
     },
     {
       "posizione": "14",
       "nome": "Paris San Giovanni",
-      "giocate": "14",
+      "giocate": "15",
       "vinte": "1",
       "pareggiate": "3",
-      "sconfitte": "10",
+      "sconfitte": "11",
       "punti": "6"
     }
   ]
