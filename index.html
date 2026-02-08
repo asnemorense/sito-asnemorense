@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="it">
 <head>
@@ -41,15 +40,28 @@
         .container { max-width: 1000px; margin: 2rem auto; padding: 0 1.5rem; position: relative; z-index: 10; }
         h2 { font-family: 'Teko', sans-serif; font-size: 2.5rem; text-transform: uppercase; color: var(--primary); margin-bottom: 1.5rem; border-bottom: 2px solid var(--primary); display: inline-block; }
 
-        /* NEWS */
-        .news-grid { display: grid; gap: 1.5rem; margin-bottom: 3rem; }
-        .news-card { display: flex; background: white; border-radius: 15px; overflow: hidden; box-shadow: 0 5px 15px rgba(0,0,0,0.08); transition: transform 0.3s; }
-        .news-card:hover { transform: translateY(-5px); }
-        .news-img { width: 35%; object-fit: cover; min-height: 150px; background: #eee; }
-        .news-content { padding: 1.5rem; flex: 1; }
+        /* NEWS CAROUSEL */
+        .news-carousel-wrapper { position: relative; margin-bottom: 3rem; padding: 0 60px; }
+        .news-carousel { overflow: hidden; position: relative; width: 100%; }
+        .news-grid { display: flex; transition: transform 0.4s ease; width: 100%; }
+        .news-card { min-width: 100%; width: 100%; display: flex; background: white; border-radius: 15px; overflow: hidden; box-shadow: 0 5px 15px rgba(0,0,0,0.08); flex-shrink: 0; }
+        .news-img { width: 35%; max-width: 350px; object-fit: cover; background: #eee; }
+        .news-content { padding: 1.5rem; flex: 1; display: flex; flex-direction: column; justify-content: center; }
         .news-content small { color: #888; font-weight: bold; text-transform: uppercase; font-size: 0.8rem; }
         .news-content h3 { font-family: 'Teko', sans-serif; font-size: 1.8rem; color: var(--primary); margin: 0.5rem 0; line-height: 1.1; }
         .news-content p { font-size: 0.95rem; color: #444; line-height: 1.5; }
+        
+        /* Frecce di navigazione */
+        .carousel-arrow { position: absolute; top: 50%; transform: translateY(-50%); background: var(--primary); color: white; border: none; width: 50px; height: 50px; border-radius: 50%; cursor: pointer; font-size: 20px; z-index: 10; box-shadow: 0 4px 10px rgba(0,0,0,0.2); transition: all 0.3s; }
+        .carousel-arrow:hover:not(:disabled) { background: var(--primary-light); transform: translateY(-50%) scale(1.1); }
+        .carousel-arrow.left { left: 0; }
+        .carousel-arrow.right { right: 0; }
+        .carousel-arrow:disabled { opacity: 0.3; cursor: not-allowed; }
+        
+        /* Indicatori */
+        .carousel-indicators { display: flex; justify-content: center; gap: 8px; margin-top: 1.5rem; }
+        .indicator { width: 10px; height: 10px; border-radius: 50%; background: #ddd; cursor: pointer; transition: all 0.3s; border: none; padding: 0; }
+        .indicator.active { background: var(--primary); width: 30px; border-radius: 5px; }
 
         /* CLASSIFICA LOGHI */
         .team-cell { display: flex; align-items: center; gap: 10px; text-align: left; }
@@ -102,10 +114,19 @@
 
         @media (max-width: 1024px) {
             body::before, body::after { display: none; }
+            .news-carousel-wrapper { padding: 0 50px; }
             .news-card { flex-direction: column; }
-            .news-img { width: 100%; height: 200px; }
+            .news-img { width: 100%; max-width: 100%; height: 200px; }
             .match-teams { font-size: 1.6rem; }
             .rosa-grid { grid-template-columns: repeat(2, 1fr); }
+            .carousel-arrow { width: 40px; height: 40px; font-size: 16px; }
+        }
+        
+        @media (max-width: 768px) {
+            .news-carousel-wrapper { padding: 0 45px; }
+            .carousel-arrow { width: 35px; height: 35px; font-size: 14px; }
+            .news-content h3 { font-size: 1.5rem; }
+            .news-content p { font-size: 0.9rem; }
         }
     </style>
 </head>
@@ -118,7 +139,18 @@
     <div class="container">
         <section>
             <h2>Ultime News</h2>
-            <div id="news-container" class="news-grid"><p>Caricamento notizie...</p></div>
+            <div class="news-carousel-wrapper">
+                <button class="carousel-arrow left" onclick="prevNews()" id="prev-btn">
+                    <i class="fas fa-chevron-left"></i>
+                </button>
+                <div class="news-carousel">
+                    <div id="news-container" class="news-grid"><p>Caricamento notizie...</p></div>
+                </div>
+                <button class="carousel-arrow right" onclick="nextNews()" id="next-btn">
+                    <i class="fas fa-chevron-right"></i>
+                </button>
+                <div class="carousel-indicators" id="news-indicators"></div>
+            </div>
         </section>
 
         <section>
@@ -273,14 +305,69 @@
             document.getElementById('lista-staff').innerHTML = staff.map(s => `<div class="player-card"><div class="player-img-container"><img src="${s.foto}" class="player-img" onerror="this.src='https://via.placeholder.com/400x500?text=Staff'"></div><div class="player-info"><div class="player-name">${s.nome}</div><div style="font-size:0.8rem; color:#666;">${s.ruolo}</div></div></div>`).join('');
         }
 
+        let currentNewsIndex = 0;
+        let totalNews = 0;
+
         function caricaNews() {
             Papa.parse(NEWS_SHEET_URL, {
                 download: true, header: true,
                 complete: function(results) {
-                    const data = results.data.reverse().slice(0, 3);
-                    document.getElementById('news-container').innerHTML = data.map(item => item.Titolo ? `<div class="news-card">${item.Immagine ? `<img src="${item.Immagine}" class="news-img" onerror="this.style.display='none'">` : ''}<div class="news-content"><small>${item.Data}</small><h3>${item.Titolo}</h3><p>${item.Testo}</p></div></div>` : '').join('');
+                    const data = results.data.reverse().slice(0, 10); // Prendo fino a 10 news più recenti
+                    totalNews = data.filter(item => item.Titolo).length;
+                    
+                    document.getElementById('news-container').innerHTML = data.map(item => 
+                        item.Titolo ? `<div class="news-card">
+                            ${item.Immagine ? `<img src="${item.Immagine}" class="news-img" onerror="this.style.display='none'">` : ''}
+                            <div class="news-content">
+                                <small>${item.Data}</small>
+                                <h3>${item.Titolo}</h3>
+                                <p>${item.Testo}</p>
+                            </div>
+                        </div>` : ''
+                    ).join('');
+                    
+                    // Crea gli indicatori
+                    const indicatorsHTML = Array.from({length: totalNews}, (_, i) => 
+                        `<button class="indicator ${i === 0 ? 'active' : ''}" onclick="goToNews(${i})"></button>`
+                    ).join('');
+                    document.getElementById('news-indicators').innerHTML = indicatorsHTML;
+                    
+                    updateCarousel();
                 }
             });
+        }
+
+        function updateCarousel() {
+            const container = document.getElementById('news-container');
+            container.style.transform = `translateX(-${currentNewsIndex * 100}%)`;
+            
+            // Aggiorna gli indicatori
+            document.querySelectorAll('.indicator').forEach((ind, i) => {
+                ind.classList.toggle('active', i === currentNewsIndex);
+            });
+            
+            // Aggiorna lo stato delle frecce
+            document.getElementById('prev-btn').disabled = currentNewsIndex === 0;
+            document.getElementById('next-btn').disabled = currentNewsIndex >= totalNews - 1;
+        }
+
+        function nextNews() {
+            if (currentNewsIndex < totalNews - 1) {
+                currentNewsIndex++;
+                updateCarousel();
+            }
+        }
+
+        function prevNews() {
+            if (currentNewsIndex > 0) {
+                currentNewsIndex--;
+                updateCarousel();
+            }
+        }
+
+        function goToNews(index) {
+            currentNewsIndex = index;
+            updateCarousel();
         }
 
         async function caricaDatiSito() {
