@@ -312,23 +312,26 @@
             Papa.parse(NEWS_SHEET_URL, {
                 download: true, header: true,
                 complete: function(results) {
-                    const data = results.data.reverse().slice(0, 10); // Prendo fino a 10 news più recenti
-                    totalNews = data.filter(item => item.Titolo).length;
+                    const data = results.data.slice(0, 10).filter(item => item.Titolo); // Prendo fino a 10 news, senza invertire
+                    totalNews = data.length;
+                    
+                    // Parto dall'ultima news (la più recente)
+                    currentNewsIndex = totalNews - 1;
                     
                     document.getElementById('news-container').innerHTML = data.map(item => 
-                        item.Titolo ? `<div class="news-card">
+                        `<div class="news-card">
                             ${item.Immagine ? `<img src="${item.Immagine}" class="news-img" onerror="this.style.display='none'">` : ''}
                             <div class="news-content">
                                 <small>${item.Data}</small>
                                 <h3>${item.Titolo}</h3>
                                 <p>${item.Testo}</p>
                             </div>
-                        </div>` : ''
+                        </div>`
                     ).join('');
                     
                     // Crea gli indicatori
                     const indicatorsHTML = Array.from({length: totalNews}, (_, i) => 
-                        `<button class="indicator ${i === 0 ? 'active' : ''}" onclick="goToNews(${i})"></button>`
+                        `<button class="indicator ${i === totalNews - 1 ? 'active' : ''}" onclick="goToNews(${i})"></button>`
                     ).join('');
                     document.getElementById('news-indicators').innerHTML = indicatorsHTML;
                     
@@ -347,11 +350,14 @@
             });
             
             // Aggiorna lo stato delle frecce
+            // Freccia sinistra: disabilitata se siamo alla news più vecchia (indice 0)
             document.getElementById('prev-btn').disabled = currentNewsIndex === 0;
+            // Freccia destra: disabilitata se siamo alla news più recente (ultima)
             document.getElementById('next-btn').disabled = currentNewsIndex >= totalNews - 1;
         }
 
         function nextNews() {
+            // Freccia destra: vai verso le news più recenti (indice più alto)
             if (currentNewsIndex < totalNews - 1) {
                 currentNewsIndex++;
                 updateCarousel();
@@ -359,6 +365,7 @@
         }
 
         function prevNews() {
+            // Freccia sinistra: vai verso le news più vecchie (indice più basso)
             if (currentNewsIndex > 0) {
                 currentNewsIndex--;
                 updateCarousel();
