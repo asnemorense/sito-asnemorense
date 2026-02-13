@@ -60,8 +60,8 @@
             height: 100%;
             background-image: url('img/hero.jpg'); 
             background-size: cover;
-            background-position: center center; /* Default mobile */
-            opacity: 0.7; /* Opacità iniziale al 70% */
+            background-position: center center; 
+            opacity: 0.7; 
             z-index: 1;
             pointer-events: none;
             filter: grayscale(20%) contrast(110%);
@@ -70,25 +70,22 @@
         /* CONFIGURAZIONE SPECIFICA PER PC */
         @media (min-width: 1025px) {
             .header-texture {
-                background-position: center 20%; /* Rialzata su PC */
+                background-position: center 20%; 
             }
             header {
                 min-height: 350px; 
             }
         }
 
-        /* LOGO CONTAINER SENZA CERCHIO */
+        /* LOGO CONTAINER */
         .logo-container { 
             position: relative; 
             z-index: 2; 
-            padding: 5px; /* Padding ridotto */
-            /* Rimosso sfondo circolare, bordo e ombra del contenitore */
-            /* Aggiunta ombra direttamente al contenitore per stacco pulito */
+            padding: 5px; 
             filter: drop-shadow(0 2px 15px rgba(255, 255, 255, 0.5));
         }
         .logo-container img { 
-            height: 120px; /* Logo leggermente più grande */
-            /* Rimosso drop-shadow dall'immagine per evitare doppio effetto */
+            height: 120px; /* Dimensione default Desktop */
             transition: height 0.3s;
         }
 
@@ -161,6 +158,7 @@
         .sponsors-grid img { max-height: 60px; opacity: 0.8; transition: opacity 0.3s; }
         .sponsors-grid a:hover img { opacity: 1; }
 
+        /* MEDIA QUERIES */
         @media (max-width: 1024px) {
             body::before, body::after { display: none; }
             .news-carousel-wrapper { padding: 0 50px; }
@@ -169,17 +167,20 @@
             .match-teams { font-size: 1.6rem; }
             .rosa-grid { grid-template-columns: repeat(2, 1fr); }
             .carousel-arrow { width: 40px; height: 40px; font-size: 16px; }
-            /* Mobile header adjustments */
             header { min-height: 180px; }
-            .logo-container img { height: 100px; } /* Logo leggermente più piccolo su mobile */
+            .logo-container img { height: 100px; } /* Tablet */
         }
         
+        /* REGOLE SPECIFICHE PER MOBILE (SMARTPHONE) */
         @media (max-width: 768px) {
             .news-carousel-wrapper { padding: 0 45px; }
             .carousel-arrow { width: 35px; height: 35px; font-size: 14px; }
             .news-content h3 { font-size: 1.5rem; }
             .news-content p { font-size: 0.9rem; }
-            header { min-height: 160px; }
+            
+            /* LOGO RIDOTTO DEL 25% (DA 75px a 56px) */
+            header { min-height: 110px; } 
+            .logo-container img { height: 56px; } 
         }
     </style>
 </head>
@@ -447,9 +448,7 @@
             const headerTexture = document.getElementById('header-texture');
             if (headerTexture) {
                 let scrollPos = window.scrollY;
-                // Opacità di partenza 0.7
                 let startOpacity = 0.7; 
-                // Fade-out graduale
                 let opacity = startOpacity - (scrollPos / 350);
                 if (opacity < 0) opacity = 0;
                 headerTexture.style.opacity = opacity;
