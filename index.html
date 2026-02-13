@@ -34,8 +34,54 @@
         body::before { top: 0; right: 0; background-image: url('img/back-right.png'); background-position: top right; }
         body::after { bottom: 0; left: 0; background-image: url('img/back-left.png'); background-position: bottom left; }
 
-        header { background: var(--white); padding: 1rem; text-align: center; border-bottom: 3px solid var(--primary); box-shadow: 0 2px 10px var(--shadow); position: relative; z-index: 10; }
-        .logo-container img { height: 80px; }
+        /* HEADER HERO CONFIGURATION */
+        header { 
+            background: var(--white);
+            padding: 1rem; 
+            text-align: center; 
+            border-bottom: 4px solid var(--primary); /* Bordo leggermente più spesso */
+            box-shadow: 0 4px 15px var(--shadow); 
+            position: relative; 
+            z-index: 10; 
+            overflow: hidden;
+            /* Aumentata altezza per mostrare meglio l'immagine 3072x1536 */
+            min-height: 220px; 
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: min-height 0.3s ease; /* Transizione fluida se si ridimensiona */
+        }
+
+        /* TEXTURE HERO */
+        .header-texture {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url('img/hero.jpg'); /* Immagine ad alta risoluzione */
+            background-size: cover; /* Copre tutto lo spazio senza deformare */
+            background-position: top center; /* Focalizza sulla parte alta (spesso le teste/volti) */
+            opacity: 1;
+            z-index: 1;
+            /* La transizione è gestita via JS, ma aggiungiamo un base */
+            will-change: opacity;
+            pointer-events: none;
+        }
+
+        .logo-container { 
+            position: relative; 
+            z-index: 2; 
+            padding: 10px;
+            background: rgba(255, 255, 255, 0.15); /* Leggero alone per staccare il logo dallo sfondo */
+            border-radius: 50%;
+            backdrop-filter: blur(2px); /* Effetto vetro leggero dietro al logo */
+        }
+        .logo-container img { 
+            height: 110px; /* Logo leggermente più grande */
+            filter: drop-shadow(0 4px 6px rgba(0,0,0,0.3)); 
+            transition: height 0.3s;
+        }
 
         .container { max-width: 1000px; margin: 2rem auto; padding: 0 1.5rem; position: relative; z-index: 10; }
         h2 { font-family: 'Teko', sans-serif; font-size: 2.5rem; text-transform: uppercase; color: var(--primary); margin-bottom: 1.5rem; border-bottom: 2px solid var(--primary); display: inline-block; }
@@ -51,23 +97,30 @@
         .news-content h3 { font-family: 'Teko', sans-serif; font-size: 1.8rem; color: var(--primary); margin: 0.5rem 0; line-height: 1.1; }
         .news-content p { font-size: 0.95rem; color: #444; line-height: 1.5; }
         
-        /* Frecce di navigazione */
+        /* Frecce e Indicatori */
         .carousel-arrow { position: absolute; top: 50%; transform: translateY(-50%); background: var(--primary); color: white; border: none; width: 50px; height: 50px; border-radius: 50%; cursor: pointer; font-size: 20px; z-index: 10; box-shadow: 0 4px 10px rgba(0,0,0,0.2); transition: all 0.3s; }
         .carousel-arrow:hover:not(:disabled) { background: var(--primary-light); transform: translateY(-50%) scale(1.1); }
         .carousel-arrow.left { left: 0; }
         .carousel-arrow.right { right: 0; }
         .carousel-arrow:disabled { opacity: 0.3; cursor: not-allowed; }
-        
-        /* Indicatori */
         .carousel-indicators { display: flex; justify-content: center; gap: 8px; margin-top: 1.5rem; }
         .indicator { width: 10px; height: 10px; border-radius: 50%; background: #ddd; cursor: pointer; transition: all 0.3s; border: none; padding: 0; }
         .indicator.active { background: var(--primary); width: 30px; border-radius: 5px; }
 
-        /* CLASSIFICA LOGHI */
+        /* CLASSIFICA E TABELLE */
         .team-cell { display: flex; align-items: center; gap: 10px; text-align: left; }
         .team-logo { width: 25px; height: 25px; object-fit: contain; }
+        .next-match-card { background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%); color: white; border-radius: 20px; padding: 2.5rem; text-align: center; margin-bottom: 3rem; }
+        .next-match-card.coppa { background: linear-gradient(135deg, #7a7a7a 0%, #78797a 100%); }
+        .match-teams { display: flex; justify-content: center; align-items: center; gap: 2rem; font-size: 2.2rem; font-family: 'Teko', sans-serif; }
+        .vs { background: var(--white); color: var(--primary); padding: 0.2rem 0.8rem; border-radius: 8px; font-size: 1.2rem; }
+        .next-match-card.coppa .vs { color: #7a7a7a; }
+        .table-container { background: var(--white); border-radius: 20px; overflow: hidden; box-shadow: 0 5px 20px rgba(0,0,0,0.05); margin-bottom: 3rem; }
+        table { width: 100%; border-collapse: collapse; }
+        th, td { padding: 1.2rem 1rem; text-align: center; border-bottom: 1px solid #eee; }
+        tr.highlight { background: rgba(107, 15, 26, 0.08); font-weight: bold; }
 
-        /* FLOAT BUTTONS */
+        /* MENU E OVERLAY */
         .team-menu-container, .social-menu-container { position: fixed; right: 25px; z-index: 1002; display: flex; flex-direction: column-reverse; align-items: center; gap: 15px; }
         .team-menu-container { bottom: 100px; transition: all 0.4s; }
         .team-menu-container.raised { bottom: 210px; }
@@ -82,8 +135,7 @@
         .staff-color { background: #444; }
         .instagram-color { background: radial-gradient(circle at 30% 107%, #fdf497 0%, #fd5949 45%, #d6249f 60%, #285AEB 90%); }
         .tiktok-color { background: #000; border: 1px solid #ff0050; }
-
-        /* OVERLAYS */
+        
         .overlay-section { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: var(--bg); z-index: 2000; display: none; overflow-y: auto; padding: 2rem 1rem; }
         .rosa-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 15px; }
         .player-card { background: white; border-radius: 12px; overflow: hidden; box-shadow: 0 4px 10px rgba(0,0,0,0.1); text-align: center; position: relative; }
@@ -91,17 +143,6 @@
         .player-img { position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; }
         .player-info { padding: 0.8rem; }
         .player-name { font-weight: bold; color: var(--primary); font-family: 'Teko', sans-serif; font-size: 1.3rem; }
-
-        /* MATCH E TABELLE */
-        .next-match-card { background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%); color: white; border-radius: 20px; padding: 2.5rem; text-align: center; margin-bottom: 3rem; }
-        .next-match-card.coppa { background: linear-gradient(135deg, ##7a7a7a 0%, #78797a 100%); }
-        .match-teams { display: flex; justify-content: center; align-items: center; gap: 2rem; font-size: 2.2rem; font-family: 'Teko', sans-serif; }
-        .vs { background: var(--white); color: var(--primary); padding: 0.2rem 0.8rem; border-radius: 8px; font-size: 1.2rem; }
-        .next-match-card.coppa .vs { color: ##7a7a7a; }
-        .table-container { background: var(--white); border-radius: 20px; overflow: hidden; box-shadow: 0 5px 20px rgba(0,0,0,0.05); margin-bottom: 3rem; }
-        table { width: 100%; border-collapse: collapse; }
-        th, td { padding: 1.2rem 1rem; text-align: center; border-bottom: 1px solid #eee; }
-        tr.highlight { background: rgba(107, 15, 26, 0.08); font-weight: bold; }
 
         /* SPONSOR */
         .sponsors-section { margin-top: 4rem; text-align: center; }
@@ -120,6 +161,9 @@
             .match-teams { font-size: 1.6rem; }
             .rosa-grid { grid-template-columns: repeat(2, 1fr); }
             .carousel-arrow { width: 40px; height: 40px; font-size: 16px; }
+            /* Mobile header adjustment */
+            header { min-height: 180px; }
+            .logo-container img { height: 90px; }
         }
         
         @media (max-width: 768px) {
@@ -127,13 +171,17 @@
             .carousel-arrow { width: 35px; height: 35px; font-size: 14px; }
             .news-content h3 { font-size: 1.5rem; }
             .news-content p { font-size: 0.9rem; }
+            header { min-height: 160px; }
         }
     </style>
 </head>
 <body>
 
     <header>
-        <div class="logo-container"><img src="logo-nemorense.png" alt="AS Nemorense"></div>
+        <div class="header-texture" id="header-texture"></div>
+        <div class="logo-container">
+            <img src="logo-nemorense.png" alt="AS Nemorense">
+        </div>
     </header>
 
     <div class="container">
@@ -230,9 +278,9 @@
     </div>
 
     <script>
-        // Lo script rimane esattamente quello dell'ultima versione funzionante
         const NEWS_SHEET_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vRSgRS1yvWq4yLdhUYqjMBB9DQYa3iZ1z4SSuPZK-mMTGpwpvCN3kPloNHh_jxVQbwTlHIxrO6QkhT0/pub?gid=0&single=true&output=csv';
 
+        // DATI GIOCATORI E STAFF
         const giocatori = [
             { nome: "Alessio Lucci", ruolo: "Portieri", foto: "img/alessio-lucci.jpg" },
             { nome: "Alessandro Tudini", ruolo: "Difensori", foto: "img/alessandro-tudini.jpg" },
@@ -312,10 +360,8 @@
             Papa.parse(NEWS_SHEET_URL, {
                 download: true, header: true,
                 complete: function(results) {
-                    const data = results.data.slice(0, 10).filter(item => item.Titolo); // Prendo fino a 10 news, senza invertire
+                    const data = results.data.slice(0, 10).filter(item => item.Titolo);
                     totalNews = data.length;
-                    
-                    // Parto dall'ultima news (la più recente)
                     currentNewsIndex = totalNews - 1;
                     
                     document.getElementById('news-container').innerHTML = data.map(item => 
@@ -329,7 +375,6 @@
                         </div>`
                     ).join('');
                     
-                    // Crea gli indicatori
                     const indicatorsHTML = Array.from({length: totalNews}, (_, i) => 
                         `<button class="indicator ${i === totalNews - 1 ? 'active' : ''}" onclick="goToNews(${i})"></button>`
                     ).join('');
@@ -343,52 +388,27 @@
         function updateCarousel() {
             const container = document.getElementById('news-container');
             container.style.transform = `translateX(-${currentNewsIndex * 100}%)`;
-            
-            // Aggiorna gli indicatori
             document.querySelectorAll('.indicator').forEach((ind, i) => {
                 ind.classList.toggle('active', i === currentNewsIndex);
             });
-            
-            // Aggiorna lo stato delle frecce
-            // Freccia sinistra: disabilitata se siamo alla news più vecchia (indice 0)
             document.getElementById('prev-btn').disabled = currentNewsIndex === 0;
-            // Freccia destra: disabilitata se siamo alla news più recente (ultima)
             document.getElementById('next-btn').disabled = currentNewsIndex >= totalNews - 1;
         }
 
-        function nextNews() {
-            // Freccia destra: vai verso le news più recenti (indice più alto)
-            if (currentNewsIndex < totalNews - 1) {
-                currentNewsIndex++;
-                updateCarousel();
-            }
-        }
-
-        function prevNews() {
-            // Freccia sinistra: vai verso le news più vecchie (indice più basso)
-            if (currentNewsIndex > 0) {
-                currentNewsIndex--;
-                updateCarousel();
-            }
-        }
-
-        function goToNews(index) {
-            currentNewsIndex = index;
-            updateCarousel();
-        }
+        function nextNews() { if (currentNewsIndex < totalNews - 1) { currentNewsIndex++; updateCarousel(); } }
+        function prevNews() { if (currentNewsIndex > 0) { currentNewsIndex--; updateCarousel(); } }
+        function goToNews(index) { currentNewsIndex = index; updateCarousel(); }
 
         async function caricaDatiSito() {
             try {
                 const response = await fetch('dati-nemorense.json?v=' + Date.now());
                 const dati = await response.json();
                 
-                // Carica prossima partita Serie A2
                 if (dati.prossima_partita) {
                     const p = dati.prossima_partita;
                     document.getElementById('next-match-container').innerHTML = `<div style="font-family:Teko; font-size:1.8rem;">${p.data}</div><div class="match-teams"><span>${p.casa}</span><span class="vs">VS</span><span>${p.trasferta}</span></div>`;
                 }
                 
-                // Carica prossima partita Coppa Italia
                 if (dati.prossima_partita_coppa) {
                     const pc = dati.prossima_partita_coppa;
                     document.getElementById('next-match-coppa-container').innerHTML = `<div style="font-family:Teko; font-size:1.8rem;">${pc.data}</div><div class="match-teams"><span>${pc.casa}</span><span class="vs">VS</span><span>${pc.trasferta}</span></div>`;
@@ -413,6 +433,20 @@
                 document.getElementById('update-time').innerHTML = `<small>Aggiornato: ${dati.ultimo_aggiornamento}</small>`;
             } catch (e) { console.error("Errore caricamento dati"); }
         }
+
+        // --- GESTIONE SCROLL & FADE DELL'HEADER HERO ---
+        window.addEventListener('scroll', function() {
+            const headerTexture = document.getElementById('header-texture');
+            if (headerTexture) {
+                let scrollPos = window.scrollY;
+                // Fade-out graduale fino a 350px di scroll
+                let opacity = 1 - (scrollPos / 350);
+                
+                if (opacity < 0) opacity = 0;
+                
+                headerTexture.style.opacity = opacity;
+            }
+        });
 
         document.addEventListener('DOMContentLoaded', () => { caricaDatiSito(); caricaNews(); });
     </script>
