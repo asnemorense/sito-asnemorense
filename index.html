@@ -39,17 +39,16 @@
             background: var(--white);
             padding: 1rem; 
             text-align: center; 
-            border-bottom: 4px solid var(--primary); /* Bordo leggermente più spesso */
+            border-bottom: 4px solid var(--primary); 
             box-shadow: 0 4px 15px var(--shadow); 
             position: relative; 
             z-index: 10; 
             overflow: hidden;
-            /* Aumentata altezza per mostrare meglio l'immagine 3072x1536 */
             min-height: 220px; 
             display: flex;
             align-items: center;
             justify-content: center;
-            transition: min-height 0.3s ease; /* Transizione fluida se si ridimensiona */
+            transition: min-height 0.3s ease;
         }
 
         /* TEXTURE HERO */
@@ -59,26 +58,44 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background-image: url('img/hero.jpg'); /* Immagine ad alta risoluzione */
-            background-size: cover; /* Copre tutto lo spazio senza deformare */
-            background-position: top center; /* Focalizza sulla parte alta (spesso le teste/volti) */
-            opacity: 1;
+            background-image: url('img/hero.jpg'); 
+            background-size: cover;
+            
+            /* MOBILE DEFAULT: Centrato */
+            background-position: center center; 
+            
+            /* OPACITÀ INIZIALE AL 70% */
+            opacity: 0.7; 
+            
             z-index: 1;
-            /* La transizione è gestita via JS, ma aggiungiamo un base */
-            will-change: opacity;
             pointer-events: none;
+            /* Aggiungiamo un filtro per migliorare la leggibilità del logo sopra la foto */
+            filter: grayscale(20%) contrast(110%);
+        }
+
+        /* CONFIGURAZIONE SPECIFICA PER PC (Schermi grandi) */
+        @media (min-width: 1025px) {
+            .header-texture {
+                /* RIALZATA DEL 20%: Sposta il focus verticale verso l'alto */
+                background-position: center 20%; 
+            }
+            header {
+                min-height: 350px; /* Aumentiamo l'altezza su PC per godersi la foto */
+            }
         }
 
         .logo-container { 
             position: relative; 
             z-index: 2; 
-            padding: 10px;
-            background: rgba(255, 255, 255, 0.15); /* Leggero alone per staccare il logo dallo sfondo */
+            padding: 15px;
+            /* Un leggero sfondo sfumato dietro al logo per staccarlo dall'immagine al 70% */
+            background: rgba(255, 255, 255, 0.4); 
             border-radius: 50%;
-            backdrop-filter: blur(2px); /* Effetto vetro leggero dietro al logo */
+            backdrop-filter: blur(5px);
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
         }
         .logo-container img { 
-            height: 110px; /* Logo leggermente più grande */
+            height: 110px; 
             filter: drop-shadow(0 4px 6px rgba(0,0,0,0.3)); 
             transition: height 0.3s;
         }
@@ -97,7 +114,6 @@
         .news-content h3 { font-family: 'Teko', sans-serif; font-size: 1.8rem; color: var(--primary); margin: 0.5rem 0; line-height: 1.1; }
         .news-content p { font-size: 0.95rem; color: #444; line-height: 1.5; }
         
-        /* Frecce e Indicatori */
         .carousel-arrow { position: absolute; top: 50%; transform: translateY(-50%); background: var(--primary); color: white; border: none; width: 50px; height: 50px; border-radius: 50%; cursor: pointer; font-size: 20px; z-index: 10; box-shadow: 0 4px 10px rgba(0,0,0,0.2); transition: all 0.3s; }
         .carousel-arrow:hover:not(:disabled) { background: var(--primary-light); transform: translateY(-50%) scale(1.1); }
         .carousel-arrow.left { left: 0; }
@@ -161,7 +177,7 @@
             .match-teams { font-size: 1.6rem; }
             .rosa-grid { grid-template-columns: repeat(2, 1fr); }
             .carousel-arrow { width: 40px; height: 40px; font-size: 16px; }
-            /* Mobile header adjustment */
+            /* Mobile header adjustments */
             header { min-height: 180px; }
             .logo-container img { height: 90px; }
         }
@@ -434,13 +450,17 @@
             } catch (e) { console.error("Errore caricamento dati"); }
         }
 
-        // --- GESTIONE SCROLL & FADE DELL'HEADER HERO ---
+        // --- GESTIONE SCROLL & FADE DELL'HEADER HERO (AGGIORNATO) ---
         window.addEventListener('scroll', function() {
             const headerTexture = document.getElementById('header-texture');
             if (headerTexture) {
                 let scrollPos = window.scrollY;
-                // Fade-out graduale fino a 350px di scroll
-                let opacity = 1 - (scrollPos / 350);
+                
+                // PARTIAMO DA OPACITÀ 0.7 (70%) INVECE CHE 1
+                let startOpacity = 0.7; 
+                
+                // Fade-out graduale
+                let opacity = startOpacity - (scrollPos / 350);
                 
                 if (opacity < 0) opacity = 0;
                 
