@@ -84,9 +84,12 @@
             padding: 5px; 
             filter: drop-shadow(0 2px 15px rgba(255, 255, 255, 0.5));
         }
+        
+        /* MODIFICA TRASPARENZA LOGO QUI */
         .logo-container img { 
             height: 120px; /* Dimensione default Desktop */
             transition: height 0.3s;
+            opacity: 0.8; /* TRASPARENZA 80% (0.8) */
         }
 
         .container { max-width: 1000px; margin: 2rem auto; padding: 0 1.5rem; position: relative; z-index: 10; }
@@ -179,11 +182,8 @@
             .news-content p { font-size: 0.9rem; }
             
             /* QUI MODIFICHIAMO IL LOGO E L'HEADER SOLO PER MOBILE */
-            /* Ho aumentato l'altezza dell'header a 160px per mostrare bene lo sfondo */
-            header { min-height: 160px; } 
-            
-            /* Il logo rimane piccolo come richiesto */
-            .logo-container img { height: 56px; } 
+            header { min-height: 160px; } /* Header alto per vedere l'immagine */
+            .logo-container img { height: 56px; } /* Logo piccolo (56px) */
         }
     </style>
 </head>
