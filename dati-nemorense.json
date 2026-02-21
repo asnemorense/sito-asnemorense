@@ -1,142 +1,142 @@
 {
-  "ultimo_aggiornamento": "12/02/2026, 11:02:49",
+  "ultimo_aggiornamento": "21/02/2026, 11:45:00",
   "squadra": "AS Nemorense",
   "prossima_partita": {
-    "data": "18/02/2026 USD Centocelle Viale della Primavera, 64",
-    "casa": "Atletico Alberone FC",
-    "trasferta": "AS Nemorense"
+    "data": "24/02/2026 Atletico 2000 Via di Centocelle, 195",
+    "casa": "AS Nemorense",
+    "trasferta": "Atletico Appio C8"
   },
   "prossima_partita_coppa": {
-    "data": "Da definire USD Centocelle Viale della Primavera, 64",
+    "data": "27/02/2026 Atletico 2000 Via di Centocelle, 195",
     "casa": "AS Nemorense",
-    "trasferta": "Da definire"
+    "trasferta": "Atletico Appio C8"
   },
   "classifica": [
     {
       "posizione": "1",
       "nome": "Atletico Alberone FC",
-      "giocate": "16",
-      "vinte": "15",
+      "giocate": "17",
+      "vinte": "16",
       "pareggiate": "0",
       "sconfitte": "1",
-      "punti": "45"
+      "punti": "48"
     },
     {
       "posizione": "2",
       "nome": "George Best Team Academy",
-      "giocate": "16",
-      "vinte": "12",
+      "giocate": "17",
+      "vinte": "13",
       "pareggiate": "3",
       "sconfitte": "1",
-      "punti": "39"
+      "punti": "42"
     },
     {
       "posizione": "3",
       "nome": "ASD Baron Academy",
-      "giocate": "16",
+      "giocate": "17",
       "vinte": "10",
       "pareggiate": "2",
-      "sconfitte": "4",
+      "sconfitte": "5",
       "punti": "32"
     },
     {
       "posizione": "4",
-      "nome": "Atletico Appio C8",
-      "giocate": "16",
+      "nome": "Gringos C8",
+      "giocate": "17",
       "vinte": "9",
       "pareggiate": "2",
-      "sconfitte": "5",
+      "sconfitte": "6",
       "punti": "29"
     },
     {
       "posizione": "5",
-      "nome": "La Fraschetta del pesce express",
-      "giocate": "16",
-      "vinte": "8",
+      "nome": "Atletico Appio C8",
+      "giocate": "17",
+      "vinte": "9",
       "pareggiate": "2",
       "sconfitte": "6",
-      "punti": "26"
+      "punti": "29"
     },
     {
       "posizione": "6",
-      "nome": "Gringos C8",
-      "giocate": "16",
-      "vinte": "8",
-      "pareggiate": "2",
-      "sconfitte": "6",
-      "punti": "26"
+      "nome": "ASD Union FB",
+      "giocate": "17",
+      "vinte": "9",
+      "pareggiate": "1",
+      "sconfitte": "7",
+      "punti": "28"
     },
     {
       "posizione": "7",
-      "nome": "ASD Union FB",
-      "giocate": "16",
+      "nome": "La Fraschetta del pesce express",
+      "giocate": "17",
       "vinte": "8",
-      "pareggiate": "1",
+      "pareggiate": "2",
       "sconfitte": "7",
-      "punti": "25"
+      "punti": "26"
     },
     {
       "posizione": "8",
-      "nome": "AS Nemorense",
-      "giocate": "16",
-      "vinte": "7",
-      "pareggiate": "3",
-      "sconfitte": "6",
-      "punti": "24"
+      "nome": "Fratini Gialli",
+      "giocate": "17",
+      "vinte": "8",
+      "pareggiate": "2",
+      "sconfitte": "7",
+      "punti": "26"
     },
     {
       "posizione": "9",
-      "nome": "Fratini Gialli",
-      "giocate": "16",
+      "nome": "AS Nemorense",
+      "giocate": "17",
       "vinte": "7",
-      "pareggiate": "2",
+      "pareggiate": "3",
       "sconfitte": "7",
-      "punti": "23"
+      "punti": "24"
     },
     {
       "posizione": "10",
       "nome": "Virtus San Giustino",
-      "giocate": "16",
-      "vinte": "6",
+      "giocate": "17",
+      "vinte": "7",
       "pareggiate": "2",
       "sconfitte": "8",
-      "punti": "20"
+      "punti": "23"
     },
     {
       "posizione": "11",
       "nome": "Inter Club C8 Academy",
-      "giocate": "16",
+      "giocate": "17",
       "vinte": "3",
       "pareggiate": "2",
-      "sconfitte": "11",
+      "sconfitte": "12",
       "punti": "11"
     },
     {
       "posizione": "12",
       "nome": "Naturalmente Carne FC",
-      "giocate": "16",
+      "giocate": "17",
       "vinte": "2",
       "pareggiate": "3",
-      "sconfitte": "11",
+      "sconfitte": "12",
       "punti": "9"
     },
     {
       "posizione": "13",
-      "nome": "Grottaferrata C8",
-      "giocate": "16",
+      "nome": "Paris San Giovanni",
+      "giocate": "17",
       "vinte": "2",
-      "pareggiate": "1",
-      "sconfitte": "13",
-      "punti": "7"
+      "pareggiate": "3",
+      "sconfitte": "12",
+      "punti": "9"
     },
     {
       "posizione": "14",
-      "nome": "Paris San Giovanni",
-      "giocate": "16",
-      "vinte": "1",
-      "pareggiate": "3",
-      "sconfitte": "12",
-      "punti": "6"
+      "nome": "Grottaferrata C8",
+      "giocate": "17",
+      "vinte": "2",
+      "pareggiate": "1",
+      "sconfitte": "14",
+      "punti": "7"
     }
   ]
 }
